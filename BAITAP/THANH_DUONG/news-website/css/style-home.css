@@ -1,0 +1,143 @@
+*{
+	margin:0px;
+	padding: 0px;
+}
+/*style box default*/
+@font-face{
+	font-family: cusFont;
+	src:url("arial.ttf");
+}
+*{
+	font-family: cusFont;
+}
+.default{
+	width:initial;
+	height: auto;
+	margin: 0px auto;
+	/*background-color: #ccc;*/
+}
+.match-paren{
+	width: initial;
+	height: auto;
+}
+.width-980{
+	margin: 0px auto;
+	width: 980px;
+	height: auto;
+}
+.side-left{
+	float: left;
+}
+.side-right{
+	float: right;
+	text-align: right;
+}
+.width-50{
+	width: 50%;
+}
+.width-30{
+	width: 30%;
+}
+.width-40{
+	width: 40%;
+}
+.width-70{
+	width: 70%;
+}
+.width-80{
+	width: 80%;
+}
+.rows{
+	width: initial;
+	height: auto;
+	background-color: #ccc;
+}
+.clear{
+	clear: both;
+}
+/*
+* style menu default
+*/
+.nav{width: initial;height: auto}
+.menu-bar{
+	list-style: none;
+}
+.menu-bar li{
+	display: inline-block;
+	/*background-color: red;*/
+	padding: 0px;
+	position: relative;
+}
+.menu-bar li a{
+	text-decoration: none;
+}
+.menu-bar ul.child-level{
+	display: none;
+	position: absolute;
+	/*background-color: red;*/
+	top: 0;
+	left: 100%;
+}
+.menu-bar>li>ul.child-level{
+	top: 100%;
+	left: 0;
+}
+.menu-bar li:hover>ul.child-level{
+	display: block;
+}
+/* end default
+ * style header
+ * style top menu, main menu
+ */
+.top-bar{
+	background-color: #f9f9f9;
+}
+.menu-top li{
+	padding: 5px 7px 5px 0px;
+}
+.menu-top li a{
+	font-size: 11px;
+	color: #000;
+	text-transform: capitalize;
+}
+.navs-main{
+	background-color: #dc002a;
+	height: 30px;
+	position: relative;
+}
+.menu-main li{
+	padding:7px 20px 5px 20px;
+	/*margin-top: 2px;*/
+	position: static;
+}
+.menu-main>li:hover{
+	background-color: #ba0017;
+}
+.menu-main li a{
+	font-size: 14px;
+	color: #fff;
+	padding-top: 3px;
+	text-transform: uppercase;
+}
+.menu-main .child-level{
+	background-color:#fff;
+	width: 100%;
+	border:1px solid #ccc;
+}
+.menu-main .child-level li{
+	display: block;
+	
+}
+.menu-main .child-level li a{
+	color: #000;
+}
+#header .banner{
+	height: 100px;
+}
+/* end header
+ * style content
+*/
+#content .sideSetSize{
+	min-height: 100px;
+	background-color: #ccc;
+}
