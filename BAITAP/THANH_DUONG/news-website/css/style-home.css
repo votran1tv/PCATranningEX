@@ -2,15 +2,22 @@
 	margin:0px;
 	padding: 0px;
 }
-/*style default*/
+/*style box default*/
+@font-face{
+	font-family: cusFont;
+	src:url("arial.ttf");
+}
+*{
+	font-family: cusFont;
+}
 .default{
-	width:inherit;
+	width:initial;
 	height: auto;
 	margin: 0px auto;
-	background-color: #ccc;
+	/*background-color: #ccc;*/
 }
 .match-paren{
-	width: inherit;
+	width: initial;
 	height: auto;
 }
 .width-980{
@@ -23,6 +30,7 @@
 }
 .side-right{
 	float: right;
+	text-align: right;
 }
 .width-50{
 	width: 50%;
@@ -39,7 +47,63 @@
 .width-80{
 	width: 80%;
 }
-
+.rows{
+	width: initial;
+	min-height: 10px;
+	background-color: #ccc;
+}
 .clear{
 	clear: both;
+}
+/*---------> style menu bar default*/
+.nav{width: initial;height: auto}
+.menu-bar{
+	list-style: none;
+}
+.menu-bar li{
+	display: inline-block;
+	/*background-color: red;*/
+	padding: 5px;
+	position: relative;
+}
+.menu-bar li a{
+	text-decoration: none;
+}
+.menu-bar ul.child-level{
+	display: none;
+	position: absolute;
+	/*background-color: red;*/
+	top: 0;
+	left: 100%;
+}
+.menu-bar>li>ul.child-level{
+	top: 100%;
+	left: 0;
+}
+.menu-bar li:hover>ul.child-level{
+	display: block;
+}
+/*----------> end style menu bar*/
+/*------------> end default style*/
+.top-bar{
+	background-color: #f9f9f9;
+}
+.menu-top li a{
+	font-size: 12px;
+	color: #000;
+	text-transform: capitalize;
+}
+.navs-main{
+	background-color: orange;
+	height: 30px;
+}
+.menu-main li{
+	padding:5px 20px 5px 20px;
+	margin-top: 2px;
+}
+.menu-main li a{
+	font-size: 14px;
+	color: #fff;
+	padding-top: 3px;
+	text-transform: uppercase;
 }
