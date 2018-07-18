@@ -1,0 +1,264 @@
+*{
+	margin: 0px;
+	padding: 0px;
+	box-sizing: border-box;
+}
+#Swapper{
+	width: 1000px;
+	margin: auto;
+}
+	#Header{
+		width: 1000px;
+		height: 230px;
+	}
+		#Header #HeaderTop{
+			width: 1000px;
+			height: 50px;
+			background-color: #ba2e1f;
+		}
+			#Header #HeaderTop #MenuBar{
+				width: 500px;
+				height: 25px;
+				float: left;
+				margin: 15px 0px 0px 13px;
+			}
+				#MenuBar ul{
+					list-style: none;
+				}
+				#MenuBar ul li{
+					display: inline-block;
+					border-right: 1px solid #ffffff;
+				}
+				#MenuBar ul li:last-child{
+					border: none;
+				}
+				#MenuBar ul li a{
+					text-decoration: none;
+					color: #ffffff;
+					padding: 0px 8px 0px 9px;
+				}
+				#MenuBar ul li a:hover{
+					color: orange;
+				}
+			#Header #HeaderTop #SearchBar{
+				width: 250px;
+				height: 27px;
+				background-color: #ffffff;
+				margin-right: 20px;
+				border-radius: 20px;
+				margin-top: 10px;
+				float: right;
+			}
+				#SearchBar #SearchInput{
+					width: 200px;
+					height: 22px;
+					padding: 5px;
+					border: none;
+					border-radius: 20px;
+					margin: 2.5px 0px 0px 15px;
+					float: left;
+					outline: none;
+				}
+				#SearchBar #SearchImg{
+					width: 20px;
+					height: 20px;
+					margin: 3px 8px 0px 0px; 
+					border-radius: 50%;
+					background-color: #b72d22;
+					padding: 3px;
+					border: none;
+					float: right;
+				}
+		#Header #HeaderCenter{
+			width: 1000px;
+			height: 140px;
+			background-color: #ffffff;
+		}
+			#Header #HeaderCenter #LogoText{
+				width: 480px;
+				height: 50px;
+				margin: 30px 0px 0px 20px;
+				float: left;
+			}
+				#LogoText #SpanCap{
+					font-size: 45px;
+					text-transform: uppercase;
+				}
+				#LogoText #SpanNormal{
+					font-size: 35px;
+					text-transform: uppercase;
+				}
+				#LogoText #Span{
+					font-size: 15px;
+				}
+			#Header #HeaderCenter #LogoLink{
+				width: 480px;
+				height: 50px;
+				margin: 40px 20px 0px 0px;
+				float: right;
+			}
+				#LogoLink .LogoImg{
+					width: 50px;
+					height: 50px;
+					background-color: black;
+					position: relative;
+					border-radius: 50%;
+					margin-left: 15px;
+					float: right;
+				}
+				#LogoLink .LogoImg:hover{
+					background-color: #ef802f;
+				}
+					.Images{
+						width: 24px;
+						height: 24px;
+						margin: 12px 0px 0px 12px;
+					}
+		#Header #HeaderBottom{
+			width: 960px;
+			height: 40px;
+			margin: 0px 20px 0px 20px;
+			background: linear-gradient(#333333 50%, #2b2b2b 50%);
+			border-radius: 5px;			
+		}
+		#Header #HeaderBottom ul{
+			list-style: none;
+		}
+			#HeaderBottom ul li{
+				display: inline-block;
+				padding: 10px 0px 0px 15px;
+			}
+			#HeaderBottom ul li:first-child{
+				margin-left: 48px;
+			}
+			#HeaderBottom ul li a{
+				text-decoration: none;
+				color: #ffffff;
+				text-transform: uppercase;
+				font-size: 15px;
+			}
+			#HeaderBottom ul li a:hover{
+				color: #bb2d1f;
+			}
+	#Content{
+		width: 1000px;
+	}
+		#Content #TopContent{
+			width: 960px;
+			height: 470px;
+			margin-left: 20px;
+		}
+		#Content #TopContent #TopImg{
+			width: 400px;
+			height: 440px;
+			margin-top: 30px;
+			float: left;
+		}
+			#TopImg .TopImgLeft{
+				width: 400px;
+				height: 440px;
+			}
+		#Content #TopContent #TopTitle{
+			width: 560px;
+			height: 300px;
+			margin-top: 110px;
+			float: left;
+		}
+		#Content #CenterContent{
+			width: 1000px;
+			height: 550px;
+			background-color: #f2f2f2;
+		}
+		#Content #CenterContent #LeftNews{
+			width: 300px;
+			height: 550px;
+			margin-left: 20px;
+			float: left;
+		}
+		#Content #CenterContent #BetweenNews{
+			width: 300px;
+			height: 550px;
+			float: left;
+			margin-left: 30px;
+			color: #878787;
+		}
+			#BetweenNews .News{
+				width: 300px;
+				height: 64px;
+				margin-bottom: 30px;
+			}
+			#BetweenNews .News .NewsImg{
+				width: 64px;
+				height: 64px;
+				margin-right: 21px;
+				float: left;
+			}
+			#BetweenNews .News .NewsText{
+				width: 215px;
+				height: 64px;
+				float: left;
+			}
+		#Content #CenterContent #RightNews{
+			width: 300px;
+			height: 550px;
+			margin-left: 30px;
+			color: #878787;
+			float: left;
+		}
+		#Content #BottomContent{
+			width: 1000px;
+			height: 470px;
+		}
+		#Content #BottomContent #BottomContent1{
+			width: 210px;
+			height: 470px;
+			margin-left: 20px;
+			float: left;
+		}
+		#Content #BottomContent #BottomContent2{
+			width: 210px;
+			height: 470px;
+			margin-left: 40px;
+			float: left;
+		}
+		#Content #BottomContent #BottomContent3{
+			width: 210px;
+			height: 470px;
+			margin-left: 40px;
+			float: left;
+		}
+		#Content #BottomContent #BottomContent4{
+			width: 210px;
+			height: 470px;
+			margin-left: 40px;
+			float: left;
+		}
+	#Footer{
+		width: 1000px;
+		height: 65px;
+		background-color: #f2f2f2;
+	}
+		#Footer #LeftFooter{
+			width: 400px;
+			height: 25px;
+			margin-left: 20px;
+			color: #919191;
+			float: left;
+		}
+		#Footer #LeftFooter .pLeft{
+			font-size: 20px;
+			margin-top: 30px;
+			float: left;
+		}
+		#Footer #RightFooter{
+			width: 400px;
+			height: 25px;
+			margin-right: 20px;
+			color: #919191;
+			float: right;
+		}
+		#Footer #RightFooter .pRight{
+			font-size: 20px;
+			margin-top: 30px;
+			float: right;
+		}
