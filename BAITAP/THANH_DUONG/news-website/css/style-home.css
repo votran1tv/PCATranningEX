@@ -49,13 +49,15 @@
 }
 .rows{
 	width: initial;
-	min-height: 10px;
+	height: auto;
 	background-color: #ccc;
 }
 .clear{
 	clear: both;
 }
-/*---------> style menu bar default*/
+/*
+* style menu default
+*/
 .nav{width: initial;height: auto}
 .menu-bar{
 	list-style: none;
@@ -63,7 +65,7 @@
 .menu-bar li{
 	display: inline-block;
 	/*background-color: red;*/
-	padding: 5px;
+	padding: 0px;
 	position: relative;
 }
 .menu-bar li a{
@@ -83,27 +85,59 @@
 .menu-bar li:hover>ul.child-level{
 	display: block;
 }
-/*----------> end style menu bar*/
-/*------------> end default style*/
+/* end default
+ * style header
+ * style top menu, main menu
+ */
 .top-bar{
 	background-color: #f9f9f9;
 }
+.menu-top li{
+	padding: 5px 7px 5px 0px;
+}
 .menu-top li a{
-	font-size: 12px;
+	font-size: 11px;
 	color: #000;
 	text-transform: capitalize;
 }
 .navs-main{
-	background-color: orange;
+	background-color: #dc002a;
 	height: 30px;
+	position: relative;
 }
 .menu-main li{
-	padding:5px 20px 5px 20px;
-	margin-top: 2px;
+	padding:7px 20px 5px 20px;
+	/*margin-top: 2px;*/
+	position: static;
+}
+.menu-main>li:hover{
+	background-color: #ba0017;
 }
 .menu-main li a{
 	font-size: 14px;
 	color: #fff;
 	padding-top: 3px;
 	text-transform: uppercase;
+}
+.menu-main .child-level{
+	background-color:#fff;
+	width: 100%;
+	border:1px solid #ccc;
+}
+.menu-main .child-level li{
+	display: block;
+	
+}
+.menu-main .child-level li a{
+	color: #000;
+}
+#header .banner{
+	height: 100px;
+}
+/* end header
+ * style content
+*/
+#content .sideSetSize{
+	min-height: 100px;
+	background-color: #ccc;
 }
