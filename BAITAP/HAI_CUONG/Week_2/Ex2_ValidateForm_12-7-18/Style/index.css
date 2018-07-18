@@ -1,0 +1,111 @@
+/* CSS Document */
+*{
+	margin: 0px;
+	padding: 0px;
+}
+#body{
+	width: 400px;
+	height: 400px;
+	padding: 40px 30px 40px 30px;
+	margin: 20px auto auto auto;
+	background-color: #ffffff;
+	border: 1px #D9D9D9 solid;
+	border-radius: 10px;
+	font-family: 'Gotham', 'Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif';
+}
+#form{
+	width: 400px;
+	height: 400px;
+	background-color: #ffffff;
+	border-radius: 10px;
+}
+a{
+	text-decoration: none;
+}
+#G{
+	font-size: 26px;
+}
+#G a:hover{
+	border-left: 10px #D56307 solid;
+	border-right: 10px #D56307 solid;
+	border-radius: 20px;
+	transition: all 0.5s linear 0s;
+	-webkit-transition: all 0.5s linear 0s;
+	-moz-transition: all 0.5s linear 0s;
+	-o-transition: all 0.5s linear 0s;
+}
+#P1{
+	margin: 15px 0px 10px 0px;
+	font-size: 26px;
+}
+#P2{
+	margin: 0px 0px 30px 0px;
+}
+#boxNoti{
+	width: 400px;
+	position: relative;
+}
+#TextSlide{
+	width: 400px;
+	/*height: 20px;*/
+	z-index: 0;
+	top: 0%;
+	position: absolute;
+	font-size: 18px;
+	color: #857E7E;
+}
+#TextSlide:hover{
+	cursor: text;
+}
+#Input{
+	width: 400px;
+	border-top: none;
+	border-left: none;
+	border-right: none;
+	border-bottom: 1px #E0D9D9 solid;
+	font-size: 18px;
+	outline: none;
+	background: unset;
+}
+#Check{
+	width: 400px;
+	height: 20px;
+	margin-top: 5px;
+	font-size: 14px;
+	color: #E30D10;
+}
+#H1{
+	
+}
+#H1 a{
+	color: #1D9CF3;
+}
+#PH{
+	margin-top: 30px;
+	font-size: 13px;
+	color: #857E7E;
+}
+#HBtn{
+	width: 400px;
+	margin-top: 30px;
+}
+#H2{
+	float: left;
+	margin-top: 5px;
+}
+#H2 a{
+	color: #1D9CF3;
+}
+#Btn{
+	width: 100px;
+	color: #ffffff;
+	border: none;
+	border-radius: 5px;
+	float: right;
+	padding: 10px;
+	font-weight: bold;
+	background-color: #066DD8;
+	outline: none;
+}
+
+
