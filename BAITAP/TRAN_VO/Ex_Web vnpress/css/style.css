@@ -1,3 +1,53 @@
-a.td:active{
-background: coral;
+body {
+    width: 1366px;
+    margin: auto;
+}
+
+header {
+    width: 1000px;
+    margin: auto;
+}
+
+#headertren {
+    font-size: 12px;
+    height: 30px;
+    width: 1000px;
+}
+
+.lienhe {
+    border-color: grey;
+}
+
+.list-inline {
+    display: inline;
+}
+
+.lhe_qc a {
+    color: darkgrey;
+    text-decoration: none;
+}
+
+#search {
+    float: right;
+}
+
+#headerduoi {
+    height: 100px;
+    display: block;
+    float: left;
+    padding-top: 30px;
+}
+
+.navbar-header {
+    font-weight: bold;
+    font-size: 12px;
+}
+
+.navbar-header a {
+    color: black;
+    text-decoration: none;
+}
+
+.navbar-header a:hover {
+    color: darkorchid;
 }
