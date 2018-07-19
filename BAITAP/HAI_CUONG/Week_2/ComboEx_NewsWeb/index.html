@@ -1,0 +1,55 @@
+<!DOCTYPE html/>
+<html lang="vi-Vn"/>
+<head>
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width-device-width, initial-scale=1.0">
+	<link rel="shortcut icon" type="image/x-icon" href="Images/logo.png"/>
+	<title>News - PCA</title>
+	<link rel="stylesheet" type="text/css" href="Asset/Style/index.css"/>
+	<link rel="stylesheet" type="text/css" href="Asset/Style/newsContent.css"/>
+	<script type="text/javascript" src="Asset/JavaScript/jquery-3.3.1.min.js"></script>
+	<script type="text/javascript" src="Asset/JavaScript/newsContent.js"></script>
+
+</head>
+<body>
+    <div id="headTop">
+    	<div id="hTTime"></div>
+    	<div id="hTList">
+    		<a href="#"><span>Về Báo Nhân Dân</span></a> - <a href="#"><span>English</span></a> - <a href="#"><span>中文</span></a> - <a href="#"><span>Français</span></a> - <a href="#"><span>Русский Язык</span></a> - <a href="#"><span>Thời Nay</span></a> - <a href="#"><span>ND Cuối Tuần</span></a> - <a href="#"><span>ND Hằng Tháng</span></a> - <a href="#"><span>Hà Nội</span></a> - <a href="#"><span>TP HCM</span></a> - <a href="#"><span>Quảng cáo</span></a>
+    	</div>
+    	<div id="hTSearch">
+    		
+    	</div>
+    </div>
+    
+    <div id="swapper">
+
+        <div id="header">
+        </div>
+        <div id="container">
+            <div id="content">
+            </div>
+            <div id="sideBar">
+            </div>
+        </div>
+        <div id="footer">
+        </div>
+
+    </div>
+</body>
+	<script language="JavaScript" type="text/javascript">
+		function makeArray(n) {
+		    arglen = makeArray.arguments.length;
+		    for (var i = 0; i < arglen; i++) { this[i + 1] = makeArray.arguments[i]; }
+		}
+		var today = new Date();
+		var months = new makeArray("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12");
+		var days = new makeArray("Chủ nhật", "Thứ hai", "Thứ ba", "Thứ tư", "Thứ năm", "Thứ sáu", "Thứ bảy");
+		var dates = today.getDate();
+		var ngay = today.getDay() + 1;
+		var nam = (today.getYear() % 100) + 2000;
+		if (ngay == 0) ngay += 7;
+		var time = "Hôm nay, " + days[ngay] + " ngày " + dates + " tháng " + months[today.getMonth() + 1] + " năm " + nam; //today.getYear()
+		document.querySelector("#hTTime").innerHTML = time;
+</script>
+</html>
