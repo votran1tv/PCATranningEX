@@ -9,6 +9,7 @@
 }
 *{
 	font-family: cusFont;
+	text-decoration: none;
 }
 .default{
 	width:initial;
@@ -17,7 +18,7 @@
 	/*background-color: #ccc;*/
 }
 .match-paren{
-	width: initial;
+	width: 100%;
 	height: auto;
 }
 .width-980{
@@ -48,9 +49,9 @@
 	width: 80%;
 }
 .rows{
-	width: initial;
+	width: 100%;
 	height: auto;
-	background-color: #ccc;
+	/*background-color: #ccc;*/
 }
 .clear{
 	clear: both;
@@ -65,8 +66,12 @@
 .menu-bar li{
 	display: inline-block;
 	/*background-color: red;*/
+	/*float: left;*/
 	padding: 0px;
 	position: relative;
+}
+.menu-bar li img.drop-icon{
+	position: absolute;
 }
 .menu-bar li a{
 	text-decoration: none;
@@ -91,11 +96,13 @@
  */
 .top-bar{
 	background-color: #f9f9f9;
+	height: 25px;
 }
 .menu-top li{
 	padding: 5px 7px 5px 0px;
 	font-size: 12px;
-	background-color: red;
+	/*background-color: red;*/
+	height: initial;
 }
 .menu-top li a{
 	font-size: 11px;
@@ -105,30 +112,85 @@
 .menu-top li a:hover{
 	color: #dc002a;
 }
+.top-right li{
+	/*padding: 0px 0px 0px 0px;*/
+}
+.top-right li img.icon{
+	width: 10px;
+	height: initial;
+}
+/*
+* end menu top
+* style main menu
+*/
 .navs-main{
 	height: 30px;
-	border-bottom: 2px solid #ba0017;	
+	border-bottom: 2px solid #ba0017;
+
 }
 .menu-main{
+	height: initial;
 	background-color: #dc002a;
 	position: relative;
+	z-index: 1;	
 }
 .menu-main>li{
-	padding:7px 20px 5px 20px;
+	padding:7px 10px 5px 10px;
 	position: static;
+	float: left;
+	display: block;
 }
-.menu-main>li:first-child{
+.menu-main>li:first-child, .menu-main>li#ic-find{
+	background-repeat: no-repeat;
+	background-position: 9px 6px;
+	background-size: 20px;
+}
+.menu-main>li:first-child{ /*set color and icon home*/
 	background-color: #ba0017;
+	background-image: url('../img/ic-home.png');
+	
+}
+.menu-main>li#ic-find{ /*set color and icon search*/
+	background-image: url('../img/ic-find.png');
+	float: right;
 }
 .menu-main>li:hover{
 	background-color: #ba0017;
 }
 .menu-main li a{
-	font-size: 14px;
+	font-size: 13px;
 	color: #fff;
 	text-transform: uppercase;
 }
-.menu-main .child-level{
+.menu-main .child-level section.find-box{ /*search box style*/
+	box-sizing: border-box;
+	padding: 10px;
+	/*position: relative;*/
+}
+.menu-main .child-level .find-box input.find-text{
+	height: 40px;
+	width: 100%;
+}
+.menu-main .child-level .find-box input.find-btn{
+	position: absolute;
+	top: 27px;
+	right: 15px;
+	height: 30px;
+	width: 30px;
+	border: none;
+	outline: none;
+	/*set background img*/
+	background-image: url('../img/ic-find-2.png');
+	background-color: unset;
+	background-repeat: no-repeat;
+	cursor: pointer;
+	background-size: 24px;
+	background-position: 2px;
+
+}
+
+
+.menu-main .child-level{ /*child level*/
 	background-color:#fff;
 	width: 100%;
 	/*border:1px solid #ccc;*/
@@ -155,11 +217,90 @@
 }
 #header .banner{
 	height: 100px;
+	background-color: #ccc;
 }
 /* end header
  * style content
 */
 #content .sideSetSize{
 	min-height: 100px;
-	background-color: #ccc;
+	/*background-color: #ccc;*/
 }
+.match-paren ul.list-bar{
+	list-style-type: square;
+}
+.match-paren ul.list-bar li:nth-child(2), .match-paren ul.list-bar li:last-child{
+	/*style list bar*/
+	float: right;
+}
+#content .side-left .img-side{
+	/*background-color: red;*/
+	
+}
+#content .side-left .img-side img.img-433{ /*--------style avata photo */
+	width: 433px;
+	max-height: 243px;
+}
+#content .side-left .img-side img.img-208{
+	width: 208px;
+	max-height: 122px;
+}
+
+#content .side-left .big-title{
+	margin-bottom: 10px;
+}
+#content .side-left .big-title a{
+	font-size: 25px;
+	color: black;
+}
+/*
+* top - news now
+*/
+#content .side-left .quick-links{ /*style for quick links*/
+	width: 100%;
+	height: auto;
+}
+.list{ /*quick link list*/
+	box-sizing: border-box; 
+	padding: 20px;
+	border-top: 1px solid #999;
+	margin-top: 20px;
+}
+.list li a{
+	color: #333;
+}
+.inline li{ /*quick link block inline*/
+	float: right;
+	/*display: inline-flex;*/
+	list-style: none;
+	width: 31%;
+	min-height: 10px;
+	background-color: red;
+	box-sizing: border-box;
+}
+#content .side-left .date-time{
+	color: #939393;
+	font-size: 16px;
+}
+#content .side-left .date-time img{
+	width: 14px;
+	height: 14px;
+}
+#content .side-left .descr{
+	margin-top: 10px;
+}
+#content .side-left .descr span{
+	font-size: 14px;
+	color: #939393;
+}
+#content .inline li:first-child{
+	
+}
+#content .inline li:nth-child(2){
+	
+}
+#content .inline li:last-child{
+	float: right;
+}
+
+

@@ -5,52 +5,59 @@
 	<link rel="icon" href="img/pca.webp">
 	<title></title>
 	<link rel="stylesheet" href="css/style-home.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
 	<header id="header" class="default">
-		<div class="match-paren top-bar">
-			<div class="width-980">
-				<div class="side-left width-50">
-					<div class="navs">
-						<ul class="menu-bar menu-top">
-							<li><a href="#">Tin tuc</a></li>
-							<li><a href="#">Tin tuc</a></li>
-							<li><a href="#">Tin tuc</a></li>
-							<li><a href="#">Tin tuc</a></li>
-							<li><a href="#">Tin tuc</a></li>
-						</ul>
+		<div class="match-paren">
+			<div class="top-bar">
+				<div class="width-980">
+					<div class="side-left width-50">
+						<div class="navs">
+							<ul class="menu-bar menu-top">
+								<li><a href="#">tin tức</a></li>
+								<li><a href="#">ICTNews</a></li>
+								<li><a href="#">IGN</a></li>
+								<li><a href="#">thế giới trẻ</a></li>
+								<li><a href="#">hành trình xanh</a></li>
+							</ul>
+						</div>
 					</div>
-				</div>
-				<div class="side-right width-50">
-					<div class="navs">
-						<ul class="menu-bar menu-top">
-							<li style="border-right: 1px solid #ccc;">
-								<span style="">Hotline: </span><span>0912345678</span>
-							</li>
-							<li><a href="#"><img src="img/pca.webp"></a></li>
-							<li><a href="#"><img src="img/pca.webp"></a></li>
-							<li><a href="#"><img src="img/pca.webp"></a></li>
-						</ul>
+					<div class="side-right width-50">
+						<div class="navs">
+							<ul class="menu-bar menu-top top-right">
+								<li style="border-right: 1px solid #ccc;">
+									<img class="icon" src="img/ic-phone.png">
+									<span style="">Hotline: </span><span>0912345678</span>
+								</li>
+								<li><a href="#"><img class="icon" src="img/ic-fb.png"></a></li>
+								<li><a href="#"><img class="icon" src="img/ic-gpls.png"></a></li>
+								<li><a href="#"><img class="icon" src="img/ic-tw.png"></a></li>
+							</ul>
+						</div>
 					</div>
-				</div>
-				<div class="clear"></div>
-				<div class="rows banner">
-					banner
+					<div class="clear"></div>
 				</div>
 			</div>
+			<div class="banner width-980">
+				http://infonet.vn
+			</div>
 		</div>
-		<div class="match-paren navs navs-main">
+		<div class="match-paren navs navs-main"><!-- main menu -->
 			<div class="width-980">
-				<ul class="menu-bar menu-main">
-					<li><a href="#">Tin tuc</a></li>
-					<li><a href="#">Tin tuc</a>
-						<!-- <div class="level-content"> -->
+				<ul class="menu-bar menu-main"> 
+					<li><a href="#">
+						<span style="visibility: hidden;">hh</span>
+						<!-- size icon home 'ic-home.png' 24x24px -->
+					</a></li>
+					<li><a href="#">thời sự</a>
+						
 						<ul class="child-level">
 							<div class="side-left width-30">
-								<li><a href="#">Tin tuc</a></li>
-								<li><a href="#">Tin tuc</a></li>
-								<li><a href="#">Tin tuc</a></li>
-								<li><a href="#">Tin tuc</a></li>
+								<li><a href="#">thế giới</a></li>
+								<li><a href="#">kinh doanh</a></li>
+								<li><a href="#">đời sống</a></li>
+								<li><a href="#">sức khỏe</a></li>
 								<li><a href="#">Tin tuc</a></li>
 							</div>
 							<div class="side-left width-70">
@@ -58,28 +65,107 @@
 							</div>
 							<div class="clear"></div>
 						</ul>
-						<!-- </div> -->
+
 					</li>
-					<li><a href="#">Tin tuc</a></li>
-					<li><a href="#">Tin tuc</a></li>
-					<li><a href="#">Tin tuc</a></li>
+					<li><a href="#">thế giới</a></li>
+					<li><a href="#">kinh doanh</a></li>
+					<li><a href="#">đời sống</a></li>
+					<li><a href="#">sức khỏe</a></li>
+					<li><a href="#">giáo dục</a></li>
+					<li><a href="#">pháp luật</a></li>
+					<li><a href="#">phương tiện</a></li>
+					<li><a href="#">khám phá</a></li>
+					<li><a href="#">quân sự</a></li>
+					<li id="ic-find"><a href="#"> <!-- find icon last-child -->
+						<span style="visibility: hidden;">hh</span></a>
+						<!-- size icon find 'ic-find.png' 24x24px -->
+						<ul class="child-level">
+							<section class="find-box">
+								<input class="find-text" type="text" name="find" placeholder="Tìm kiếm">
+								<input class="find-btn" type="button" name="btn" value="">
+							</section>
+						</ul>
+					</li><!-- /find icon last-child -->
+					
+					<p class="clear"></p>
 				</ul>
 			</div>
-		</div>
+		</div><!-- /main menu -->
 	</header><!-- /header -->
+
 	<div id="content" class="default">
 		<div class="width-980">
-			<div class="side-left width-50 sideSetSize">
-				<div class="rows">
-					
-				</div>
+			<div class="match-paren">
+				<ul class="menu-bar menu-top list-bar">
+					<!--list bar -->
+					<li><a href="#">abc</a></li>
+					<li><a href="#">abc</a></li>
+					<li><a href="#">abc</a></li>
+				</ul>
 			</div>
-			<div class="side-left width-50 sideSetSize">
-				<div class="rows">
-					
+			<!-- 
+			-- / menu-bar, main-menu, list-bar
+----------------- start main content ------------------------------- main content --------------
+			 -->
+			<div class="match-paren" style="margin-top: 20px;">
+				<div class="side-left width-70 sideSetSize">
+					<div class="rows">
+						<div class="match-paren">
+							<h3 class="big-title"><a href="#">
+								Chạy đua lấy lòng Nga, Mỹ đã thua trước Trung Quốc
+							</a></h3>
+							<div style="width: 35%;" class="side-left">
+								<p class="date-time">
+									<img style="" src="img/ic-clock.png">
+									<span>14:00 - 19/07/2018</span>
+								</p>
+								<div class="descr">
+									<span style="text-transform: uppercase; font-size: 10px; color: red;">infonet &ndash; </span>
+									<span>
+										Triều Tiên mới đây đã yêu cầu đại sứ đang làm việc ở nước ngoài về nước để nhóm họp khẩn cấp, một động thái hiếm có khi mới chỉ có 43 cuộc họp đại sứ được tổ chức kể từ khi Triều Tiên được thành...
+									</span>
+								</div>
+								<ul class="quick-links list" style="">
+									<li><a href="#">
+										Mỹ tốn bao nhiêu tiền cho cuộc diễu binh hoành tráng vào tháng 11 tới?
+									</a></li>
+								</ul>
+							</div>
+							<div style="width: 65%; text-align: right;"  class="side-left img-side">
+								<img class="img-433" src="media/photo/img01.jpg">
+							</div>
+							<p class="clear"></p>
+						</div>
+						<div class="match-paren" style="">
+							<ul class="quick-links inline" style="">
+								<li>
+									<div class="img-side">
+										<img class="img-208" src="media/photo/img01.jpg">
+									</div>
+								</li>
+								<li>
+									<div class="img-side">
+										<img class="img-208" src="media/photo/img01.jpg">
+									</div>
+								</li>
+								<li>
+									<div class="img-side">
+										<img class="img-208" src="media/photo/img01.jpg">
+									</div>
+								</li>
+								<p class="clear"></p>
+							</ul>
+						</div>
+					</div>
 				</div>
+				<div class="side-left width-30 sideSetSize">
+					<div class="rows">
+						abc
+					</div>
+				</div>
+				<div class="clear"></div>
 			</div>
-			<div class="clear"></div>
+			
 		</div>
 	</div>
 	<footer id="footer" class="default">
