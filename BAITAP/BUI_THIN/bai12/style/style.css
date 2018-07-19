@@ -10,78 +10,128 @@ body{
 	width: 100%;
 	height: auto;
 }
-
+#swapper #header{
+	width: 100%;
+}
 #swapper #header #header1{
-	width: 70%;
+	width: 970px;
 	height: 50px;
-	margin: 0 180px;
+	margin: 0 auto;
 }
 #swapper #header #header1 #img_home{
 	position: relative;
-	width: 130px;
-	height: 42px;
-	margin-top: 2px;
+	width: 160px;
+	height: 36px;
+	margin-top: 5px;
+}
+#swapper #header #header1 #search{
+	
+	box-sizing: border-box;
+	border: 1px solid #ddd;
+	height: 32px;
+	width: 360px;
+	margin-top: -35px;
+	margin-left: 300px;
 }
 #swapper #header #header1 #search input{
-	float: right;
-	margin-left: 320px;
-	margin-top: -34px;
-	width: 300px;
-	height: 24px;
+	margin-right: 5px;
+	width: 315px;
+	height: 30px;
 	padding-left: 10px;
-	position: absolute;
+	border: none;
+	margin-top: 0px;
 }
+
 .clear{
 	clear:both;
 }
 #swapper #header #header1 #search img{
-	background-color: red;
-	position: absolute;
-	float: right;
-	margin-left: 610px;
-	margin-top: -30px;
+/*	background-color: red;*/
 	width: 20px;
 	height: 20px;
+	float: right;
+	margin-top: 5px;
+	margin-right: 5px;
 }
 #swapper #header #header1 #img_user{
 	float: right;
-	margin-left: 820px;
-	margin-top: -32px;
+	margin-left: 900px;
+	margin-top: -24px;
 	width: 20px;
 	height: 20px;
 	position: absolute;
 }
 #swapper #header #header1 #img_mobile{
 	float: right;
-	margin-left: 850px;
-	margin-top: -32px;
+	margin-left: 940px;
+	margin-top: -24px;
 	width: 20px;
 	height: 20px;
 	position: absolute;
 }
 #menu{
-	border: 1px solid pink;
 	height: 30px;
 	background-color: #20AEB0;
 	width: 100%;
 }
 #menu ul{
 	list-style-type: none;
-	text-align: center;
+	text-align: left;
 	width: 970px;
-	margin: 0 120px;
-	font-size: 12px;
-
+	font-size: 13px;
+	margin: 0 auto;
 }
 #menu ul li{
-	display: inline-block;
-	margin-top: 5px;
-	
+	float: left;
+	/*display: inline-block;*/
+	position: relative;
+	padding-top: 7px;
+	padding-bottom: 7px;
+	padding-left: 5px;
+	padding-right: 5px;
+}
+#menu #home{
+	margin-top: -10px;
+	margin-bottom: -7px;
 }
 #menu ul li a{
 	text-decoration: none;
 	color: white;
-	padding: 2px 0px;
 	display: block;
 }
+#menu ul li:hover{
+	background-color: #0DA183;
+}
+	
+/*Menu cap 2*/
 
+
+#menu ul ul li{
+	float: none;
+	border: none;
+	border-bottom: 1px solid #20AEB0;
+	padding-top: 7px;
+	padding-bottom: 7px;
+	padding-left: 5px;
+	transition: 0.2s;
+}
+/*Hiệu ứng rung rinh =))))*/
+#menu ul ul li:hover{
+	padding-left: 20px;
+	
+}
+#menu ul ul{
+	position: absolute;
+	top:100%;
+	width: 350%;
+	margin-left: 0;
+	display: none;
+	z-index: 1000;
+	background-color: #20AEB0;
+	text-align: left;
+}
+#content #ad{
+	margin: 15px auto;
+	width: 970px;
+	height: 90px;
+}
