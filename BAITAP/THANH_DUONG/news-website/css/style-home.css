@@ -11,6 +11,9 @@
 	font-family: cusFont;
 	text-decoration: none;
 }
+a:hover{
+	color: #dc002a;
+}
 .default{
 	width:initial;
 	height: auto;
@@ -89,6 +92,10 @@
 }
 .menu-bar li:hover>ul.child-level{
 	display: block;
+}
+#content{}
+#footer{
+	margin-bottom: 20px;
 }
 /* __________end style default
  * style header
@@ -170,6 +177,7 @@
 .menu-main .child-level .find-box input.find-text{
 	height: 40px;
 	width: 100%;
+	box-sizing: border-box;
 }
 .menu-main .child-level .find-box input.find-btn{
 	position: absolute;
@@ -210,7 +218,9 @@
 }
 .menu-main .child-level li:hover{
 	padding-left: 25px;
+	color: #ba0017;
 }
+.menu-main .child-level li:hover a{color: #ba0017;}
 .menu-main .child-level li a{
 	color: #000;
 	text-transform: capitalize;
@@ -221,6 +231,9 @@
 }
 /* end header
  * style content
+*/
+/*
+* style for row 1
 */
 #content .sideSetSize{
 	min-height: 100px;
@@ -242,27 +255,32 @@
 	max-height: 243px;
 }
 #content .side-left .img-side img.img-208{
-	width: 208px;
+	/*width: 220px;*/
+	width: 100%;
 	max-height: 122px;
 }
-
-#content .side-left .big-title{
+/*
+* top - news now
+*/
+#content .side-left .big-title,#content .side-left .normal-title{ /*item title */
 	margin-bottom: 10px;
 }
 #content .side-left .big-title a{
 	font-size: 25px;
 	color: black;
 }
-/*
-* top - news now
-*/
+#content .side-left .normal-title a{
+	font-size: 16px;
+	color: black;
+}
+
 #content .side-left .quick-links{ /*style for quick links*/
 	width: 100%;
 	height: auto;
 }
 .list{ /*quick link list*/
 	box-sizing: border-box; 
-	padding: 20px;
+	/*padding: 20px;*/
 	border-top: 1px solid #999;
 	margin-top: 20px;
 }
@@ -270,12 +288,12 @@
 	color: #333;
 }
 .inline li{ /*quick link block inline*/
-	float: right;
+	float: left;
 	/*display: inline-flex;*/
 	list-style: none;
-	width: 31%;
+	width: 32%;
 	min-height: 10px;
-	background-color: red;
+	/*background-color: red;*/
 	box-sizing: border-box;
 }
 #content .side-left .date-time{
@@ -294,13 +312,145 @@
 	color: #939393;
 }
 #content .inline li:first-child{
-	
+	margin-right: 2%;
 }
 #content .inline li:nth-child(2){
+	margin-right: 2%;
+}
+
+/*
+* style for row 2
+*/
+#content .list-item-header{
+	margin-top: 20px;
 	
 }
-#content .inline li:last-child{
-	float: right;
+#content .list-item-header h3.center{
+	text-align: center;
+	margin-top: 20px;
+	text-transform: uppercase;
+}
+#content .list-item-header a.text-center{
+	color: #fff;
+	background-color: #dc002a;
+	padding: 5px 10px 5px 10px;
+}
+#content .list-item-header hr{
+	width: 100%;
+	/*border: 1px solid #dc002a;*/
+	margin-top: 5px;
+	background-color: #dc002a;
+}
+#content .side-left .list-side a{
+	font-weight: bold;
+	font-size: 16px;
+	color: #000;
+}
+#content .side-left .list-side li{
+	border-bottom: 1px dotted #ccc;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+#content .side-left .list-side li:last-child{
+	border-bottom: none;
+}
+#content .list-item-header h2{
+	font-size: 25px;
+	text-transform: uppercase;
+	margin-top: 20px;
+}
+#content .list-item-header h2 a{
+	color: #000;
+}
+/*
+* style for list and grid view: div,artical,section,p tag;
+*/
+#content .list-style{}
+.grid{
+	width: 100%;
+	height: auto;
+	/*background-color: red;*/
+}
+.grid .grid-style{
+	float: left;
+}
+/*
++ cols 3
+*/
+.grid .cols-3{
+	width:32%;
+	margin-right:2%;
+	/*background-color: blue;*/
+
+}
+.grid .cols-3:nth-child(3){
+	margin-right:unset;
+}
+/*
++ cols 4
+*/
+.grid .cols-4{
+	width: 25%;
+	box-sizing: border-box;
+	padding: 10px 10px 10px 10px;
+}
+.grid .cols-4 img{width: 100%;}
+.grid p a{color: #fff;}
+.grid p{margin-top: 5px;}
+.grid ul.liStyle-none li{
+	display: block;
+	padding-top: 10px;
+	padding-bottom: 30px;
+}
+/*
++ cols 5
+*/
+.grid .cols-5{
+	width: 20%;
+	min-height: 10px;
+	/*background-color: red;*/
+	box-sizing: border-box;
+	padding: 10px;
+}
+.grid .cols-5 li{
+	padding-top: 0;
+	padding-bottom: 5px;
+	font-size: 12px;
+}
+.grid .cols-5 header h3{
+	font-size: 13px;
+}
+.grid .set-border-top li{
+	border-top: 1px solid #999;
+}
+.grid ul.set-border-top li:first-child{
+	padding-top: unset;
+	border-top: unset;
+}
+.grid ul.liStyle-none li:last-child{
+	padding-bottom: unset;
+}
+.grid .set-border-top li{
+	border-top: 1px solid #999;
+}
+/*
+* style for video
+*/
+.videos-panel{
+	width: 100%;
+	height: auto;
+	margin-top: 20px;
+	background-color: #333;
+}
+.videos-panel .videos{
+	width: 100%;
+	height: 390px;
+	
+}
+.videos-panel h3{
+	color: #fff;
 }
 
-
+.footer-menu-bar{
+	background-color: #f6f6f6;
+}
