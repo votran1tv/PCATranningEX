@@ -1,53 +1,276 @@
+* {
+    margin: 0 auto;
+    padding: 0;
+}
+
 body {
-    width: 1366px;
-    margin: auto;
+    width: 100%;
+    margin: 0 auto;
+    background-color: #FFFFFF;
+}
+#hdtren {
+    width: 100%;
+    height: 29px;
+    background-color: #EEEEEE;
+     margin: auto; 
+    border-bottom: #CCCCCC solid 1px;
+    border-top: #CCCCCC solid 1px;
 }
 
-header {
+.container-vne {
     width: 1000px;
-    margin: auto;
+    height: 20px;
+    font-size: 11px;
+   margin: auto;
+   position: relative;
+   top: 4px;
 }
 
-#headertren {
-    font-size: 12px;
-    height: 30px;
-    width: 1000px;
+.container-vne ul {
+    float: left;
+    list-style-type: none;
+    
 }
 
-.lienhe {
-    border-color: grey;
+.container-vne ul li a {
+    text-decoration: none;
 }
 
 .list-inline {
-    display: inline;
+   display: inline;
 }
 
-.lhe_qc a {
-    color: darkgrey;
-    text-decoration: none;
+.tel {
+    width: 245px;
+    height:100%;
+    border-right: solid 1px #CCCCCC;
+}
+.tel a{
+    color: #696969;
+    /* position: relative;
+    top: 3px; */
 }
 
-#search {
+.lhqc {
+    width: 105px;
+    border-right: solid 1px #CCCCCC;
+   
+}
+.lhqc a{
+    color: #949494;
+}
+#like_fa {
+    width: 50px;
+    
+}
+
+#follow_tw {
+    width: 50px;
+}
+
+#khung {
+    width: 400px;
+    height: 29px;
     float: right;
 }
 
-#headerduoi {
-    height: 100px;
-    display: block;
+.tkiem {
+    width: 146px;
+    height: 24px;
+}
+.icontk{
+    width: 11px;
+    position: relative;
+    left: -11px;
+}
+
+.userdn {
+    width: 70px;
+    border-right: solid 1px #CCCCCC;
+    border-left: solid 1px #CCCCCC;
+}
+#khung1{
+    float: right;
+}
+#khung button{
+    background-color: white;
+}
+
+.dki {
+    width: 60px;
+    border-right: solid 1px #CCCCCC;
+}
+#khung ul li a{
+    color: #858585;
+}
+#hdduoi {
+    width: 100%;
+    height: 114px;
+    background-color: #FFFFFF;
+   
+}
+.hdlogo {
+    width: 1000px;
+    height: 104px;
+    margin: auto;
+}
+
+.logo {
+    width: 225px;
+    height: 101px;
     float: left;
-    padding-top: 30px;
 }
 
-.navbar-header {
-    font-weight: bold;
-    font-size: 12px;
+.bannertopright {
+    width: 775px;
+    height: 94px;
+    float: right;
 }
 
-.navbar-header a {
+#menu {
+    width: 1000px;
+    height: 13px;
+    
+}
+.navbar-header a{
     color: black;
     text-decoration: none;
+    font-size: 11.5px;
+    font-weight: bold;
+}
+.navbar-header{
+    border-bottom: #696969 solid 2px;
+    padding-bottom:1px;
+}
+.navbar-header span{
+    color: #C0C0C0;
+}
+#sub-menu {
+    width: 1000px;
+    height: 26px; 
+    margin-top: 8px;
+    
+}
+.smnuleft{
+    width: 500px;
+    float: left;
+}
+.ten {
+    height: 26px;
+    width: 100%;
+    border-left: solid 3px #9F224E;
+    color: #9F224E;
+}
+.smnuright{
+    float: right;
+}
+.btnto_en button{
+    width: 66px;
+    background-color: #E2E2E2;
+    margin-right: 10px;
+    color: #838383;
+
+}
+.time_home{
+    width: 200px;
+
+}
+#trangnhat {
+    width: 1000px;
+    height: 412px;
+    /* background-color: rgb(251, 127, 255); */
+    border-bottom: #E2E2E3 solid 1px;
+}
+.title-new{
+    height: 50px;
+}
+#trangnhat a:hover{
+    color: #9F224E;
+}
+article{
+    width: 500px;
+    height: 407px;
+    background-color: yellowgreen;
+    float: left;
+}
+.sub-futured{
+    width: 200px;
+    height: 407px;
+    background-color: blue;
+    float: left;
+}
+.ads-futured{
+    width: 300px;
+    height: 407px;
+    background-color: coral;
+    float: right;
 }
 
-.navbar-header a:hover {
-    color: darkorchid;
+#ttin {
+    width: 960px;
+}
+
+#sideBar_home1 {
+    width: 380px;
+    background-color: darkgoldenrod;
+    height: 1000px;
+    float: left;
+}
+
+#sideBar_home2 {
+    width: 420px;
+    height: 1000px;
+    background-color: chocolate;
+    float: left;
+}
+
+#sideBar_home3 {
+    width: 160px;
+    background-color: darkmagenta;
+    height: 1000px;
+    float: left;
+}
+
+.clear {
+    clear: both;
+}
+
+#chan {
+    width: 1000px;
+    clear: both;
+}
+
+#heder {
+    width: 980px;
+    height: 30px;
+    background-color: blueviolet;
+}
+
+#list {
+    width: 980px;
+    height: 80px;
+    background-color: cadetblue;
+}
+
+#shop {
+    width: 980px;
+    height: 104px;
+    background-color: coral;
+}
+
+#topfter {
+    width: 1000px;
+    height: 27px;
+    background-color: darkorchid;
+}
+
+#rowmnu {
+    width: 1000px;
+    height: 110px;
+    background-color: gold;
+}
+
+#Bottomfooter {
+    width: 1000px;
+    height: 36px;
 }
