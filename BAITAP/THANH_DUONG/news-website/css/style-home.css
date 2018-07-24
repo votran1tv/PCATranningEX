@@ -2,6 +2,9 @@
 	margin:0px;
 	padding: 0px;
 }
+a:hover{
+	color: #ba0017;
+}
 /*
 *style box default
 * set font family
@@ -35,9 +38,7 @@
 	font-family: NotoSerif-Regular;
 	text-decoration: none;
 }
-a:hover{
-	color: #dc002a;
-}
+
 .default{
 	width:initial;
 	height: auto;
@@ -196,7 +197,7 @@ a:hover{
 	font-size: 13px;
 	color: #fff;
 	text-transform: uppercase;
-	font-family: arial-bold;
+	font-family: arial;
 }
 .menu-main .child-level section.find-box{ /*search box style*/
 	box-sizing: border-box;
@@ -254,7 +255,7 @@ a:hover{
 .menu-main .child-level li a{
 	color: #000;
 	text-transform: capitalize;
-	font-family: arial-regular;
+	font-family: arial;
 	font-size: 15px;
 }
 #header .banner{
@@ -335,9 +336,13 @@ ul.list-bar li a, ul.list-bar li{
 	/*padding: 20px;*/
 	border-top: 1px solid #999;
 	margin-top: 20px;
+	list-style: none;
+	padding-top: 20px;
 }
 .list li a{
 	color: #333;
+	font-family: arial;
+	font-size: 16px;
 }
 .inline li{ /*quick link block inline*/
 	float: left;
@@ -348,6 +353,18 @@ ul.list-bar li a, ul.list-bar li{
 	/*background-color: red;*/
 	box-sizing: border-box;
 }
+/* .child-level .list li{
+	margin-bottom: 20px;
+	pointer-events: none;
+	cursor: pointer;
+} */
+/* b.bf{
+	display: block;
+	float: left;
+	height: inherit;
+} */
+
+
 #content .side-left .date-time{
 	color: #939393;
 	font-size: 16px;
@@ -465,14 +482,12 @@ ul.list-bar li a, ul.list-bar li{
 	box-sizing: border-box;
 	padding: 10px;
 }
-.grid .cols-5 li{
-	padding-top: 0;
-	padding-bottom: 5px;
-	font-size: 12px;
-	
+.grid .cols-5 li a:hover{
+	color: #ba0017;
 }
 .grid .cols-5 li a{
-	font-family: arial-regular;
+	font-family: arial;
+	font-size: 12px;
 }
 .grid .cols-5 header h3{
 	font-size: 13px;
@@ -576,8 +591,8 @@ ul.list-bar li a, ul.list-bar li{
 	border-left: none;
 }
 .footer-menu-bar ul li a{
-	font-size: 12px;
-	font-family: arial-regular;
+	font-size: 14px;
+	font-family: arial;
 	color: #000;
 }
 /*
@@ -595,4 +610,21 @@ ul.list-bar li a, ul.list-bar li{
 .normal-logo img{
 	width: 196px;
 	margin-top: 25px;
+}
+
+/* 
+* before and after content
+*/
+b.bf:before{
+	content: "✤";
+	color: #dc002a;
+	display: flex;
+	float: left;
+	clear: left;
+	height: 100px;
+	margin-right: 10px;
+}
+b.pen:before{
+	content:"✎";
+	color: #ff0000;
 }
