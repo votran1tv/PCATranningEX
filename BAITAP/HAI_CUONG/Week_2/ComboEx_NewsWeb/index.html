@@ -2,54 +2,179 @@
 <html lang="vi-Vn"/>
 <head>
 	<meta charset="UTF-8"/>
-	<meta name="viewport" content="width-device-width, initial-scale=1.0">
+	<!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
 	<link rel="shortcut icon" type="image/x-icon" href="Images/logo.png"/>
 	<title>News - PCA</title>
 	<link rel="stylesheet" type="text/css" href="Asset/Style/index.css"/>
 	<link rel="stylesheet" type="text/css" href="Asset/Style/newsContent.css"/>
 	<script type="text/javascript" src="Asset/JavaScript/jquery-3.3.1.min.js"></script>
+	<!--[if lt IE 9]>
+	<script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
+<![endif]-->
 	<script type="text/javascript" src="Asset/JavaScript/newsContent.js"></script>
 
 </head>
 <body>
-    <div id="headTop">
-    	<div id="hTTime"></div>
-    	<div id="hTList">
+    <div id="head_swapper">
+    	<div id="head_top_main">
+    		<div id="head_time"></div>
+    	<div id="head_list">
     		<a href="#"><span>Về Báo Nhân Dân</span></a> - <a href="#"><span>English</span></a> - <a href="#"><span>中文</span></a> - <a href="#"><span>Français</span></a> - <a href="#"><span>Русский Язык</span></a> - <a href="#"><span>Thời Nay</span></a> - <a href="#"><span>ND Cuối Tuần</span></a> - <a href="#"><span>ND Hằng Tháng</span></a> - <a href="#"><span>Hà Nội</span></a> - <a href="#"><span>TP HCM</span></a> - <a href="#"><span>Quảng cáo</span></a>
     	</div>
-    	<div id="hTSearch">
-    		
+    	<div id="head_search">
+    		<form id="form">
+    			<input id="input_search" type="text" name="search" placeholder="Tìm kiếm">
+    			<div id="search_icon">
+    				<img src="Images/search_64px.png">
+    			</div>
+    		</form>
+    	</div>
     	</div>
     </div>
     
     <div id="swapper">
-
+		
+		<div id="banner_logo">
+			<img src="Images/TiitleLogo_mod.jpg" width="354" height="100px">
+			<img src="Images/Banner.jpg" width="780" height="100px">
+        </div>
         <div id="header">
+			<ul>
+				<li> <a href="#"><span><img src="Images/home.png" width="22" height="24"></span></a></li>
+				<li> <a href="#"><span>chính trị</span></a>
+					
+				</li>
+				<li> <a href="#"><span>kinh tế</span></a></li>
+				<li> <a href="#"><span>văn hóa</span></a></li>
+				<li> <a href="#"><span>xã hội</span></a></li>
+				<li> <a href="#"><span>thế giới</span></a></li>
+				<li> <a href="#"><span>công nghệ</span></a></li>
+				<li> <a href="#"><span>khoa học</span></a></li>
+				<li> <a href="#"><span>giáo dục</span></a></li>
+				<li> <a href="#"><span>sức khỏe</span></a></li>
+				<li> <a href="#"><span>pháp luật</span></a></li>
+				<li> <a href="#"><span>thể thao</span></a></li>
+				<li> <a href="#"><span>bạn đọc</span></a></li>
+				<li> <a href="#"><span>hà nội</span></a></li>
+				<li> <a href="#"><span>tp hcm</span></a></li>
+			</ul>
+			
         </div>
+        <div id="hr"></div>
         <div id="container">
-            <div id="content">
+            <div id="top_row">
+
+				<div id="left_top_row">
+
+					<div id="main_news">
+						<div id="slide">
+							<span>Tin mới nhận: </span>
+							<marquee onmouseover="this.stop()" onmouseout="this.start()" tittle="Tin nóng" behavior="scroll" scrollamount="6" loop="infinite">
+								<a href="#"><span></span>Cơ hội để thị trường hồi phục</a>
+								&nbsp;&nbsp;
+								<a href="#"><span></span>Cơ hội để thị trường hồi phục</a>
+								&nbsp;&nbsp;
+								<a href="#"><span></span>Cơ hội để thị trường hồi phục</a>
+								&nbsp;&nbsp;
+								<a href="#"><span></span>Cơ hội để thị trường hồi phục</a>
+								&nbsp;&nbsp;
+								<a href="#"><span></span>Cơ hội để thị trường hồi phục</a>
+								&nbsp;&nbsp;
+							</marquee>
+						</div>
+						<img src="Images/main_news.png" width="580" height="315"/>
+						<div id="text_main_news">
+							<h3>
+								<a href="#">
+									Tổng Bí thư Nguyễn Phú Trọng tiếp; Chủ tịch Quốc hội Nguyễn Thị Kim Ngân đón, hội đàm với Chủ tịch Hạ viện Australia T.Smith
+								</a>
+							</h3>
+							<p>
+								Nhận lời mời của Chủ tịch Quốc hội (QH) Nguyễn Thị Kim Ngân, Đoàn đại biểu cấp cao Hạ viện Australia do Ngài T.Smith, Chủ tịch Hạ viện dẫn đầu, đã đến Hà Nội, bắt đầu thăm chính thức Việt Nam.
+							</p>
+						</div>
+					</div>
+					<div id="subs_news">
+						
+						<div id="sub_news_top">
+							<a href="#"><img src="Images/sub_news.jpg" width="290" height="160"/></a>
+							<div id="hit_sub">
+								<a href="#"><h4>Thủ tướng Nguyễn Xuân Phúc làm việc với Ban Kinh tế T.Ư</h4></a>
+							</div>
+						</div>
+						<div class="sub_news">
+							<div class="sub_news_left">
+								<a href="#">Khai thác thế mạnh cây công nghiệp ở Đông Nam Bộ (Kỳ 1)</a>
+							</div>
+							<div class="sub_news_right">
+									<a href="#"><img src="Images/sub_news_right.png"/></a>
+							</div>
+						</div>
+						<div class="sub_news">
+								<div class="sub_news_left">
+										<a href="#">Khai thác thế mạnh cây công nghiệp ở Đông Nam Bộ (Kỳ 1)</a>
+									</div>
+									<div class="sub_news_right">
+											<a href="#"><img src="Images/sub_news_right.png"/></a>
+									</div>
+						</div>
+						<div class="sub_news">
+								<div class="sub_news_left">
+										<a href="#">Khai thác thế mạnh cây công nghiệp ở Đông Nam Bộ (Kỳ 1)</a>
+									</div>
+									<div class="sub_news_right">
+											<a href="#"><img src="Images/sub_news_right.png"/></a>
+									</div>
+						</div>
+						<div class="sub_news">
+								<div class="sub_news_left">
+										<a href="#">Khai thác thế mạnh cây công nghiệp ở Đông Nam Bộ (Kỳ 1)</a>
+									</div>
+									<div class="sub_news_right">
+										<a href="#"><img src="Images/sub_news_right.png"/></a>
+									</div>
+						</div>
+
+					</div>
+					<div id="img_sub"><a href="#"><img src="Images/img_sub.jpg"/></a></div>
+				
+					<div id="bottom_row">
+					<div id="tittle_bottom">
+								
+					</div>
+				</div>
+				</div>
+
+				<div id="right_top_row">
+					
+				</div>
+
             </div>
-            <div id="sideBar">
+            <div id="second_row">
             </div>
-        </div>
-        <div id="footer">
         </div>
 
     </div>
+
+    <div id="footer_bottom">
+    	
+    </div>
 </body>
 	<script language="JavaScript" type="text/javascript">
-		function makeArray(n) {
-		    arglen = makeArray.arguments.length;
-		    for (var i = 0; i < arglen; i++) { this[i + 1] = makeArray.arguments[i]; }
-		}
-		var today = new Date();
-		var months = new makeArray("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12");
-		var days = new makeArray("Chủ nhật", "Thứ hai", "Thứ ba", "Thứ tư", "Thứ năm", "Thứ sáu", "Thứ bảy");
-		var dates = today.getDate();
-		var ngay = today.getDay() + 1;
-		var nam = (today.getYear() % 100) + 2000;
-		if (ngay == 0) ngay += 7;
-		var time = "Hôm nay, " + days[ngay] + " ngày " + dates + " tháng " + months[today.getMonth() + 1] + " năm " + nam; //today.getYear()
-		document.querySelector("#hTTime").innerHTML = time;
+
+var view = document.querySelector("#head_time");
+var time;
+var d = new Date();
+var day = (d.getDay() + 1) + ", ";
+var date = d.getDate() + "/";
+var thang;
+if (d.getMonth() < 9) {
+    thang = "0" + (d.getMonth() + 1) + "/";
+} else
+    thang = d.getMonth() + 1 + "/";
+var year = d.getFullYear();
+time = "Thứ " + day + date + thang + year;
+ view.innerHTML = time;
+
 </script>
 </html>
