@@ -8,4 +8,24 @@ jQuery(document).ready(function($) {
 		/* Stuff to do when the mouse leaves the element */
 		$(this).find("ul").stop().slideUp(0);
 	});
+
+/*Test Sticky JS*/	
+	const nav = document.querySelector('#menu');
+	const navTop = nav.offsetTop;
+	function stickyNavigation() {
+	console.log('navTop = ' + navTop);
+	console.log('scrollY = ' + window.scrollY);
+
+	if (window.scrollY >= navTop) {
+		// nav offsetHeight = height of nav
+		document.body.style.paddingTop = nav.offsetHeight + 'px';
+		document.body.classList.add('fixed-nav');
+	} else
+		{
+		document.body.style.paddingTop = 0;
+		document.body.classList.remove('fixed-nav');
+		}
+	}
+	window.addEventListener('scroll', stickyNavigation); 
 });
+
