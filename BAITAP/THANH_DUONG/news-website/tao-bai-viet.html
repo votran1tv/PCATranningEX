@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <title>Document</title>
+    <link rel="stylesheet" href="css/style-writer.css">
+    <script src="script/script-writer.js"></script>
+</head>
+<body>
+    <div class="swapper">
+        <div class="rows" style="margin-bottom: 10px; background-color: #f3f3f3;">
+            <h1 style="text-transform: uppercase; padding:20px;">nội dung bài viết</h1>
+        </div>
+        <form id="form" action="#">
+            <div class="rows side">
+                <div class="side-child">
+                    
+                        <table class="tab" border="0">
+                            <tr>
+                                <td>Tiêu đề</td>
+                                <td colspan="3"><input type="text" name="title" id="" placeholder="Nhập tiêu đều bài viết"></td>
+                            </tr>
+                            <tr>
+                                <td>Liên kết tĩnh</td>
+                                <td colspan="3">
+                                    <input value="12232" disabled type="text" name="link" id="" style="border: none; background-color: unset;">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="align-content: flex-start;">Nội dung</td>
+                                <td colspan="3">
+                                    <textarea name="content" id="" cols="30" rows="10" style="resize: none" placeholder="Nội dung bài viết"></textarea>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Lịch đăng</td>
+                                <td>
+                                    <label for="n0">
+                                        <input checked type="radio" name="ld" id="n0" value="0" style="width:30%"> Đăng ngay
+                                    </label>
+                                    
+                                </td>
+                                <td>
+                                    <label for="n1">
+                                        <input type="radio" name="ld" id="n1" value="1" style="width:30%"> Đặt lịch
+                                    </label>
+                                    
+                                </td>
+                                <td>
+                                    <input disabled type="datetime" name="setTime" id="" placeholder="dd/MM/yyyy">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    <input type="submit" id="validate" value="Đăng bài">
+                                    <input type="reset" value="Reset">
+                                </td>
+                                <td></td>
+                            </tr>
+                        </table>
+                    
+                    
+                </div>
+                <div class="side-child">
+                    <h3 style="text-transform: uppercase">thông tin bổ sung</h3>
+                    <article>
+                        <p>Email liên hệ</p>
+                        <input type="text" name="email" id="" placeholder="Nhập email">
+                    </article>
+                    <article>
+                        <p>Số điện thoại</p>
+                        <input type="text" name="email" id="" placeholder="Nhập số điện thoại">
+                    </article>
+                    <article>
+                        <p>Thẻ đánh dấu</p>
+                        <section style="box-sizing: border-box; padding: 5px;">
+                            <input type="text" name="email" id="">
+                            <input type="button" value="Thêm">
+                            <p style="font-style: italic; margin: 10px 0px 10px 0px; color:#999;">Phân cách các thẻ bằng dấu phẩy (,).</p>
+                            <p id="tag" style="height: 20px; width: 100%; overflow: hidden;">
+                                <span><b class="delTag"></b>Tag1</span>
+                            </p>
+                        </section>
+                        
+                    </article>
+                </div>
+                <div style="clear: both;"></div>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

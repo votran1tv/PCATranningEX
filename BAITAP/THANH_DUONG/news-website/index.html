@@ -4,6 +4,8 @@
 	<meta charset="utf-8">
 	<link rel="icon" href="img/pca.webp">
 	<title></title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script type="text/javascript" src="script/script-home.js"></script>
 	<link rel="stylesheet" href="css/style-home.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
@@ -40,7 +42,15 @@
 				</div>
 			</div>
 			<div class="banner width-980">
-				http://infonet.vn
+				<div class="side-left width-40">
+					<div class="logo normal-logo">
+						<img src="media/photo/logo.png" alt="home">
+					</div>
+				</div>
+				<div class="side-left width-60">
+					
+				</div>
+				<div class="clear"></div>
 			</div>
 		</div>
 		<div class="match-paren navs navs-main"><!-- main menu -->
@@ -52,16 +62,41 @@
 					</a></li>
 					<li><a href="#">thời sự</a>
 						
-						<ul class="child-level" style="box-sizing: border-box; padding-left: 5px; padding-right:5px;">
-							<div class="side-left width-30">
+						<ul class="child-level" style="box-sizing: border-box;">
+							<div class="side-left width-30" style="margin-left: 3%;">
 								<li><a href="#">thế giới</a></li>
 								<li><a href="#">kinh doanh</a></li>
 								<li><a href="#">đời sống</a></li>
 								<li><a href="#">sức khỏe</a></li>
 								<li><a href="#">Tin tuc</a></li>
 							</div>
-							<div class="side-left width-70">
-								abc	
+							<div class="side-left width-30" style="margin-left: 3%;">
+								<div class="img-side">
+									<img class="img-208" src="media/photo/img02.jpg">
+								</div>
+								<h3 class="normal-title"><a href="#">
+									Xử lý nghiêm người đứng đầu ngân hàng vi phạm về lãi suất cho vay
+								</a></h3>
+							</div>
+							<div class="side-left width-30" style="margin-left: 3%;">
+								<ul class="quick-links list" style="border:none; list-style:none; margin-top: unset; padding-top: unset;">
+									<li class="full-item"> <a href="chi-tiet.html">
+										<img style="width: 40%;" src="media/photo/img01.jpg" alt="">
+										<span style="">
+											Vụ nâng điểm ở Hà Giang: Sự việc nghiêm trọng này đã diễn ra được bao năm?
+										</span>
+										<p class="clear"></p>
+									</a> </li>
+	
+									<li class="full-item"> <a href="#">
+										<img style="width: 40%;" src="media/photo/img02.jpg" alt="">
+										<span style="">
+											Giám đốc Sở GD-ĐT Đà Nẵng hiến kế tổng rà soát điểm thi THPT trên cả nước
+										</span>
+										<p class="clear"></p>
+									</a> </li>
+									
+								</ul>
 							</div>
 							<div class="clear"></div>
 						</ul>
@@ -96,11 +131,13 @@
 	<div id="content" class="default">
 		<div class="width-980">
 			<div class="match-paren">
-				<ul class="menu-bar menu-top list-bar">
+				<ul class="list-bar">
 					<!--list bar -->
-					<li><a href="#">abc</a></li>
-					<li><a href="#">abc</a></li>
-					<li><a href="#">abc</a></li>
+					<li><a href="#">Vụ sửa điểm thi ở Hà Giang</a></li>
+					<li id="show-date">date</li>
+					<li><a href="#">24h qua</a></li>
+					<li><a href="#">RSS</a></li>
+					<p class="clear"></p>
 				</ul>
 			</div>
 			<!-- 
@@ -108,11 +145,11 @@
 ----------------- start main content ------------------------------- main content --------------
 			 -->
 			<div class="match-paren" style="margin-top: 20px;">
-				<div class="side-left width-70 sideSetSize">
+				<div class="side-left sideSetSize" style="width: 65%;">
 					<div class="rows"> <!-- row 1 -->
 						<div class="match-paren">
-							<h3 class="big-title"><a href="#">
-								Chạy đua lấy lòng Nga, Mỹ đã thua trước Trung Quốc
+							<h3 class="big-title"><a href="chi-tiet.html">
+									Vụ nâng điểm ở Hà Giang: Sự việc nghiêm trọng này đã diễn ra được bao năm?
 							</a></h3>
 							<div style="width: 35%;" class="side-left">
 								<p class="date-time">
@@ -125,8 +162,9 @@
 										Triều Tiên mới đây đã yêu cầu đại sứ đang làm việc ở nước ngoài về nước để nhóm họp khẩn cấp, một động thái hiếm có khi mới chỉ có 43 cuộc họp đại sứ được tổ chức kể từ khi Triều Tiên được thành...
 									</span>
 								</div>
-								<ul class="quick-links list" style="padding: 20px;">
-									<li><a href="#">
+								<ul class="quick-links list nnows" style="">
+									<li><b class="bf"></b>
+										<a href="#">
 										Mỹ tốn bao nhiêu tiền cho cuộc diễu binh hoành tráng vào tháng 11 tới?
 									</a></li>
 								</ul>
@@ -617,9 +655,33 @@
 						</div> <!-- /rows 6 - grid view -->
 					</div> <!-- /rows 6 -->
 				</div> <!-- /side left 01 -->
-				<div class="side-left width-30 sideSetSize"> <!-- side left 02 -->
+				<div class="side-left sideSetSize" style="width: 35%;"> <!-- side left 02 -->
 					<div class="rows">
-						abc
+						<div style="width:95%; float:right;">
+							<ul class="menu-bar title-bar">
+								<li><a href="#">đọc nhiều</a></li>
+								<li><a href="#">tin mới</a></li>
+							</ul>
+							<ul class="quick-links list" style="border:none; list-style:none;">
+								<li class="full-item"> <a href="#">
+									<img style="width: 40%;" src="media/photo/img01.jpg" alt="">
+									<span style="">
+										Vụ nâng điểm ở Hà Giang: Sự việc nghiêm trọng này đã diễn ra được bao năm?
+									</span>
+									<p class="clear"></p>
+								</a> </li>
+
+								<li class="full-item"> <a href="#">
+									<img style="width: 40%;" src="media/photo/img02.jpg" alt="">
+									<span style="">
+										Giám đốc Sở GD-ĐT Đà Nẵng hiến kế tổng rà soát điểm thi THPT trên cả nước
+									</span>
+									<p class="clear"></p>
+								</a> </li>
+								
+							</ul>
+						</div>
+						<p class="clear"></p>
 					</div>
 				</div><!-- /side left 02 -->
 				<div class="clear"></div>
@@ -630,14 +692,25 @@
 	<footer id="footer" class="default">
 		<div class="width-980" style="margin-top: 40px;"> <!-- width 980px -->
 			<div class="match-paren footer-menu-bar">
-				<ul class="menu-bar menu-top list-bar">
-					<!--list bar -->
-					<li><a href="#">abc</a></li>
-					<li><a href="#">abc</a></li>
-					<li><a href="#">abc</a></li>
-				</ul>
+				<div class="side-left width-30">
+					<article class="logo mini-logo">
+						<img src="media/photo/logo-m.png" alt="">
+					</article>
+				</div>
+				<div class="side-right width-70">
+					<ul class="menu-bar">
+						<!--list bar -->
+						<li><b class="pen"></b><a href="#">Tạo bài viết</a></li>
+						<li><a href="#">Liên hệ toà soạn</a></li>
+						<li><a href="#">Quảng cáo</a></li>
+						<li><a href="#">Phiên bản mobile</a></li>
+					</ul>
+				</div>
+				<p class="clear"></p>
+				
 			</div>
 			<div class="grid">
+				
 				<article class="grid-style cols-5">
 					<header class="list-item-header">
 						<h3 style="text-transform: uppercase;">
@@ -645,8 +718,72 @@
 						</h3>
 					</header>
 					<ul class="quick-links list" style="border:none; list-style:none;">
-						<li> <a href="#" title="">This is item</a> </li>
-						<li> <a href="#" title="">This is item</a> </li>
+						<li> <a href="#" title="">Sự kiện</a> </li>
+						<li> <a href="#" title="">Dư luận</a> </li>
+						<li> <a href="#" title="">Nhân vật</a> </li>
+						<li> <a href="#" title="">Suy&nghĩ</a> </li>
+					</ul>
+				</article>
+				<article class="grid-style cols-5">
+					<header class="list-item-header">
+						<h3 style="text-transform: uppercase;">
+							<a href="#" style="color: #000;">thế giới</a>
+						</h3>
+					</header>
+					<ul class="quick-links list" style="border:none; list-style:none;">
+						<li> <a href="#" title="">Tin mới</a> </li>
+						<li> <a href="#" title="">Bình luận</a> </li>
+						<li> <a href="#" title="">Gương mặt quốc tế</a> </li>
+					</ul>
+				</article>
+				<article class="grid-style cols-5">
+					<header class="list-item-header">
+						<h3 style="text-transform: uppercase;">
+							<a href="#" style="color: #000;">kinh doanh</a>
+						</h3>
+					</header>
+					<ul class="quick-links list" style="border:none; list-style:none;">
+						<li> <a href="#" title="">Tiền tệ</a> </li>
+						<li> <a href="#" title="">Bất động sản</a> </li>
+						<li> <a href="#" title="">Thị trường</a> </li>
+						<li> <a href="#" title="">Doanh nghiệp</a> </li>
+					</ul>
+				</article>
+				<article class="grid-style cols-5">
+					<header class="list-item-header">
+						<h3 style="text-transform: uppercase;">
+							<a href="#" style="color: #000;">đời sống</a>
+						</h3>
+					</header>
+					<ul class="quick-links list" style="border:none; list-style:none;">
+						<li> <a href="#" title="">Nhịp sống</a> </li>
+						<li> <a href="#" title="">Đời thường</a> </li>
+						<li> <a href="#" title="">Thời tiết</a> </li>
+						<li> <a href="#" title="">An toàn giao thông</a> </li>
+					</ul>
+				</article>
+				<article class="grid-style cols-5">
+					<header class="list-item-header">
+						<h3 style="text-transform: uppercase;">
+							<a href="#" style="color: #000;">sức khỏe</a>
+						</h3>
+					</header>
+					<ul class="quick-links list" style="border:none; list-style:none;">
+						<li> <a href="#" title="">Sức khỏe</a> </li>
+						<li> <a href="#" title="">Sức khỏe</a> </li>
+						<li> <a href="#" title="">Sức khỏe</a> </li>
+						<li> <a href="#" title="">Sức khỏe</a> </li>
+					</ul>
+				</article>
+				<article class="grid-style cols-5">
+					<header class="list-item-header">
+						<h3 style="text-transform: uppercase;">
+							<a href="#" style="color: #000;">giáo dục</a>
+						</h3>
+					</header>
+					<ul class="quick-links list" style="border:none; list-style:none;">
+						<li> <a href="#" title="">Học đường</a> </li>
+						<li> <a href="#" title="">Lối sống</a> </li>
 						<li> <a href="#" title="">This is item</a> </li>
 						<li> <a href="#" title="">This is item</a> </li>
 					</ul>
@@ -654,68 +791,54 @@
 				<article class="grid-style cols-5">
 					<header class="list-item-header">
 						<h3 style="text-transform: uppercase;">
-							<a href="#" style="color: #000;">thời sự</a>
+							<a href="#" style="color: #000;">pháp luật</a>
 						</h3>
 					</header>
 					<ul class="quick-links list" style="border:none; list-style:none;">
-						<li> <a href="#" title="">This is item</a> </li>
-						<li> <a href="#" title="">This is item</a> </li>
-						<li> <a href="#" title="">This is item</a> </li>
-						<li> <a href="#" title="">This is item</a> </li>
+						<li> <a href="#" title="">Tin tức</a> </li>
+						<li> <a href="#" title="">Vụ án</a> </li>
+						<li> <a href="#" title="">Điều tra</a> </li>
+						<li> <a href="#" title="">Tư vấn</a> </li>
 					</ul>
 				</article>
 				<article class="grid-style cols-5">
 					<header class="list-item-header">
 						<h3 style="text-transform: uppercase;">
-							<a href="#" style="color: #000;">thời sự</a>
+							<a href="#" style="color: #000;">phương tiện</a>
 						</h3>
 					</header>
 					<ul class="quick-links list" style="border:none; list-style:none;">
-						<li> <a href="#" title="">This is item</a> </li>
-						<li> <a href="#" title="">This is item</a> </li>
-						<li> <a href="#" title="">This is item</a> </li>
-						<li> <a href="#" title="">This is item</a> </li>
+						<li> <a href="#" title="">Xe mới</a> </li>
+						<li> <a href="#" title="">Chợ xe</a> </li>
+						<li> <a href="#" title="">Tư vấn xe cộ</a> </li>
+						<li> <a href="#" title="">Đồ lạ</a> </li>
 					</ul>
 				</article>
 				<article class="grid-style cols-5">
 					<header class="list-item-header">
 						<h3 style="text-transform: uppercase;">
-							<a href="#" style="color: #000;">thời sự</a>
+							<a href="#" style="color: #000;">khám phá</a>
 						</h3>
 					</header>
 					<ul class="quick-links list" style="border:none; list-style:none;">
-						<li> <a href="#" title="">This is item</a> </li>
-						<li> <a href="#" title="">This is item</a> </li>
-						<li> <a href="#" title="">This is item</a> </li>
-						<li> <a href="#" title="">This is item</a> </li>
+						<li> <a href="#" title="">Chuyện bốn phương</a> </li>
+						<li> <a href="#" title="">Du lịc</a> </li>
 					</ul>
 				</article>
 				<article class="grid-style cols-5">
 					<header class="list-item-header">
 						<h3 style="text-transform: uppercase;">
-							<a href="#" style="color: #000;">thời sự</a>
+							<a href="#" style="color: #000;">quân sự</a>
 						</h3>
 					</header>
 					<ul class="quick-links list" style="border:none; list-style:none;">
-						<li> <a href="#" title="">This is item</a> </li>
-						<li> <a href="#" title="">This is item</a> </li>
-						<li> <a href="#" title="">This is item</a> </li>
-						<li> <a href="#" title="">This is item</a> </li>
+						<li> <a href="#" title="">Tin mới nhận</a> </li>
+						<li> <a href="#" title="">Công nghệ quân sự</a> </li>
+						<li> <a href="#" title="">Hồ sơ mật</a> </li>
+						<li> <a href="#" title="">Quốc phòng việt nam</a> </li>
 					</ul>
 				</article>
-				<article class="grid-style cols-5">
-					<header class="list-item-header">
-						<h3 style="text-transform: uppercase;">
-							<a href="#" style="color: #000;">thời sự</a>
-						</h3>
-					</header>
-					<ul class="quick-links list" style="border:none; list-style:none;">
-						<li> <a href="#" title="">This is item</a> </li>
-						<li> <a href="#" title="">This is item</a> </li>
-						<li> <a href="#" title="">This is item</a> </li>
-						<li> <a href="#" title="">This is item</a> </li>
-					</ul>
-				</article>
+				<div class="clear"></div>
 			</div>
 		</div> <!-- / width 980px -->
 	</footer>
