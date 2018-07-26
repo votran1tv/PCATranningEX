@@ -42,7 +42,7 @@ body {
 
 .tel {
     width: 245px;
-    height:100%;
+    height:15px;
     border-right: solid 1px #CCCCCC;
 }
 .tel a{
@@ -317,12 +317,15 @@ article .title{
     /* height: 1000px; */
     float: left;
     border-right: 1px solid #F1F1F1;
+    margin-top: 10px;
 }
 .listnew{
     width: 380px;
     height: 142px;
     margin-left: 0 auto;
     border-bottom: #949494 dotted 1px;
+    position: relative;
+    top: -10px;
 }
 .listnew h3{
     font-size: 14px;
@@ -420,30 +423,43 @@ article .title{
     float: left;
 } */
 #sideBar_home2 {
-    width: 420px;
+    width: 430px;
     /* height: 1000px; */
     /* background-color: chocolate; */
     float: left;
-    margin-right: 5px;
+    margin-right: 10px;
     border-right: #C0C0C0 solid 1px;    
+    margin-top: 10px;
+    margin-left: 5px;
 }
 .box-title{
-    width: 410px;
-    height: 33px;
-    background-color: #EEEEEE;
+    width: 420px;
 }
-.menubox ul li{
+#thethao{
+    height: 202px;
+}
+.menubox ul{
     display: inline-block;
-    padding-top: 5px;
+    height: 33px;
+    width: 410px;
+    background-color: #EEEEEE;
+    border-top: #949494 solid 2px;
+} 
+.menubox ul li{
+   display: inline-block;
+     padding-top: 2px;
     margin-left: 3px;
-
+   /* width: 100%;*/
+    height: 13px; 
 }
 .menubox ul .idtitle a{
-    border: unset; font-size: 14px;color: #9F224E;
+    border: unset; font-size: 15px;color: #9F224E;
 }
-.menubox ul  .idtitle{
-    border-top: #9F224E solid 2px;
-}
+ .menubox ul  .idtitle{
+    border-top: #9F224E solid 2px; 
+    position: relative;
+    top: -2px;
+} 
 .menubox ul li a{
     text-decoration: none;
     border-left: #858585 solid 1px;
@@ -453,8 +469,20 @@ article .title{
 }
 .listnewbox{
     width: 280px;
-    
+    /* background-color: #9F224E; */
     float: left;
+}
+.listnewbox h3{
+    position: relative;
+    top: -20px;
+    font-weight: bold;
+}
+.listnewbox h3 a:hover{
+    color: #286B9D;
+}
+.listnewbox .imgart{
+    position: relative;
+    top: -20px;
 }
 .listnewbox a{
     text-decoration: none;
@@ -462,38 +490,77 @@ article .title{
     font-size: 15px;
 }
 .listnewbox h4{
-    font-size: 10px;
+    font-size: 12px;
     height: 80px;
+    position: relative;
+    top: -20px;
 }
 .listtitlebox ul{
-    width: 115px;
+    width: 105px;
     height: 154px;
     float: right;
     list-style-type: square;
     margin-top: 10px;
     padding-bottom: 10px;
+    padding-left: -3px;
     
 }
 .listtitlebox ul a{
     text-decoration: none;
     color: #696969;
     font-weight: bold;
-    font-size: 13px;
+    font-size: 11px;
 }
 .listtitlebox ul a:hover{
     color: #286B9D;
 }
+#kinhdoanh{
+    height: 349px;
+}
 #sideBar_home3 {
     width: 160px;
-    background-color: darkmagenta;
+    /* background-color: darkmagenta; */
     height: 1000px;
     float: left;
+    margin-top: 10px;
 }
 
 .clear {
     clear: both;
 }
-
+.boxwethear{
+    width: 160px;
+    height: 36px;
+    background-color: #efedef;
+    margin-bottom: 2px;
+}
+.txtweather{
+    width: 100px;
+    height: 100%;
+    float: left;
+    padding-left: 20px;
+    font-weight: bolder;
+    font-size: 13px;
+}
+.txtweather a{
+    text-decoration: none;
+    color: #666666;
+}
+.txtweather a:hover{
+    color: #286B9D;
+}
+.boxad{
+    width: 160px;
+    height: 25px;
+    background-color: #efedef;
+    margin-bottom: 20px;
+}
+.boxad a{
+    text-decoration: none;
+    color:#949494;
+    font-size: 13px;
+    padding-left: 30px;
+}
 #chan {
     width: 1000px;
     clear: both;
@@ -528,8 +595,50 @@ article .title{
     height: 110px;
     background-color: gold;
 }
-
+#rowmnu ul{
+    float: left;
+    width: 120px;
+    height: 110px;
+    margin-left: 20px;
+}
+#rowmnu ul li{
+    text-decoration: none;
+}
 #Bottomfooter {
     width: 1000px;
     height: 36px;
+}
+#logobottom{
+    width: 180px;
+    height: 36px;
+    /* background-color: #286B9D; */
+    float: left;
+    margin-top: 15px;
+    margin-left: 10px;
+
+}
+.bottomgt1{
+    width: 399px;
+    font-size: 10px;
+    /* background-color: #9F224E; */
+    float: left;
+    margin-top: 15px;
+    margin-left: 10px;  
+}
+.bottomft2{
+    width: 330px;
+    /* background-color: black; */
+    float: right;
+    font-size: 11px;
+    margin-top: 15px;
+    text-align: end;
+    margin-right: 20px;
+}
+.bottomft2 a{
+    color: #696969;
+    text-decoration: none;
+    padding-left: 10px;
+}
+.bottomft2 a:hover{
+    color: #286B9D;
 }
