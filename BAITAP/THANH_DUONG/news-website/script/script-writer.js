@@ -47,14 +47,18 @@ $(document).ready(function () {
         var show ="";
         if(getTag != ""){
             for(var i=0;i<arrTag.length;i++){
-                show += '<span style="margin-right:5px;"><b class="delTag"></b>'+arrTag[i]+'</span>';
+                show += '<span class="elTag" style="margin-right:10px;"><b class="delTag"></b>'+arrTag[i]+'</span>';
+                
             }
         }
         
         $('#showTag').html($('#showTag').html()+show);
         tag.val("");
+        // remove tag
+        $('.elTag').on('click',function(){
+            $(this).remove();
+        });
     });
-
     
     $('input[name="ld"]').on('click', function () {
 
@@ -64,6 +68,9 @@ $(document).ready(function () {
             $('input[name="setTime"]').prop ('disabled', true);
         }
         
+    });
+    $('#reset').on('click',function(){
+        $('#showTag').html("");
     });
     
 });

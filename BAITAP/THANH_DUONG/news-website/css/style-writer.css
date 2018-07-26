@@ -91,8 +91,10 @@
 b.delTag::before{
     content: "⊗";
     color: red;
-    cursor: pointer;
     font-weight: normal;
+}
+.elTag{
+    cursor: pointer;
 }
 b.imp::after{
     content: "⁎";
