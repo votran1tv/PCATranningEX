@@ -9,7 +9,9 @@ body{
 	margin: 0 auto;
 	width: 100%;
 	height: auto;
+	
 }
+
 #swapper #header{
 	width: 100%;
 }
@@ -24,7 +26,7 @@ body{
 	height: 36px;
 	margin-top: 5px;
 }
-#swapper #header #header1 #search{
+#swapper #header #header1 .search{
 	
 	box-sizing: border-box;
 	border: 1px solid #ddd;
@@ -33,7 +35,7 @@ body{
 	margin-top: -35px;
 	margin-left: 300px;
 }
-#swapper #header #header1 #search input{
+#swapper #header #header1 .search input{
 	margin-right: 5px;
 	width: 315px;
 	height: 30px;
@@ -45,7 +47,7 @@ body{
 .clear{
 	clear:both;
 }
-#swapper #header #header1 #search img{
+#swapper #header #header1 .search img{
 /*	background-color: red;*/
 	width: 20px;
 	height: 20px;
@@ -83,16 +85,20 @@ body{
 	font-size: 13px;
 	margin: 0 auto;
 }
+#menu li.home{
+	background-color: red;
+}
 #menu ul li{
 	float: left;
 	/*display: inline-block;*/
 	position: relative;
 	padding: 7px 5px;
 }
-#menu #home{
-	margin-top: -10px;
-	margin-bottom: -7px;
+#menu ul .home{
+	padding-bottom:1.5px;
+	padding-top: 5px;
 }
+
 #menu ul li a{
 	text-decoration: none;
 	color: white;
@@ -161,11 +167,12 @@ body{
 }
 #swapper a{
 	text-decoration: none;
-	color: blue;
 }
+
 #box-top1 .video{
 	float: right;
 	background-color: white;
+	border-radius: 10px;
 	margin-top: -35px;
 	margin-right: 5px;
 	width: 25px;
@@ -173,7 +180,7 @@ body{
 }
 .list{
 	list-style-type: none;
-	font-size: 12px;
+	font-size: 15px;
 	margin-top: 5px;
 }
 .list li{
@@ -181,6 +188,7 @@ body{
 }
 .list li a{
 	text-decoration: none;
+	color: #ddd;
 }
 
 .list li:last-child{
@@ -200,13 +208,15 @@ body{
 #box-top1:hover p{
 	color: red;
 }
-/* #box-top1:hover .list img{
+#box-top1:hover .list img{
 	display: block;
-} */
-#swapper a:hover{
-	color: red;
-} 
-
+}
+.list a:hover{
+	color:red;
+}
+.source{
+	padding-bottom: 5px;
+}
 .top2-1{
 	position: relative;
 	width: 32%;
@@ -271,6 +281,12 @@ body{
 	width: 330px;
 	margin-top: 15px;
 	float: right;
+	height: auto;
+}
+.sbnews{
+	width: 100%;
+	height: 63px;
+	padding-bottom: 10px;
 }
 .img_sbnews img{
 	width: 60px;
@@ -299,10 +315,97 @@ body{
 }
 
 
+#active{
+	width: 60px;
+	height: 430px;
+	float: left;
+	margin-left: -70px;
+}
+
+#active a.nong{
+	color: red;
+	border-bottom: 1px solid red;
+	padding-bottom: 5px;
+}
+#active a{
+	padding-bottom: 5px;
+    margin-bottom: 5px;
+    font-size: 13px;
+    display: block;
+	width: 60px;
+    text-align: center;
+    margin-left: auto;
+	margin-right: auto;
+	border-bottom: 1px solid #ddd;
+}
+#active a img{
+	margin-bottom: 5px;
+	width: 30px;
+	height: 30px;
+}
+#active span{
+	display: block;
+}
+
+#footer{
+	width: 100%;
+	margin: auto;
+	background-color: #20AEB0;
+	float: right;
+}
+.footer1{
+	width: 970px;
+	height: 50px;
+	margin: auto;
+}
+.logo{
+	
+	background-image: url("../images/img_logo.png");
+	display: inline-block;
+	vertical-align: middle;
+	background-size: 160px 72px;
+	width: 160px;
+	height: 36px;
+	padding-bottom: -15px;
+}
+.searchft{
+	float: right;
+	box-sizing: border-box;
+	border: 1px solid #ddd;
+	height: 32px;
+	width: 360px;
+	margin-top: 10px;
+	margin-left: 300px;
+	
+}
+
+.searchft input{
+	margin-right: 5px;
+	width: 315px;
+	height: 30px;
+	padding-left: 1px;
+	border: none;
+	padding-bottom: -5px;
+}
+
+
+
+
+
+
+
+
+
+
 /*Test Sticky JS*/
 .fixed-nav #menu {
 	position: fixed;
 	top:0;
 	z-index: 1;
-  }
-  
+}
+
+.fixed-nav #active{
+	position: fixed;
+	z-index: 1;
+	top: 50px;
+}

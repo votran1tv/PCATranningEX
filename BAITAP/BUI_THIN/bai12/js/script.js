@@ -11,12 +11,14 @@ jQuery(document).ready(function($) {
 
 /*Test Sticky JS*/	
 	const nav = document.querySelector('#menu');
+	// const nav1 = document.querySelector('#active');
 	const navTop = nav.offsetTop;
+	// const navTop1 = nav1.offsetTop;
 	function stickyNavigation() {
-	console.log('navTop = ' + navTop);
-	console.log('scrollY = ' + window.scrollY);
+	// console.log('navTop = ' + navTop);
+	// console.log('scrollY = ' + window.scrollY);
 
-	if (window.scrollY >= navTop) {
+	if ((window.scrollY >= navTop) && (window.scrollY >= navTop)) {
 		// nav offsetHeight = height of nav
 		document.body.style.paddingTop = nav.offsetHeight + 'px';
 		document.body.classList.add('fixed-nav');
