@@ -159,12 +159,29 @@ body {
     float: left;
     border-left: solid 3px #9F224E;
     margin-top: 2px;
+    
+}
+.smnuleft .txtsmnuleft{
+    width: 80px;
+    height: 23px;
+    /* background-color: #BAB3A2;  */
+     float: left;
+     border-right: ▶ 15px #000000;
 }
 .ten {
     height: 26px;
-    /* border-left: solid 3px #9F224E; */
+    width: 80px;
+    
     color: #9F224E;
     margin-left: 6px;
+    
+    width: 170px;
+    padding-top: 2px;
+}
+.mui{
+    position: relative;
+    top: -10.6px;
+    left: -2.5px;
 }
 .smnuright{
     float: right;
@@ -549,6 +566,10 @@ article .title{
 .txtweather a:hover{
     color: #286B9D;
 }
+.modal-footer img{
+    position: relative;
+    right: 10px;
+}
 .boxad{
     width: 160px;
     height: 25px;
@@ -565,6 +586,9 @@ article .title{
     width: 1000px;
     clear: both;
 }
+#slideshop{
+
+}
 
 #heder {
     width: 980px;
@@ -579,30 +603,79 @@ article .title{
 }
 
 #shop {
-    width: 980px;
+    width: 1000px;
     height: 104px;
-    background-color: coral;
+    background-color: #ffffff;
+    margin-bottom: 10px;
 }
 
 #topfter {
     width: 1000px;
-    height: 27px;
-    background-color: darkorchid;
+    height: 26px;
+    background-color: #F4F4F4;
+    border-bottom: #949494 solid 1px;
+    border-top: #949494 solid 1px;
+    margin-bottom: 2px;
+    
 }
-
+#topfter a{
+    float: right;
+    height: 25px;
+    color: #696969;
+    padding-top: 2px;
+    text-decoration: none;
+    margin-left: 15px;
+    padding-right: 25px;
+    border-left: #696969 solid 1px;
+    padding-left: 5px;
+}
+/* #topfter .tkiem1 {
+    text-align: center;
+    border: red 2px solid;
+    background-color: yellow;
+    float: none;
+    
+} */
 #rowmnu {
     width: 1000px;
     height: 110px;
-    background-color: gold;
+    background-color: #F4F4F4;
 }
 #rowmnu ul{
     float: left;
-    width: 120px;
+    width: 113px;
     height: 110px;
     margin-left: 20px;
+    margin-top: 5px
 }
 #rowmnu ul li{
+    list-style-type: none;
+    padding-bottom: 5px;
+}
+#rowmnu ul a{
+    color: #666666;
     text-decoration: none;
+    font-weight: bold;
+    font-size: 12px;
+}
+#rowmnu ul a:hover{
+    color: #9F224E;
+}
+.vneapp{
+    width: 100%;
+    height: 106px;
+}
+.download{
+   height: 68px;
+   width: 175px;
+}
+.store{
+    float: left;
+    width: 100px;
+}
+.qr{
+    float: left;
+    width: 65px;
 }
 #Bottomfooter {
     width: 1000px;
@@ -613,7 +686,7 @@ article .title{
     height: 36px;
     /* background-color: #286B9D; */
     float: left;
-    margin-top: 15px;
+    margin-top: 10px;
     margin-left: 10px;
 
 }
@@ -622,7 +695,7 @@ article .title{
     font-size: 10px;
     /* background-color: #9F224E; */
     float: left;
-    margin-top: 15px;
+    margin-top: 10px;
     margin-left: 10px;  
 }
 .bottomft2{
@@ -630,7 +703,7 @@ article .title{
     /* background-color: black; */
     float: right;
     font-size: 11px;
-    margin-top: 15px;
+    margin-top: 10px;
     text-align: end;
     margin-right: 20px;
 }
