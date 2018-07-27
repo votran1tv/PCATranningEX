@@ -611,7 +611,69 @@ ul.list-bar li a, ul.list-bar li{
 	width: 196px;
 	margin-top: 25px;
 }
-
+/* 
+* style for slide-show
+*/
+.slide-show{
+	width: 980px;
+	height: 400px;
+	background-color: #ccc;
+	overflow: hidden;
+	position: relative;
+}
+.slide-show .l-out{
+	width: 100%;
+	height: 100%;
+}
+.slide-show .l-out ul{
+	width: 10000px;
+	height: 100%;
+	margin-left: -980px;
+	background-color: blue;
+	list-style: none
+}
+.slide-show .l-out ul li{
+	background-color: #ccc;
+	width: 980px;
+	height: 100%;
+	float: left;
+}
+.slide-show .l-out ul li img{
+	width: 100%;
+	height: 100%;
+}
+.slide-show .controls{
+	position: absolute;
+	min-width: 50px;
+	height: 100%;
+	opacity: 0.4;
+	background-color: #333;
+	box-sizing: border-box;
+	cursor: pointer;
+}
+.slide-show .controls:nth-child(2){
+	top: 0;
+	right: 0;
+}
+.slide-show .controls:nth-child(2)::before{
+	content: "》";
+	color: #fff;
+	font-size: 30px;
+	margin-left: 20px;
+	position: absolute;
+	top: 180px;
+}
+.slide-show .controls:nth-child(3){
+	top: 0;
+	left: 0;
+}
+.slide-show .controls:nth-child(3)::before{
+	content: "《";
+	color: #fff;
+	font-size: 30px;
+	position: absolute;
+	top: 180px;
+}
 /* 
 * before and after content
 */
@@ -627,4 +689,6 @@ b.bf:before{
 b.pen:before{
 	content:"✎";
 	color: #ff0000;
+	font-weight: normal;
+	font-size: 20px;
 }

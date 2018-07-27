@@ -9,4 +9,45 @@ jQuery(document).ready(function($) {
 	}
 	var covrt = week[date.getDay()]+", ngày "+date.getDate()+"-"+month+"-"+date.getFullYear();
 	$('#show-date').text(covrt);
+	// slide-show function
+	function slide(){
+		$('.slide-show ul').stop(true, true).animate({
+			marginLeft:-980*2
+		},500,function(){
+			$($(this).find('li')[0]).appendTo($(this))
+			
+			$(this).css({
+				marginLeft:'-980px'
+			});
+			
+		});
+	}
+	// .slide-show
+	//var run = setInterval(slide,3000);
+			
+	$('.slide-show').hover(function(){
+		clearInterval(run);
+		console.log("1");
+	},function(){
+		console.log("0");
+		
+		run = setInterval(slide,3000);
+	});
+
+	$('#next').on('click', function(){
+		slide();
+	});
+
+	$('#priv').on('click', function(){
+	
+		$('.slide-show ul').stop(true,true).animate({
+			marginLeft:'0'
+		},500,function(){
+			$('.slide-show ul').css({
+				marginLeft:'-980px'
+			});
+			$('.slide-show ul').prepend($('.slide-show ul li:last'));
+		});
+	});
+	// /.slide-show
 });
