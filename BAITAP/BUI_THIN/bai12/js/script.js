@@ -29,5 +29,19 @@ jQuery(document).ready(function($) {
 		}
 	}
 	window.addEventListener('scroll', stickyNavigation); 
+
+function locationChange(obj){
+	var message = document.getElementById('show');
+    var value = obj.value;
+	if (value === 'nam'){
+        message.innerHTML = "Bạn đã chọn giới tính nam";
+    }
+    else if (value === 'nu'){
+        message.innerHTML = "Bạn đã chọn giới tính nữ";
+    }
+
+}
+
+
 });
 
