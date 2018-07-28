@@ -29,7 +29,6 @@ jQuery(document).ready(function($) {
 		}
 	}
 	window.addEventListener('scroll', stickyNavigation); 
-
 function locationChange(obj){
 	var message = document.getElementById('show');
     var value = obj.value;

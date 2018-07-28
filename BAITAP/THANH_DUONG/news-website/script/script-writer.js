@@ -47,7 +47,7 @@ $(document).ready(function () {
         var show ="";
         if(getTag != ""){
             for(var i=0;i<arrTag.length;i++){
-                show += '<span class="elTag" style="margin-right:10px;"><b class="delTag"></b>'+arrTag[i]+'</span>';
+                show += '<span class="elTag" style="margin-right:10px;"><b class="delTag"></b>'+arrTag[i].trim()+'</span>';
                 
             }
         }
