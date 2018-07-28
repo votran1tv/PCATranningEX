@@ -9,11 +9,63 @@
 	<script type="text/javascript" src="js/script.js"></script>
 </head>
 <body>
+
 	<div id="dangbai">
 		<h1>NỘI DUNG BÀI VIẾT</h1>
-		<div id="tieude">
-			
+		<div id="main-content">
+			<div class="title">
+				<p class="ptag">Tiêu đề</p>
+				<input type="text" name="" class="iptitle" placeholder="Nhập tiêu đề bài viết">
+			</div>
+			<div class="link">
+				<div class="ptag">Liên kết tĩnh</div>
+				<a href="#" class="alink">...</a>
+			</div>
+			<div class="content">
+				<p class="ptag">Nội dung</p>
+				<input type="text" name="" class="ipcontent" placeholder="Nhập nội dung bài viết, chứa ít nhất 200 ký tự">
+			</div>
+			<div class="lich">
+				<p class="ptag">Lịch đăng</p>
+				<div class="lichdang">
+					<form action="">
+						<input type="radio" name="lich" class="dangngay" value="dangngay" checked>Đăng ngay&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<input type="radio" name="lich" class="datlich" value="datlich">Đặt lịch
+						<input type="text" name="" class="datetime" placeholder="dd/mm/yyyy">
+					</form>
+				</div>
+			</div>
+			<div class="post">
+				<input type="button" name="" class="dangbai" value="Đăng bài">
+				<input type="button" name="" class="reset" value="Reset">
+			</div>
+		</div>
+		<div id="more">
+			<h3>THÔNG TIN BỔ SUNG</h3>
+			<div class="email">
+				<p class="ptag1">Email liên hệ</p>
+				<input type="text" name="" class="ipemail" placeholder="Nhập email">
+			</div>
+			<div class="sdt">
+				<p class="ptag1">Số điện thoại</p>
+				<input type="text" name="" class="ipsdt" placeholder="Nhập số điện thoại">
+			</div>
+			<div class="tag">
+				<p class="ptag1">Thẻ đánh dấu</p>
+				<div class="tag-content">
+					<input type="text" name="" class="iptag" placeholder="Nhập thẻ">
+					<input type="button" name="" class="btnadd" value="Thêm">
+					<p class="tag-ins">Phân cách các thẻ bằng dấu phẩy (,)</p>
+					<div class="tag-list">
+						<a href="#">Thẻ 1&nbsp;&nbsp;&nbsp;&nbsp;</a>
+						<a href="#">Thẻ 2&nbsp;&nbsp;&nbsp;&nbsp;</a>
+						<a href="#">Thẻ 3&nbsp;&nbsp;&nbsp;&nbsp;</a>
+						<a href="#">Thẻ 4</a>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
+
 </body>
 </html>
