@@ -9,28 +9,29 @@ jQuery(document).ready(function($) {
 	}
 	var covrt = week[date.getDay()]+", ngày "+date.getDate()+"-"+month+"-"+date.getFullYear();
 	$('#show-date').text(covrt);
-	// slide-show function
-	function slide(){
-		$('.slide-show ul').stop(true, true).animate({
-			marginLeft:-980*2
-		},500,function(){
-			$($(this).find('li')[0]).appendTo($(this))
-			
-			$(this).css({
-				marginLeft:'-980px'
-			});
-			
-		});
+	
+	/*
+	* slide show 
+	*
+	*/
+	var run = setInterval(slide,3000);
+
+	var size = $('.slide-show ul li').length;
+	var n = "", count = 0;
+	for(var i=0;i<size;i++){
+		n += '<span style="color:#fff;padding:0px 3px 0px 3px; cursor:pointer;">▪</span>';
 	}
-	// .slide-show
-	//var run = setInterval(slide,3000);
-			
+	$('.dotteds').html(n);
+	var dotChild = $('.dotteds span');
+		// dat mau mac dinh cho span[0]
+	$(dotChild[0]).css({
+		color:'#ba0017'
+	});
+
+		// -----------
 	$('.slide-show').hover(function(){
 		clearInterval(run);
-		console.log("1");
 	},function(){
-		console.log("0");
-		
 		run = setInterval(slide,3000);
 	});
 
@@ -47,7 +48,68 @@ jQuery(document).ready(function($) {
 				marginLeft:'-980px'
 			});
 			$('.slide-show ul').prepend($('.slide-show ul li:last'));
+				// ckeck count = size-1 thi reset mau span[0]
+			if(count == size-1){
+				$(dotChild[0]).css({
+					color:'#fff'
+				});
+			}
+				// reset mau span[count+1] khi span[count] doi mau
+			$(dotChild[count+1]).css({
+				color:'#fff'
+			});
 		});
+			// check count = 0 thi count = size-1 
+			// thuc hien viec giam di mot don vi
+		if(count <= 0){
+			count = size-1;
+		}else{
+			count --;
+		}
+
+		console.log(count);
+			// doi mau span[count]
+		$(dotChild[count]).css({
+			color:'#ba0017'
+		});
+		
 	});
-	// /.slide-show
+	/*
+	* slide show ef
+	*/
+	function slide(){
+		$('.slide-show ul').stop(true, true).animate({
+			marginLeft:-980*2
+		},500,function(){
+			$($(this).find('li')[0]).appendTo($(this))
+			
+			$(this).css({
+				marginLeft:'-980px'
+			});
+				// reset mau cho span[count-1] khi span[count] doi mau
+			$(dotChild[count-1]).css({
+				color:'#fff'
+			});
+		});
+			// cai dat bien dem cho count
+		if(count == size-1){
+			count = 0;
+		}else{
+			count ++;
+		}
+		console.log(count);
+			// thuc hien doi mau cho span[count]
+		$(dotChild[count]).css({
+			color:'#ba0017'
+		});
+			// reset mau cho span[size-1] khi count = 0
+		if(count == 0){
+			$(dotChild[size-1]).css({
+				color:'#fff'
+			});
+		}
+	}
+	/*
+	* end slide-show
+	*/
 });
