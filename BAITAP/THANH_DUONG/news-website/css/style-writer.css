@@ -1,0 +1,104 @@
+*{
+    margin: 0px;
+    padding: 0px;
+}
+.swapper{
+    width: 1000px;
+    height: auto;
+    margin: 20px auto;
+}
+.rows{
+    width: 100%;
+    height: auto;
+}
+.side{
+    width: 100%;
+    height: 500px;
+}
+.side .side-child{
+    float: left;
+    box-sizing: border-box;
+    height: 100%;;
+    /* clear: right; */
+    background-color: #f3f3f3;
+}
+.side .side-child:nth-child(1){
+    width: 64%;
+}
+.side .side-child:nth-child(2){
+    width: 35%;
+    margin-left: 1%;
+    box-sizing: border-box;
+    padding:10px;
+}
+
+.tab{
+    width: 100%;
+}
+.tab tr td{
+    padding: 10px 5px 10px 5px;;
+}
+.tab tr td:nth-child(1){
+    /* background-color: brown; */
+    text-align: right;
+    width: 18%;
+}
+/* .tab tr td:nth-child(1)::after{
+    content: "⁎";
+    color: red;
+    margin-left: 5px;
+}
+.tab tr:last-child td:nth-child(1)::after, .tab tr:nth-child(2) td:nth-child(1)::after,.tab tr:nth-child(4) td:nth-child(1)::after{
+    content: "";
+} */
+.tab tr:nth-child(4) td:last-child{
+    width: 35%;
+}
+.tab tr:nth-child(5) td:first-child{
+    text-align: unset;
+}
+.tab tr:nth-child(5) td input{
+    width: 30%;
+}
+.tab tr td input, .tab tr td textarea, article input{
+    width: 100%;
+    border-radius: 3px;
+    border: 1px solid #999;
+}
+.tab tr td input, article input{
+    height: 25px;
+}
+/* 
+* 
+*/
+.side .side-child:nth-child(2) article{
+    margin-top: 20px;
+}
+.side .side-child:nth-child(2) article:nth-child(4) section{
+    height: 100px;
+    background-color: #fff;
+}
+.side .side-child:nth-child(2) article:nth-child(4) input:nth-child(1){
+    width: 79%;
+}
+.side .side-child:nth-child(2) article:nth-child(4) input:nth-child(2){
+    width: 19%;
+    height: 27px;
+}
+/* 
+* remove tag
+*/
+b.delTag::before{
+    content: "⊗";
+    color: red;
+    font-weight: normal;
+}
+.elTag{
+    cursor: pointer;
+}
+b.imp::after{
+    content: "⁎";
+    color: red;
+    margin-left: 5px;
+    font-weight: normal;
+}
