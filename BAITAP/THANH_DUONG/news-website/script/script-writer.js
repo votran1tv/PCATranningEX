@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    var reg = /^([A-Za-z0-9\.\_])+@([A-Za-z\.]+)\.([A-Za-z]{3,4})/i;
+    var reg = /^([A-Za-z0-9\.])+@([A-Za-z\.]+)\.([A-Za-z]{3,4})/i;
 
     var title = $('input[name="title"]');
     var link = $('input[name="link"]');
@@ -77,7 +77,7 @@ $(document).ready(function () {
 
 function convert(s){
     s = s.replace(/(à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ)/gi, 'a');
-    s = s.replace(/(è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ)/gi,'e');
+    s = s.replace(/(è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ)/i,'e');
     s = s.replace(/(ì|í|ị|ỉ|ĩ)/i,'i');
     s = s.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/gi,'o');
     s = s.replace(/(ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ)/gi,'u');
@@ -85,3 +85,4 @@ function convert(s){
     s = s.replace(/(đ)/gi,'d');
     s = s.replace(/\ /g,"-");
     return s;
+}
