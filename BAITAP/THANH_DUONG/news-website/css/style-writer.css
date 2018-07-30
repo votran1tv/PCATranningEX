@@ -43,14 +43,14 @@
     text-align: right;
     width: 18%;
 }
-.tab tr td:nth-child(1)::after{
+/* .tab tr td:nth-child(1)::after{
     content: "⁎";
     color: red;
     margin-left: 5px;
 }
-.tab tr:last-child td:nth-child(1)::after, .tab tr:nth-child(2) td:nth-child(1)::after{
+.tab tr:last-child td:nth-child(1)::after, .tab tr:nth-child(2) td:nth-child(1)::after,.tab tr:nth-child(4) td:nth-child(1)::after{
     content: "";
-}
+} */
 .tab tr:nth-child(4) td:last-child{
     width: 35%;
 }
@@ -84,4 +84,21 @@
 .side .side-child:nth-child(2) article:nth-child(4) input:nth-child(2){
     width: 19%;
     height: 27px;
+}
+/* 
+* remove tag
+*/
+b.delTag::before{
+    content: "⊗";
+    color: red;
+    font-weight: normal;
+}
+.elTag{
+    cursor: pointer;
+}
+b.imp::after{
+    content: "⁎";
+    color: red;
+    margin-left: 5px;
+    font-weight: normal;
 }
