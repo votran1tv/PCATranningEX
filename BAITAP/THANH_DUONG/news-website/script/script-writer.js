@@ -85,4 +85,3 @@ function convert(s){
     s = s.replace(/(đ)/gi,'d');
     s = s.replace(/\ /g,"-");
     return s;
-}
