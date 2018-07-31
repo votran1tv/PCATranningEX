@@ -1,0 +1,113 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+body{
+    font-family: 'Times New Roman', Times, serif, Arial, Helvetica, sans-serif;
+}
+
+#swapper{
+    width: 1000px;
+    height: 700px;
+    background-color: #bfffd0;
+    margin: 50px auto;
+    border: 1px solid #bfffd0;
+}
+
+#content{
+    width: 960px;
+    height: 500px;
+    margin: 100px auto;
+    border: 5px solid white;
+    background-color: #aaaaaa;
+}
+
+#content h1{
+    text-align: left;
+    border-bottom: 5px solid white;
+    padding: 10px 10px 10px 20px;
+    /* margin-bottom: 10px; */
+}
+
+#trai{
+    float: left;
+    width: 640px;
+    height: 440px;
+    border-right: 5px solid white;
+}
+.tieude{
+    margin: 20px;
+    height: 40px;
+}
+
+.lienket{
+    margin: 20px;
+}
+
+.noidung{
+    margin: 20px;
+    height: 150px;
+}
+
+.datlich{
+    margin: 20px;
+}
+
+.post{
+    margin: 20px;
+}
+label.error{    /*Thông báo lỗi*/
+    width: 180px;
+    height: 40px;
+    margin-left: 105px;
+    color: red;
+}
+
+
+
+
+
+#phai{
+    float: right;
+    width: 300px;
+}
+h3{
+    margin: 20px 0;
+}
+.email{
+    margin: 20px 0;
+    height: 60px;
+}
+.sdt{
+    margin: 20px 0;
+    height: 60px;
+}
+.the{
+    margin: 20px 0;
+}
+.tagDiv{
+    width: 90%;
+    height: 150px;
+    background-color: white;
+    margin: 20px 0;
+    padding-top: 20px;
+}
+
+
+
+
+label{
+    display: inline-block;
+    width: 100px;
+    text-align: left;
+}
+
+input[type="text"]{
+    display: inline-block;
+    height: 20px;
+    padding-left: 5px;
+}
+textarea{
+    display: inline-block;
+}
+
