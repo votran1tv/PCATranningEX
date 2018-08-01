@@ -2,7 +2,7 @@
 	margin:0px;
 	padding: 0px;
 }
-body a:hover{
+a:hover{
 	color: #ba0017;
 }
 /*
@@ -627,7 +627,7 @@ ul.list-bar li a, ul.list-bar li{
 	height: 100%;
 }
 .slide-show .l-out ul{
-	min-width: 10000px;
+	width: 10000px;
 	height: 100%;
 	margin-left: -980px;
 	background-color: blue;
@@ -693,7 +693,7 @@ ul.list-bar li a, ul.list-bar li{
 	text-align: center;
 }
 /* 
-* end .slide-show
+* end slide 
 */
 .ss p{
 	font-family: Arial, Helvetica, sans-serif;

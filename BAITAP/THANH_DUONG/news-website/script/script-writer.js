@@ -1,4 +1,3 @@
-
 $(document).ready(function () {
     var reg = /^([A-Za-z0-9\.])+@([A-Za-z\.]+)\.([A-Za-z]{3,4})/i;
 
@@ -9,22 +8,12 @@ $(document).ready(function () {
     var tel = $('input[name="tel"]');
     var tag = $('input[name="tagName"]');
 
-
     title.change(function(){
-        // console.log(title.val());
+        console.log(title.val());
         var conv = convert(title.val());
         // alert(this.val());
-        // console.log(conv);
-        var t = window.location.href;
-        
-        t = t.replace('file:///mnt/DATA/dao_tao_pca/PCA_EX/','');
-        t = t.replace('/tao-bai-viet.html','/');
-        // console.log(t+conv);
-        if(title.val() == ""){
-            link.val('');
-        }else{
-            link.val(t+conv+'.html');
-        }
+        console.log(conv);
+        link.val(conv);
     });
 
 
@@ -65,9 +54,10 @@ $(document).ready(function () {
         
         $('#showTag').html($('#showTag').html()+show);
         tag.val("");
+	
         // remove tag
-        $('.elTag').on('click',function(){
-            $(this).remove();
+        $('.delTag').on('click',function(){
+            $(this).parent().remove();
         });
     });
     
@@ -96,5 +86,4 @@ function convert(s){
     s = s.replace(/(đ)/gi,'d');
     s = s.replace(/\ /g,"-");
     return s;
-
 }
