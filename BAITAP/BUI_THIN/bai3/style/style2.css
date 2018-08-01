@@ -45,7 +45,7 @@ body{
 }
 
 .noidung{
-    margin: 20px;
+    margin: 20px 20px 30px 20px;
     height: 150px;
 }
 
@@ -54,7 +54,8 @@ body{
 }
 
 .post{
-    margin: 20px;
+    margin-left: 20px;
+    margin-top: 50px;
 }
 label.error{    /*Thông báo lỗi*/
     width: 180px;
@@ -100,6 +101,10 @@ label{
     display: inline-block;
     width: 100px;
     text-align: left;
+}
+.d{
+    top: -115px;
+    position: relative;
 }
 
 input[type="text"]{
