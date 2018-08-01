@@ -1,0 +1,74 @@
+*{
+    margin: auto;
+    padding: auto;
+    font-family: 'Times New Roman', Times, serif
+}
+#khung{
+    width: 800px;
+    height: 500px;
+    background-color: white;
+}
+#TopTitle{
+    width: 790px;
+    height: 60px;
+    background-color: whitesmoke;
+    margin: 5px 5px;
+}
+#TopTitle p{
+    padding-top: 20px;
+    padding-left: 20px;
+    font-weight: bold;
+}
+#boxtrai{
+    width: 520px;
+    height: 300px;
+    float: left;
+    background-color: whitesmoke;
+    margin-left: 5px;
+}
+#tieude{
+    margin-top: 10px;
+    margin-left: 10px;
+}
+.txt{
+    width: 90px;
+    float: left;
+}
+.inputtxt{
+    border-radius: 5px;
+    border-style: groove;
+}
+#lket{
+    width: 520px;
+    margin-left: 10px;
+    margin-top: 10px;
+}
+#noidung{
+    margin-left: 10px;
+    margin-top: 10px;
+}
+#lichdang{
+    margin-left: 10px;
+    margin-top: 10px;
+}
+#nut span{
+    margin-left: 10px;
+}
+
+
+
+#boxphai{
+    width: 260px;
+    height: 300px;
+    float: right;
+    background-color: whitesmoke;
+    margin-right: 5px;
+}
+#inputtt{
+    padding-top: 5px;
+    margin-left: 10px;
+}
+#tag{
+    padding-top: 5px;
+    margin-left: 10px;
+}

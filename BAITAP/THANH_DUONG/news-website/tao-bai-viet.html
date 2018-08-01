@@ -1,3 +1,113 @@
+<<<<<<< HEAD
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <!-- style -->
+    <link rel="stylesheet" href="css/style-writer.css">
+    <link rel="stylesheet" href="css/jquery.datetimepicker.css">
+    <!-- scrip -->
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="script/jquery.datetimepicker.js"></script>
+    <script src="script/script-writer.js"></script>
+</head>
+<body>
+    <div class="swapper">
+        <div class="rows" style="margin-bottom: 10px; background-color: #f3f3f3;">
+            <h1 style="text-transform: uppercase; padding:20px;">nội dung bài viết</h1>
+        </div>
+        <form id="form" action="#">
+            <div class="rows side">
+                <div class="side-child">
+                    
+                    <table class="tab" border="0">
+                        <tr>
+                            <td>Tiêu đề <b class="imp"></b> </td>
+                            <td colspan="3"><input type="text" name="title" id="" placeholder="Nhập tiêu đều bài viết"></td>
+                        </tr>
+                        <tr>
+                            <td>Liên kết tĩnh</td>
+                            <td colspan="3">
+                                <input value="" disabled type="text" name="link" id="" style="border: none; background-color: unset;text-decoration:underline; color: blue; cursor: pointer;">
+                                <!-- <span id="link" style="font-size: 14px; text-decoration:underline; color: blue; cursor: pointer;"></span> -->
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="">Nội dung <b class="imp"></b></td>
+                            <td colspan="3">
+                                <textarea name="content" id="" cols="30" rows="10" style="resize: none" placeholder="Nội dung bài viết"></textarea>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Lịch đăng</td>
+                            <td>
+                                <label for="n0">
+                                    <input checked type="radio" name="ld" id="n0" value="0" style="width:30%"> Đăng ngay
+                                </label>
+                                
+                            </td>
+                            <td>
+                                <label for="n1">
+                                    <input type="radio" name="ld" id="n1" value="1" style="width:30%"> Đặt lịch
+                                </label>
+                                
+                            </td>
+                            <td>
+                                <input disabled type="datetime" name="setTime" class="form-control" id="date-picker" placeholder="dd/MM/yyyy">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                <input type="submit" id="validate" value="Đăng bài">
+                                <input type="reset" id="reset" value="Reset">
+                            </td>
+                            <td></td>
+                        </tr>
+                    </table>
+                    
+                    
+                </div>
+                <div class="side-child">
+                    <h3 style="text-transform: uppercase">thông tin bổ sung</h3>
+                    <article>
+                        <p>Email liên hệ <b class="imp"></b></p>
+                        <input type="text" name="email" id="" placeholder="Nhập email">
+                    </article>
+                    <article>
+                        <p>Số điện thoại <b class="imp"></b></p>
+                        <input type="text" name="tel" id="" placeholder="Nhập số điện thoại">
+                    </article>
+                    <article>
+                        <p>Thẻ đánh dấu</p>
+                        <section style="box-sizing: border-box; padding: 5px;">
+                            <input type="text" name="tagName" id="" style="width: 75%;">
+                            <input type="button" name="addTag" value="Thêm" >
+                            <p style="font-style: italic; margin: 10px 0px 10px 0px; color:#999;">
+                                Phân cách các thẻ bằng dấu phẩy (,).
+                            </p>
+                            <p id="showTag" style="min-height: 20px; width: 100%;">
+                                <!-- <span class="elTag" style="margin-right:5px;"><b class="delTag"></b>tag1</span>
+                                <span class="elTag" style="margin-right:5px;"><b class="delTag"></b>tag2</span>
+                                <span class="elTag" style="margin-right:5px;"><b class="delTag"></b>tag3</span> -->
+                            </p>
+                        </section>
+                        
+                    </article>
+                </div>
+                <div style="clear: both;"></div>
+            </div>
+        </form>
+    </div>
+    <script type="text/javascript">
+        $(function () {
+            $('#date-picker').datetimepicker();
+        });
+    </script>
+</body>
+=======
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -105,4 +215,5 @@
         });
     </script>
 </body>
+>>>>>>> upstream/master
 </html>
