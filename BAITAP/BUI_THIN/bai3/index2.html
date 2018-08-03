@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Đăng bài viết - Validate Form</title>
+    <link rel="shortcut icon" href="./images/icon.png">
+    <link rel="stylesheet" href="./style/style2.css">
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="js/jquery.js"></script>
+</head>
+<body>
+<div id="swapper">
+    <div id="content">
+        <h1>NỘI DUNG BÀI VIẾT</h1>
+        <form id="form" method="POST">
+        <div id="trai">
+
+            <div class="tieude">
+                <label>Tiêu đề</label>
+                <input class="ipTieuDe" type="text" name="tieude" placeholder="Nhập tiêu đề bài viết" style="width: 460px;" required>
+            </div>
+
+            <div class="lienket" style="overflow: auto;">
+                <label>Liên kết</label>
+                <a href="#" class="linklienket" style="color: blue;">http://pca.net.vn/</a>
+            </div>
+
+            <div class="noidung">
+                <label class="d">Nội dung</label>
+                <textarea name="noidung" class="content" cols="30" rows="15" placeholder="Nhập nội dung bài viết" style="width: 465px; height: 120px; padding: 5px" required></textarea>
+            </div>
+
+            <div class="datlich">
+                <label>Lịch đăng</label>
+                <input type="radio" name="lich" class="dangNgay" checked>&nbsp;Đăng ngay
+                <div class="lenLichDang" style="float: right; margin-right: 30px;">
+                    <input type="radio" name="lich" class="lenLich">&nbsp;Đặt lịch
+                    <input type="datetime-local" name="time" class="time" style="width: 250px;" disabled>
+                </div>
+            </div>
+
+            <div class="post">
+                <button type="submit" style="padding: 10px; border-radius: 5px; border: none; margin-right: 10px; outline: none">Đăng bài</button>
+                <button class="btnReset" type="reset" style="padding: 10px; border: none; border-radius: 5px; outline: none;">Reset</button>
+            </div>
+
+        </div>
+
+        <div id="phai">
+
+            <h3>THÔNG TIN BỔ SUNG</h3>
+
+            <div class="email">
+                <label>Email liên hệ</label>
+                <input type="text" name="email" class="ipEmail" placeholder="Nhập email" style="width: 170px; height: 20px;" required>
+            </div>
+
+            <div class="sdt">
+                <label>Số điện thoại</label>
+                <input type="text" name="sdt" class="ipSdt" placeholder="Nhập số điện thoại" style="width: 170px; height: 20px;" required>
+            </div>
+
+            <div class="the">
+                <label>Thẻ đánh dấu</label>
+                    <div class="tagDiv">
+                        <input type="text" name="the" class="theDanhDau" placeholder="Nhập thẻ đánh dấu" style="margin: 5px 10px;">
+                        <input type="button" name="themThe" class="btnThem" value="Thêm" style="padding: 5px; border-radius: 5px; border: 1px solid black; outline: none;">
+                        <p style="margin-left: 10px; margin-top: 20px;">Phân cách các thẻ bằng dấu phẩy (,)</p>
+                        <!-- <div class="tag" style="margin-top: 10px;height: 50px; margin-left: 10px">
+                            <a href="#" class="tagList" style="width: 90%;
+                        padding-top: 100px; text-decoration: none; color: blue;"></a>
+                            
+                        </div> -->
+                        <div class="danhsachthe" style="overflow: auto; height: 50px;">
+                            <a href="#" class="tagList" style="margin-left: 10px; margin-right: 10px; color: blue;"></a>
+                        </div>
+                    </div>
+            </div>
+
+        </div>
+
+        </form>
+    </div>
+</div>
+   
+</body>
+</html>

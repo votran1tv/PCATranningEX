@@ -54,17 +54,17 @@ $('#weather_location').change(function(){
 		$("#test").attr('src', '\images/img_weather.png');
 	}
 });
-function locationChange(obj){
-	var message = document.getElementById('show');
-    var value = obj.value;
-	if (value === 'nam'){
-        message.innerHTML = "Bạn đã chọn giới tính nam";
-    }
-    else if (value === 'nu'){
-        message.innerHTML = "Bạn đã chọn giới tính nữ";
-    }
-});
+// function locationChange(obj){
+// 	var message = document.getElementById('show');
+//     var value = obj.value;
+// 	if (value === 'nam'){
+//         message.innerHTML = "Bạn đã chọn giới tính nam";
+//     }
+//     else if (value === 'nu'){
+//         message.innerHTML = "Bạn đã chọn giới tính nữ";
+//     }
+// });
 // function a(){
 // 	var x = document.getElementById('weather_location').value;
 // 	document.getElementById("show").innerHTML = x;
-// }
+})
