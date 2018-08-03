@@ -121,14 +121,37 @@ $(document).ready(function(){
 
 
    
-    $(".btnThem").click(function(){
-        var tList = $(".theDanhDau").val();
-        if(tList != ""){
-        var test =  $(".tagList").text($(".tagList").text()+tList + " ");
-        }
-        $(".theDanhDau").val("");
+    // $(".btnThem").click(function(){
+    //     var tList = $(".theDanhDau").val();
+    //     if(tList != ""){
+    //     var test =  $(".tagList").text($(".tagList").text()+tList + " ");
+    //     }
+    //     $(".theDanhDau").val("");
 
+    // })
+
+
+$(".btnThem").click(function(){
+    var tTag = $(".theDanhDau").val();
+    var array = tTag.split(", ");
+    var list = "";
+    if (tTag != ""){
+        for (var i = 0; i<array.length; i++){
+            list+= '<span class = "getTagList" style= "margin-right: 10px;"><b class="delTag"></b>' + array[i].trim() + '</span>';
+        }
+    }
+
+    $(".tagList").html($(".tagList").html()+list);
+    $(".theDanhDau").val("");
+
+
+    $(".delTag").click(function(){
+        $(this).parent().remove();
     })
+})
+
+
+
 
 /*Reset Liên kết + Thẻ*/
     $(".btnReset").click(function(){

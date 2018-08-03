@@ -55,8 +55,8 @@ $(document).ready(function () {
         $('#showTag').html($('#showTag').html()+show);
         tag.val("");
         // remove tag
-        $('.elTag').on('click',function(){
-            $(this).remove();
+        $('.delTag').on('click',function(){
+            $(this).parent().remove();
         });
     });
     

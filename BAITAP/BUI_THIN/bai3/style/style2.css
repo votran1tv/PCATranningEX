@@ -42,6 +42,7 @@ body{
 
 .lienket{
     margin: 20px;
+    height: 20px;
 }
 
 .noidung{
@@ -114,5 +115,10 @@ input[type="text"]{
 }
 textarea{
     display: inline-block;
+}
+
+b.delTag::before{
+    content: "✘";
+    color: red;
 }
 
