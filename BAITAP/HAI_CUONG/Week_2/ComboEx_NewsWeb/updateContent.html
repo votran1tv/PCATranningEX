@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="shortcut icon" type="image/x-icon" href="Images/logo.png"/>
+    <title>Content News</title>
+    <link rel="stylesheet" type="text/css" media="screen" href="Asset/Style/bootstrap-4.1.3.min.css"/>
+    <link rel="stylesheet" type="text/css" media="screen" href="Asset/Style/updateContent.css"/>
+    <script type="text/javascript" src="Asset/JavaScript/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="Asset/JavaScript/popper-v1.min.js"></script>
+</head>
+<body>
+    <form id="container">
+        <div id="title">
+            <h2>Nội Dung Bài Viết</h2>
+        </div>
+        <table id="table_left" border="0" cellpadding="4px" cellspacing="0px">
+                    <tr>
+                        <td align="right" style="margin-top: 10px">Tiêu đề</td>
+                        <td colspan="3" style="padding-top: 20px"><input id="input_txt" type="text"/></td>
+                    </tr>
+                    <tr>
+                        <td align="right">Liên kết tĩnh</td>
+                        <td colspan="3"></td>
+                    </tr>
+                    <tr>
+                        <td align="right" width="100px"><p style="margin-top: -95px">Nội dung</p></td>
+                        <td colspan="3"><textarea id="textarea" rows="4" placeholder="Nội dung bài viết, chứa ít nhất 200 ký tự"></textarea></td>
+                    </tr>
+                    <tr>
+                        <td align="right">Lịch đăng</td>
+                        <td><input id="radio" type="radio" name="radio"/> &nbsp;Đăng ngay</td>
+                        <td width="125px"><input id="radio" type="radio" name="radio"/> &nbsp;Đặt lịch</td>
+                        <td width="270px"><input type="datetime-local"/></td>
+                    </tr>
+                    <tr align="right">
+                        <td width="125px" style="padding-bottom: 30px"><input id="btn" type="submit" value="Đăng bài"/></td>
+                        <td width="125px" style="padding-bottom: 30px"><input id="btn" type="reset" value="Reset"/></td>
+                    </tr>
+        </table>
+
+        <table id="table_right" class="table">
+                
+        </table>
+    </form>
+</body>
+</html>
