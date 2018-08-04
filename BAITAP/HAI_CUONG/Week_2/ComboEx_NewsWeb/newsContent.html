@@ -1,0 +1,440 @@
+<!DOCTYPE html/>
+<html lang="vi-Vn"/>
+<head>
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="shortcut icon" type="image/x-icon" href="Images/logo.png"/>
+	<title>News Content - PCA</title>
+	<!-- <link rel="stylesheet" type="text/css"  media="screen" href="Asset/Style/bootstrap-4.1.3.min.css"/> -->
+	<link rel="stylesheet" type="text/css"  media="screen" href="Asset/Style/index.css"/>
+	<script type="text/javascript" src="Asset/JavaScript/jquery-3.3.1.min.js"></script>
+	<!-- <script type="text/javascript" src="Asset/JavaScript/bootstrap-4.1.3.min.js"></script>
+	<script type="text/javascript" src="Asset/JavaScript/popper-v1.min.js"></script> -->
+	<script type="text/javascript" src="Asset/JavaScript/newsContent.js"></script>
+	<!--[if lt IE 9]>
+	<script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
+<![endif]-->
+
+<script>
+		$(document).ready(function(){
+
+			var float = function(){
+			$('#slide_img').stop(true, true).animate({
+				'margin-left':-300*2
+			},300,function(){
+				$(this).css({
+					marginLeft:-300
+				})
+				$($(this).find('img')[0]).appendTo($(this));
+			});
+		}
+			
+			var slide = setInterval(float,1000);
+
+			$("#slide_right_top_row").hover(function(){
+				clearInterval(slide);
+			},function(){
+				slide = setInterval(float,1000);
+			});
+		
+			$("#control_img_prev").click(function(){
+				$('#slide_img').stop(true, true).animate({
+				'margin-left':0
+			},300,function(){
+				$("#slide_img").css({
+					marginLeft:-300
+				})
+				$($("#slide_img").find('img')[2]).prependTo($("#slide_img"));
+				});
+			});
+			
+			$("#control_img_next").click(function(){
+				
+				float();
+			});
+
+			$(".control_img").hover(function(){
+				$(".control_img img").css({"opacity": "1"});
+			}, function(){
+				$(".control_img img").css({"opacity": "0.25"});
+			});
+
+			$("#control_img_prev").click(function(){
+				$("#control_img_prev img").css({"border": "2px solid yellow", "border-radius": "50%"});
+			}).hover(function(){}, function(){
+				$("#control_img_prev img").css({"border": "none"});			
+			});
+
+			$("#control_img_next").click(function(){
+				$("#control_img_next img").css({"border": "2px solid yellow", "border-radius": "50%"});
+			}).hover(function(){}, function(){
+				$("#control_img_next img").css({"border": "none"});			
+			});
+
+		});
+		
+	</script>
+
+</head>
+<body>
+    <div id="head_swapper">
+    	<div id="head_top_main">
+    		<div id="head_time"></div>
+    	<div id="head_list">
+    		<a href="#"><span>Về Báo Nhân Dân</span></a> - <a href="#"><span>English</span></a> - <a href="#"><span>中文</span></a> - <a href="#"><span>Français</span></a> - <a href="#"><span>Русский Язык</span></a> - <a href="#"><span>Thời Nay</span></a> - <a href="#"><span>ND Cuối Tuần</span></a> - <a href="#"><span>ND Hằng Tháng</span></a> - <a href="#"><span>Hà Nội</span></a> - <a href="#"><span>TP HCM</span></a> - <a href="#"><span>Quảng cáo</span></a>
+    	</div>
+    	<div id="head_search">
+    		<form id="form">
+    			<input id="input_search" type="text" name="search" placeholder="Tìm kiếm">
+    			<div id="search_icon">
+    				<img src="Images/search_64px.png">
+    			</div>
+    		</form>
+    	</div>
+    	</div>
+    </div>
+    
+    <div id="swapper">
+		
+		<div id="banner_logo">
+			<img src="Images/TiitleLogo_mod.jpg" width="354" height="100px">
+			<img src="Images/Banner.jpg" width="780" height="100px">
+        </div>
+        <div id="header">
+				<div id="inside_header">
+						<ul>
+								<li> <a href="index.html"><span><img src="Images/home.png" width="22" height="24"></span></a></li>
+								<li> <a href="#"><span>chính trị</span></a>
+									
+								</li>
+								<li> <a href="#"><span>kinh tế</span></a></li>
+								<li> <a href="#"><span>văn hóa</span></a></li>
+								<li> <a href="#"><span>xã hội</span></a></li>
+								<li> <a href="#"><span>thế giới</span></a></li>
+								<li> <a href="#"><span>công nghệ</span></a></li>
+								<li> <a href="#"><span>khoa học</span></a></li>
+								<li> <a href="#"><span>giáo dục</span></a></li>
+								<li> <a href="#"><span>sức khỏe</span></a></li>
+								<li> <a href="#"><span>pháp luật</span></a></li>
+								<li> <a href="#"><span>thể thao</span></a></li>
+								<li> <a href="#"><span>bạn đọc</span></a></li>
+								<li> <a href="#"><span>hà nội</span></a></li>
+								<li> <a href="#"><span>tp hcm</span></a></li>
+							</ul>
+				</div>
+			</div>
+        <div id="hr_sub"></div>
+        <div id="container">
+            <div id="top_row">
+
+				<div id="left_top_row">
+                    <div id="title_left_top_row">
+                        <h3>Lũ đang lên nhanh ở đồng bằng sông Cửu Long</h3>
+                    </div>
+
+                    <div id="title_tool_left_top_row">
+
+						<div id="left_time_news">
+
+						</div>
+						<div id="right_font_news">
+							<span style="font-weight: bolder; vertical-align: 3px">A &nbsp;</span><span style="vertical-align: 3px">Font Size: &nbsp;&nbsp;</span><img src="Images/down.png" width="20" height="15"/> | <img src="Images/up.png" width="20" height="15"/><a href="#"><img src="Images/print.png" width="30" height="20"/></a>
+						</div>
+						<script>
+							$(document).ready(function () {
+								var resetAll = $("#right_font_news span");
+								var ups = $($("#right_font_news").find("img")[1]);
+								var downs = $($("#right_font_news").find("img")[0]);
+								var printc = $($("#right_font_news").find("img")[2]);
+								// kích thước font chữ tối thiểu
+								var min=9;
+								//kích thước font chữ tối đa
+								var max=999;
+								// lấy font chữ mực định
+								var reset = $("#content_news_top_row p").css('fontSize');
+								//những phần tử sẽ thực hiện khi chức năng được gọi
+								var elm = $("#content_news_top_row p");
+								// ấn định kích thước font chữ mặc định và xóa bỏ px từ giá trị
+								var size = str_replace(reset, 'px', '');
+								//Tăng kích thước font chữ
+								ups.click(function() {
+								// Nếu kích thước font chữ nhở hơn hoặc bằng với giá trị tối đa thì
+								if (size<=max) {
+									// tăng kích thước
+									size++;
+									// ấn định kích thước font cho phần tử
+									elm.css({'fontSize' : size});
+								}
+								// hủy sự kiện click
+								return false;
+								});
+								// Giảm kích thước font
+								downs.click(function() {
+								// nếu kích thước font chữ lớn hơn hay bằng với giá trị tối thiểu
+								if (size>=min) {
+									//giảm kích thước
+									size--;
+									// ấn định kích thước font cho phần tử
+									elm.css({'fontSize' : size});
+								}
+								// hủy sự kiện click
+								return false;
+								});
+								// khôi phục lại kích thước mặc định
+								resetAll.click(function () {
+								// ấn định kích thước font chữ mặc định
+								elm.css({'fontSize' : reset});
+								});
+
+									function printContent(content_news_top_row){   
+										var prtContent = document.getElementById("content_news_top_row");
+										var WinPrint = window.open('','','letf=0,top=0,width=800,height=800');
+										WinPrint.document.write(prtContent.innerHTML);
+										WinPrint.document.close();
+										WinPrint.focus();
+										WinPrint.print();
+									}
+									printc.click(function(){
+										printContent(content_news_top_row);
+									});
+								});
+								//hàm thay đổi chuỗi
+								function str_replace(haystack, needle, replacement) {
+								var temp = haystack.split(needle);
+								return temp.join(replacement);
+								}
+
+						</script>
+
+                    </div>
+
+                    <div id="img_news_top_row">
+                        <a href="#"><img src="Images/img_news_top_row.jpg"/></a>
+                        <p>Họp khẩn ứng phó thiên tai khu vực ĐBSCL, sáng 31-7.</p>
+                    </div>
+
+                    <div id="content_news_top_row">
+						<p>
+							NDĐT - Do diễn biễn bất thường của thời tiết, lũ từ thượng nguồn đổ về đang lên nhanh, uy hiếp tính mạng, 
+							tài sản của người dân vùng đồng bằng sông Cửu Long (ĐBSCL), ngày 31-7, 
+							Văn phòng thường trực Ban Chỉ đạo T.Ư về Phòng chống thiên tai (PCTT) tổ chức cuộc họp về ứng phó thiên tai khu vực ĐBSCL.
+						</p>
+						<br/>
+						<p>
+							Theo Văn phòng thường trực Ban Chỉ đạo T.Ư về PCTT, mực nước lũ ở ĐBSCL đang lên và còn diễn biến phức tạp. 
+							Mực nước đầu nguồn sông Cửu Long đang lên, mực nước cao nhất ngày 29-7 trên sông Tiền tại trạm Tân Châu là 2,87 m, 
+							trên sông Hậu tại Châu Đốc là 2,38 m.
+						</p>
+						<br/>
+						<p>
+								Do lũ thượng nguồn về, trong 2-3 ngày tới, mực nước đầu nguồn sông Cửu Long tiếp tục lên nhanh, sau đó lên chậm do triều thấp. 
+								Đến ngày 8-8, mực nước cao nhất trên sông Tiền tại trạm Tân Châu có khả năng lên mức 3,35 m dưới báo động 1 (BĐ1) là 0,15 m; 
+								trên sông Hậu tại trạm Châu Đốc có khả năng lên mức 2,75 m (dưới BĐ1 là 0,25 m).
+						</p>
+						<br/>
+						<p>
+								Trong 10 ngày tiếp theo, mực nước đầu nguồn sông Cửu Long tiếp tục lên và đạt mức cao nhất vào ngày 13-8, 
+								mực nước cao nhất trên sông Tiền tại trạm Tân Châu lên mức 3,7 m (trên BĐ1 là 0,20 m); 
+								trên sông Hậu tại trạm Châu Đốc lên mức 3,1 m (trên BĐ1 là 0,1 m), sau đó biến đổi chậm.
+						</p>
+						<br/>
+						<p>
+								Đến ngày 18-8, mực nước cao nhất trên sông Tiền tại trạm Tân Châu ở mức 3,55 m (trên BĐ1 là 0,05 m); 
+								trên sông Hậu tại trạm Châu Đốc ở mức 2,95 m (dưới BĐ1 là 0,05 m). Nguy cơ cao xảy ra ngập lụt ở các vùng trũng thấp, 
+								vùng ven sông, vùng ngoài đê bao các tỉnh An Giang, Đồng Tháp, Long An. Đỉnh lũ năm 2018 ở đầu nguồn sông Cửu Long ở mức BĐ2 và trên BĐ2. 
+								Thời gian xuất hiện đỉnh lũ năm vào khoảng nửa đầu tháng 10-2018. Cảnh báo cấp độ rủi ro thiên tai là cấp 1-2.
+						</p>
+						<br/>
+						<p>
+								NDĐT - Do diễn biễn bất thường của thời tiết, lũ từ thượng nguồn đổ về đang lên nhanh, uy hiếp tính mạng, 
+								tài sản của người dân vùng đồng bằng sông Cửu Long (ĐBSCL), ngày 31-7, 
+								Văn phòng thường trực Ban Chỉ đạo T.Ư về Phòng chống thiên tai (PCTT) tổ chức cuộc họp về ứng phó thiên tai khu vực ĐBSCL.
+							</p>
+							<br/>
+							<p>
+								Theo Văn phòng thường trực Ban Chỉ đạo T.Ư về PCTT, mực nước lũ ở ĐBSCL đang lên và còn diễn biến phức tạp. 
+								Mực nước đầu nguồn sông Cửu Long đang lên, mực nước cao nhất ngày 29-7 trên sông Tiền tại trạm Tân Châu là 2,87 m, 
+								trên sông Hậu tại Châu Đốc là 2,38 m.
+							</p>
+							<br/>
+							<p>
+									Do lũ thượng nguồn về, trong 2-3 ngày tới, mực nước đầu nguồn sông Cửu Long tiếp tục lên nhanh, sau đó lên chậm do triều thấp. 
+									Đến ngày 8-8, mực nước cao nhất trên sông Tiền tại trạm Tân Châu có khả năng lên mức 3,35 m dưới báo động 1 (BĐ1) là 0,15 m; 
+									trên sông Hậu tại trạm Châu Đốc có khả năng lên mức 2,75 m (dưới BĐ1 là 0,25 m).
+							</p>
+							<br/>
+							<p>
+									Trong 10 ngày tiếp theo, mực nước đầu nguồn sông Cửu Long tiếp tục lên và đạt mức cao nhất vào ngày 13-8, 
+									mực nước cao nhất trên sông Tiền tại trạm Tân Châu lên mức 3,7 m (trên BĐ1 là 0,20 m); 
+									trên sông Hậu tại trạm Châu Đốc lên mức 3,1 m (trên BĐ1 là 0,1 m), sau đó biến đổi chậm.
+							</p>
+							<br/>
+							<p>
+									Đến ngày 18-8, mực nước cao nhất trên sông Tiền tại trạm Tân Châu ở mức 3,55 m (trên BĐ1 là 0,05 m); 
+									trên sông Hậu tại trạm Châu Đốc ở mức 2,95 m (dưới BĐ1 là 0,05 m). Nguy cơ cao xảy ra ngập lụt ở các vùng trũng thấp, 
+									vùng ven sông, vùng ngoài đê bao các tỉnh An Giang, Đồng Tháp, Long An. Đỉnh lũ năm 2018 ở đầu nguồn sông Cửu Long ở mức BĐ2 và trên BĐ2. 
+									Thời gian xuất hiện đỉnh lũ năm vào khoảng nửa đầu tháng 10-2018. Cảnh báo cấp độ rủi ro thiên tai là cấp 1-2.
+							</p>
+							<br/>
+							<p>
+									NDĐT - Do diễn biễn bất thường của thời tiết, lũ từ thượng nguồn đổ về đang lên nhanh, uy hiếp tính mạng, 
+									tài sản của người dân vùng đồng bằng sông Cửu Long (ĐBSCL), ngày 31-7, 
+									Văn phòng thường trực Ban Chỉ đạo T.Ư về Phòng chống thiên tai (PCTT) tổ chức cuộc họp về ứng phó thiên tai khu vực ĐBSCL.
+								</p>
+								<br/>
+								<p>
+									Theo Văn phòng thường trực Ban Chỉ đạo T.Ư về PCTT, mực nước lũ ở ĐBSCL đang lên và còn diễn biến phức tạp. 
+									Mực nước đầu nguồn sông Cửu Long đang lên, mực nước cao nhất ngày 29-7 trên sông Tiền tại trạm Tân Châu là 2,87 m, 
+									trên sông Hậu tại Châu Đốc là 2,38 m.
+								</p>
+								<br/>
+								<p>
+										Do lũ thượng nguồn về, trong 2-3 ngày tới, mực nước đầu nguồn sông Cửu Long tiếp tục lên nhanh, sau đó lên chậm do triều thấp. 
+										Đến ngày 8-8, mực nước cao nhất trên sông Tiền tại trạm Tân Châu có khả năng lên mức 3,35 m dưới báo động 1 (BĐ1) là 0,15 m; 
+										trên sông Hậu tại trạm Châu Đốc có khả năng lên mức 2,75 m (dưới BĐ1 là 0,25 m).
+								</p>
+								<br/>
+								<p>
+										Trong 10 ngày tiếp theo, mực nước đầu nguồn sông Cửu Long tiếp tục lên và đạt mức cao nhất vào ngày 13-8, 
+										mực nước cao nhất trên sông Tiền tại trạm Tân Châu lên mức 3,7 m (trên BĐ1 là 0,20 m); 
+										trên sông Hậu tại trạm Châu Đốc lên mức 3,1 m (trên BĐ1 là 0,1 m), sau đó biến đổi chậm.
+								</p>
+								<br/>
+								<p>
+										Đến ngày 18-8, mực nước cao nhất trên sông Tiền tại trạm Tân Châu ở mức 3,55 m (trên BĐ1 là 0,05 m); 
+										trên sông Hậu tại trạm Châu Đốc ở mức 2,95 m (dưới BĐ1 là 0,05 m). Nguy cơ cao xảy ra ngập lụt ở các vùng trũng thấp, 
+										vùng ven sông, vùng ngoài đê bao các tỉnh An Giang, Đồng Tháp, Long An. Đỉnh lũ năm 2018 ở đầu nguồn sông Cửu Long ở mức BĐ2 và trên BĐ2. 
+										Thời gian xuất hiện đỉnh lũ năm vào khoảng nửa đầu tháng 10-2018. Cảnh báo cấp độ rủi ro thiên tai là cấp 1-2.
+								</p>
+								<br/>
+								<div class="author">
+									<p>Thanh Trà</p>
+								</div>
+                    </div>
+				</div>
+
+				<div id="right_top_row">
+					<div id="img_right_top_row">
+						<a href="#"><img src="Images/img1_right_top_row.png"/></a>
+						<a href="#"><img src="Images/img2_right_top_row.jpg"/></a>
+					</div>
+					<div id="content_right_top_row">
+						<div id="tittle_right_top_row">
+							<a href=""><h3>Tin bài mới</h3></a>
+						</div>
+						<div id="scroll_right_top_row">
+							<a href="#"><p>Giao quyền Bộ trưởng Thông tin và Truyền thông đối với Thiếu tướng Nguyễn Mạnh Hùng </p></a>
+							<a href="#"><p>Giao quyền Bộ trưởng Thông tin và Truyền thông đối với Thiếu tướng Nguyễn Mạnh Hùng </p></a>
+							<a href="#"><p>Giao quyền Bộ trưởng Thông tin và Truyền thông đối với Thiếu tướng Nguyễn Mạnh Hùng </p></a>
+							<a href="#"><p>Giao quyền Bộ trưởng Thông tin và Truyền thông đối với Thiếu tướng Nguyễn Mạnh Hùng </p></a>
+							<a href="#"><p>Giao quyền Bộ trưởng Thông tin và Truyền thông đối với Thiếu tướng Nguyễn Mạnh Hùng </p></a>
+							<a href="#"><p>Giao quyền Bộ trưởng Thông tin và Truyền thông đối với Thiếu tướng Nguyễn Mạnh Hùng </p></a>
+							<a href="#"><p>Giao quyền Bộ trưởng Thông tin và Truyền thông đối với Thiếu tướng Nguyễn Mạnh Hùng </p></a>
+							<a href="#"><p>Giao quyền Bộ trưởng Thông tin và Truyền thông đối với Thiếu tướng Nguyễn Mạnh Hùng </p></a>
+							<a href="#"><p>Giao quyền Bộ trưởng Thông tin và Truyền thông đối với Thiếu tướng Nguyễn Mạnh Hùng </p></a>
+							<a href="#"><p>Giao quyền Bộ trưởng Thông tin và Truyền thông đối với Thiếu tướng Nguyễn Mạnh Hùng </p></a>
+							<a href="#"><p>Giao quyền Bộ trưởng Thông tin và Truyền thông đối với Thiếu tướng Nguyễn Mạnh Hùng </p></a>
+							<a href="#"><p>Giao quyền Bộ trưởng Thông tin và Truyền thông đối với Thiếu tướng Nguyễn Mạnh Hùng </p></a>
+							<a href="#"><p>Giao quyền Bộ trưởng Thông tin và Truyền thông đối với Thiếu tướng Nguyễn Mạnh Hùng </p></a>
+							<a href="#"><p>Giao quyền Bộ trưởng Thông tin và Truyền thông đối với Thiếu tướng Nguyễn Mạnh Hùng </p></a>
+							<a href="#"><p>Giao quyền Bộ trưởng Thông tin và Truyền thông đối với Thiếu tướng Nguyễn Mạnh Hùng </p></a>
+							<a href="#"><p>Giao quyền Bộ trưởng Thông tin và Truyền thông đối với Thiếu tướng Nguyễn Mạnh Hùng </p></a>
+							<a href="#"><p>Giao quyền Bộ trưởng Thông tin và Truyền thông đối với Thiếu tướng Nguyễn Mạnh Hùng </p></a>
+							<a href="#"><p>Giao quyền Bộ trưởng Thông tin và Truyền thông đối với Thiếu tướng Nguyễn Mạnh Hùng </p></a>
+							<a href="#"><p>Giao quyền Bộ trưởng Thông tin và Truyền thông đối với Thiếu tướng Nguyễn Mạnh Hùng </p></a>
+							<a href="#"><p>Giao quyền Bộ trưởng Thông tin và Truyền thông đối với Thiếu tướng Nguyễn Mạnh Hùng </p></a>
+							
+						</div>
+					</div>
+					<div id="under_right_top_row">
+						<a href="#"><img src="Images/img1under_right_top_row.png" width="300" height="390"></a>
+						<a href="#"><img src="Images/img2under_right_top_row.png" width="300" height="90"></a>
+					</div>
+					<div id="slide_right_top_row">
+							<div id="slide_right_img">
+									<div id="slide_img">
+										<a href="#"><img src="Images/slide_right_top_row_1.png"/></a>
+										<a href="#"><img src="Images/slide_right_top_row_2.png"/></a>
+										<a href="#"><img src="Images/slide_right_top_row_3.png"/></a>
+									</div>
+									<div id="control_img_prev" class="control_img">
+										<img class="img_pre" src="Images/preview_icon.svg"/>
+									</div>
+									<div id="control_img_next" class="control_img">
+										<img class="img_next" src="Images/next _icon.svg"/>
+									</div>
+							</div>
+					</div>
+				</div>
+
+            </div>
+		</div>
+		<div id="hr_subb"></div>
+
+    </div>
+
+    <div id="footer_bottom">
+		<div class="line_bottom"></div>
+    	<div id="top_bottom">
+			<div id="lk">
+				<span>LIÊN KẾT:</span>
+			</div>
+			<div id="alk">
+				<a href="#">Báo Điện tử Đảng Cộng sản</a>
+				<a href="#">Báo điện tử Chính phủ</a>
+				<a href="#">Thông tấn xã Việt Nam</a>
+				<a href="#">Đài Tiếng nói Việt Nam</a>
+				<a href="#">Báo điện tử Quân đội nhân dân</a>
+			</div>
+		</div>
+		<div class="line_bottom"></div>
+		<div id="down_bottom">
+			<strong>Tổng Biên tập: Thuận Hữu</strong>
+			<br/>
+			<p>© Báo Nhân Dân thiết kế và giữ bản quyền. Mong bạn đọc góp ý kiến, phê bình</p>
+			<p>Trụ sở Bộ biên tập: 71 Hàng Trống - Hà Nội. Tel: (84) 24 382 54231/382 54232 Fax: (84) 24 382 55593.</p>
+			<p>E-mail: nhandandientu@nhandan.org.vn nhandandientutiengviet@gmail.com</p>
+
+		</div>
+    </div>
+</body>
+<script language="JavaScript" type="text/javascript">
+	var view = document.querySelector("#head_time");
+	var viewsub = document.querySelector("#left_time_news");
+	var time;
+	var stime;
+	var d = new Date();
+	var s = d.getSeconds();
+	var m = d.getMinutes();
+	var h = d.getHours();
+	var day = (d.getDay() + 1) + ", ";
+	var date = d.getDate() + "/";
+	var thang;
+	if (d.getMonth() < 9) {
+		thang = "0" + (d.getMonth() + 1) + "/";
+	} else{
+		thang = d.getMonth() + 1 + "/";}
+	var year = d.getFullYear();
+	time = "Thứ " + day + date + thang + year;
+	stime = "Thứ " + day + date + thang + year + ", " + h + ":" + m + ":" + s;
+	view.innerHTML = time;
+	viewsub.innerHTML = stime;
+</script>
+
+<script language="JavaScript" type="text/javascript">
+	window.onscroll = function() {scroll()};
+
+	var navbar = document.getElementById("header");
+	var sticky = navbar.offsetTop;
+	var inside = document.querySelector("#inside_header");
+
+	function scroll() {
+	if (window.pageYOffset >= sticky) {
+		navbar.classList.add("sticky");
+		inside.classList.add("child_sticky");
+	} else {
+			navbar.classList.remove("sticky");
+		}
+	}
+</script>
+</html>
