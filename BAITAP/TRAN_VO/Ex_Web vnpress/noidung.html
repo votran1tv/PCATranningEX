@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Thông tin đăng nhập</title>
+    <link rel="stylesheet" href="css/stylettdn.css">
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/jquery.validate.min.js"></script>
+    <script src="script/scriptttdn.js"  ></script>
+</head>
+<body>
+    <form id="khung" method="POST">
+        <div id="TopTitle">
+            <p>NỘI DUNG BÀI VIẾT</p>
+        </div>
+
+        <div id="boxtrai">
+            <div id="tieude">
+                <div class="txt" style="height: 40px;"><label>Tiêu đề</label></div>
+                <input type="text" name="inputtde" style="width: 400px;" class="inputtxt" required>
+            </div>
+            <div id="lket">
+                <div class="txt"><label>Liên kết tĩnh</label></div>
+                <a href="http://" target="_blank"></a> <br>
+            </div>
+            <div id="noidung">
+                <div class="txt" style="height: 160px;"><label>Nội dung</label></div>
+                <textarea name="noidung" id="" cols="53" rows="8" minlength="200" class="inputtxt" placeholder=" Nội dung bài viết chưa ít nhất 200 ký tự" required></textarea>
+            </div>
+            <div id="lichdang">
+                <div class="txt"><p>Lịch đăng</p></div>
+                <input type="radio" name="lichdang" id="dangngay" checked> Đăng ngay
+                <input type="radio" name="lichdang" id="datlich"> Đặt lịch
+                <input type="datetime-local" name="datetime" id="datetime" placeholder=" dd/mm/yyyy hh:mm" class="inputtxt" disabled>
+            </div>
+            <div id="nut">
+                <button type="submit" value="Đăng bài" style="border-radius: 5px" id="dangbai"  >Đăng bài</button>
+                <button type="reset" style="border-radius: 5px">Reset</button>
+            </div>
+        </div>
+
+
+        <div id="boxphai">
+            <p style="margin: 10px 10px;"><b>THÔNG TIN BỔ SUNG</b></p>
+            <div id="inputtt" >
+                    <div style="margin-top: 15px; height: 60px">
+                        <label>Email liên hệ:</label>
+                    <input type="text" name="txtEmail" id="email" placeholder=" Nhập email" class="inputtxt" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"><br>
+                    </div>
+                   <div style="margin-top: 15px; height: 60px">
+                    <label style="margin-top: 10px;" >Số điện thoại:</label>
+                    <input type="tel" name="sđt" placeholder=" Nhập số điện thoại" class="inputtxt" pattern="[0-9]" > 
+                   </div>
+            </div>
+            <div id="tag">
+                <p style="margin-top: 10px;">Thẻ đánh dấu</p>
+                <input type="text" class="inputtxt" id="nhapthe" placeholder=" Nhập thẻ" >
+                <button type="button" style="border-radius: 5px;" name="btnthem">  Thêm</button>
+                <p>Phân cách các thẻ bằng dấu phẩy (,)</p>
+                <div id="khungtag">
+                    <a type="url" class="div1"></a>
+                </div>
+            </div>
+        </div>
+    </form>
+</body>
+</html>
