@@ -28,8 +28,7 @@
 			create table Thanh_Vien (
 			Id int not null identity unique,
 			TaiKhoan nchar(255),
-			MatKhau nvarchar(255),
-			constraint pk_Thanh_Vien primary key(Id)
+			MatKhau nvarchar(255)
 			);
 		end;
 	else
@@ -59,8 +58,8 @@
 			TieuDe nchar(255),
 			NoiDung ntext,
 			HinhAnh ntext,
-			constraint fk_Bai_Viet_TV foreign key(Id) references Thanh_Vien(Id),
-			constraint fk_Bai_Viet_DM foreign key(Id) references Dm_BaiViet(Id)
+			Id_Dm int not null,
+			constraint fk_Bai_Viet_DM foreign key(Id_Dm) references Dm_BaiViet(Id)
 			);
 		end;
 	else
@@ -142,36 +141,36 @@
 
 -- Thêm dữ liệu bảng Bai_Viet
 	insert into Bai_Viet values
-		(N'Tiêu đề 1', N'Nội dung bài viết 1', N'Hình ảnh 1'),
-		(N'Tiêu đề 2', N'Nội dung bài viết 2', N'Hình ảnh 2'),
-		(N'Tiêu đề 3', N'Nội dung bài viết 3', N'Hình ảnh 3'),
-		(N'Tiêu đề 4', N'Nội dung bài viết 4', N'Hình ảnh 4'),
-		(N'Tiêu đề 5', N'Nội dung bài viết 5', N'Hình ảnh 5'),
-		(N'Tiêu đề 6', N'Nội dung bài viết 6', N'Hình ảnh 6'),
-		(N'Tiêu đề 7', N'Nội dung bài viết 7', N'Hình ảnh 7'),
-		(N'Tiêu đề 8', N'Nội dung bài viết 8', N'Hình ảnh 8'),
-		(N'Tiêu đề 9', N'Nội dung bài viết 9', N'Hình ảnh 9'),
-		(N'Tiêu đề 10', N'Nội dung bài viết 10', N'Hình ảnh 10'),
-		(N'Tiêu đề 11', N'Nội dung bài viết 11', N'Hình ảnh 11'),
-		(N'Tiêu đề 12', N'Nội dung bài viết 12', N'Hình ảnh 12'),
-		(N'Tiêu đề 13', N'Nội dung bài viết 13', N'Hình ảnh 13'),
-		(N'Tiêu đề 14', N'Nội dung bài viết 14', N'Hình ảnh 14'),
-		(N'Tiêu đề 15', N'Nội dung bài viết 15', N'Hình ảnh 15'),
-		(N'Tiêu đề 16', N'Nội dung bài viết 16', N'Hình ảnh 16'),
-		(N'Tiêu đề 17', N'Nội dung bài viết 17', N'Hình ảnh 17'),
-		(N'Tiêu đề 18', N'Nội dung bài viết 18', N'Hình ảnh 18'),
-		(N'Tiêu đề 19', N'Nội dung bài viết 19', N'Hình ảnh 19'),
-		(N'Tiêu đề 20', N'Nội dung bài viết 20', N'Hình ảnh 20'),
-		(N'Tiêu đề 21', N'Nội dung bài viết 21', N'Hình ảnh 21'),
-		(N'Tiêu đề 22', N'Nội dung bài viết 22', N'Hình ảnh 22'),
-		(N'Tiêu đề 23', N'Nội dung bài viết 23', N'Hình ảnh 23'),
-		(N'Tiêu đề 24', N'Nội dung bài viết 24', N'Hình ảnh 24'),
-		(N'Tiêu đề 25', N'Nội dung bài viết 25', N'Hình ảnh 25'),
-		(N'Tiêu đề 26', N'Nội dung bài viết 26', N'Hình ảnh 26'),
-		(N'Tiêu đề 27', N'Nội dung bài viết 27', N'Hình ảnh 27'),
-		(N'Tiêu đề 28', N'Nội dung bài viết 28', N'Hình ảnh 28'),
-		(N'Tiêu đề 29', N'Nội dung bài viết 29', N'Hình ảnh 29'),
-		(N'Tiêu đề 30', N'Nội dung bài viết 30', N'Hình ảnh 30');
+		(N'Tiêu đề 1', N'Nội dung bài viết 1', N'Hình ảnh 1', 1),
+		(N'Tiêu đề 2', N'Nội dung bài viết 2', N'Hình ảnh 2', 2),
+		(N'Tiêu đề 3', N'Nội dung bài viết 3', N'Hình ảnh 3', 3),
+		(N'Tiêu đề 4', N'Nội dung bài viết 4', N'Hình ảnh 4', 4),
+		(N'Tiêu đề 5', N'Nội dung bài viết 5', N'Hình ảnh 5', 5),
+		(N'Tiêu đề 6', N'Nội dung bài viết 6', N'Hình ảnh 6', 6),
+		(N'Tiêu đề 7', N'Nội dung bài viết 7', N'Hình ảnh 7', 7),
+		(N'Tiêu đề 8', N'Nội dung bài viết 8', N'Hình ảnh 8', 8),
+		(N'Tiêu đề 9', N'Nội dung bài viết 9', N'Hình ảnh 9', 9),
+		(N'Tiêu đề 10', N'Nội dung bài viết 10', N'Hình ảnh 10', 10),
+		(N'Tiêu đề 11', N'Nội dung bài viết 11', N'Hình ảnh 11', 11),
+		(N'Tiêu đề 12', N'Nội dung bài viết 12', N'Hình ảnh 12', 12),
+		(N'Tiêu đề 13', N'Nội dung bài viết 13', N'Hình ảnh 13', 13),
+		(N'Tiêu đề 14', N'Nội dung bài viết 14', N'Hình ảnh 14', 14),
+		(N'Tiêu đề 15', N'Nội dung bài viết 15', N'Hình ảnh 15', 15),
+		(N'Tiêu đề 16', N'Nội dung bài viết 16', N'Hình ảnh 16', 16),
+		(N'Tiêu đề 17', N'Nội dung bài viết 17', N'Hình ảnh 17', 17),
+		(N'Tiêu đề 18', N'Nội dung bài viết 18', N'Hình ảnh 18', 18),
+		(N'Tiêu đề 19', N'Nội dung bài viết 19', N'Hình ảnh 19', 19),
+		(N'Tiêu đề 20', N'Nội dung bài viết 20', N'Hình ảnh 20', 20),
+		(N'Tiêu đề 21', N'Nội dung bài viết 21', N'Hình ảnh 21', 21),
+		(N'Tiêu đề 22', N'Nội dung bài viết 22', N'Hình ảnh 22', 22),
+		(N'Tiêu đề 23', N'Nội dung bài viết 23', N'Hình ảnh 23', 23),
+		(N'Tiêu đề 24', N'Nội dung bài viết 24', N'Hình ảnh 24', 24),
+		(N'Tiêu đề 25', N'Nội dung bài viết 25', N'Hình ảnh 25', 25),
+		(N'Tiêu đề 26', N'Nội dung bài viết 26', N'Hình ảnh 26', 26),
+		(N'Tiêu đề 27', N'Nội dung bài viết 27', N'Hình ảnh 27', 27),
+		(N'Tiêu đề 28', N'Nội dung bài viết 28', N'Hình ảnh 28', 28),
+		(N'Tiêu đề 29', N'Nội dung bài viết 29', N'Hình ảnh 29', 29),
+		(N'Tiêu đề 30', N'Nội dung bài viết 30', N'Hình ảnh 30', 30);
 -----
 
 -- Yêu cầu 2 - Đổi tên bảng Thanhvien thành bảng User --
@@ -182,7 +181,7 @@
 		gender ntext, 
 		email ntext,  
 		phone int, 
-		birthday text, 
+		birthday date, 
 		country ntext;
 -----
 
@@ -218,7 +217,10 @@
 	update [user] set gender = N'Nam', email = N'cuongnh0907@gmail.com', phone = 0989113968, birthday = '09-07-1991', country = N'Hà Tĩnh' where Id = '28';
 	update [user] set gender = N'Nam', email = N'cuongnh0907@gmail.com', phone = 0989113968, birthday = '09-07-1991', country = N'Hà Tĩnh' where Id = '29';
 	update [user] set gender = N'Nam', email = N'cuongnh0907@gmail.com', phone = 0989113968, birthday = '09-07-1991', country = N'Hà Tĩnh' where Id = '30';
-	--Select CONVERT(varchar, '1991-10-21', 103)
+	--SET DATEFORMAT dmy;
+	--Select CONVERT(varchar, GETDATE(), 103)
+	--select Id, TaiKhoan, Matkhau, gender, email, phone, country, convert(varchar, birthday, 103) as NgaySinh from [user]
+	--Tạo hàm
 -----
 
 -- Yêu cầu 5 - Tìm danh mục Thể Thao trong bảng danh mục và xóa bỏ danh mục đó --
@@ -227,15 +229,16 @@
 ----
 
 -- Xóa bỏ danh mục Thể Thao
-	alter table Bai_Viet drop constraint fk_Bai_Viet_TV;
-	alter table Bai_Viet drop constraint fk_Bai_Viet_DM;
+	alter table Bai_Viet drop constraint fk_Bai_Viet_DM; --Xóa bỏ ràng buộc--
 	delete from Dm_BaiViet where Id = '1';
+	alter table Bai_Viet with nocheck  add constraint fk_Bai_Viet_DM foreign key(Id_Dm)	 references Dm_BaiViet(Id); --Tạo lại ràng buộc--
 -----
 
 -----------------------------END--------------------------------
 
 -- Hiển thị bảng:
 	select * from [user];
+	select Id, TaiKhoan, Matkhau, gender, email, phone, country, convert(varchar, birthday, 103) as NgaySinh from [user];
 	select * from Thanh_Vien;
 	select * from Dm_BaiViet;
 	select * from Bai_Viet;
@@ -244,11 +247,10 @@
 -- Lệnh bổ trợ --
 /*
 -- Xóa ràng buộc
-	alter table Thanh_Vien drop constraint pk_Thanh_Vien;
-	alter table [user] drop constraint pk_Thanh_Vien;
-	alter table Bai_Viet drop constraint fk_Bai_Viet_TV;
 	alter table Bai_Viet drop constraint fk_Bai_Viet_DM;
 	alter table Dm_BaiViet drop constraint pk_Dm_BaiViet;
+	alter table Bai_Viet nocheck constraint fk_Bai_Viet_DM; --Bỏ kiểm tra ràng buộc--
+	alter table Bai_Viet with check check constraint fk_Bai_Viet_DM --Tạo lại ràng buộc--
 -----
 -- Xóa bảng
 	drop table Thanh_Vien
@@ -272,7 +274,7 @@
 	alter table [user] alter column gender ntext;
 	alter table [user] alter column email ntext;
 	alter table [user] alter column phone int;
-	alter table [user] alter column birthday ntext;
+	alter table [user] alter column birthday date;
 	alter table [user] alter column country ntext;
 -----
 */
