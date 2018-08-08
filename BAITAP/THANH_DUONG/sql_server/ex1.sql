@@ -5,7 +5,7 @@ if not exists (select * from sys.databases where name = N'DB_NEWS')
 			size = 5,
 			maxsize = 50,
 			filegrowth = 5,
-			filename = 'D:\DB_NEWS.mdf',
+			filename = 'D:\DB\DB_NEWS.mdf',
 			name = DB_NEWS
 		)
 	end;
@@ -252,7 +252,7 @@ WHERE ID = 30;
 		delete from BaiViet where ID = 1 -- bài viết thuộc danh mục thể thao có ID = 1,8,12,28 
 	-- C1 - b2: quay lại xóa thư mục có tên 'thể thao'
 	select ID,Ten_DM from DM_BaiViet; -- show toàn bộ dữ liệu trong DM_BaiViet, tìm thấy danh mục thể thao có ID = 1;
-	DELETE from DM_BaiViet where id = 18; -- xóa danh mục 'thể thao' theo ID = 1
+	DELETE from DM_BaiViet where id = 1; -- xóa danh mục 'thể thao' theo ID = 1
 		-- hoăc 
 	DELETE from DM_BaiViet where Ten_DM = N'thể thao'; -- xóa danh mục thể thao theo tên 
 
@@ -266,8 +266,7 @@ WHERE ID = 30;
 	alter table BaiViet with NOCHECK
 		add constraint FK_id_dm foreign key (id_dm) references DM_BaiViet(ID)
 
-	
-
+-- select * from [User]
 
 
 -- ALTER TABLE Purchasing.PurchaseOrderHeader  
