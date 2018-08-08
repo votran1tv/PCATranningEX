@@ -1,13 +1,13 @@
 if not exists (select * from sys.databases where name = N'DB_NEWS')
 	begin
 		create database DB_NEWS
-		-- on primary(
-		-- 	size = 5,
-		-- 	maxsize = 50,
-		-- 	filegrowth = 5,
-		-- filename = '/home/duongth/db/DB/DB_NEWS.mdf',
-		-- 	name = DB_NEWS
-		-- )
+		on primary(
+			size = 5,
+			maxsize = 50,
+			filegrowth = 5,
+			filename = 'D:\DB\DB_NEWS.mdf',
+			name = DB_NEWS
+		)
 	end;
 
 -- DROP DATABASE DB_NEWS
