@@ -39,10 +39,10 @@ $(document).ready(function(){
     })
 
     $("input[name='lichdang']").click(function(){
-        if($("#dangngay").prop('checked')){
+        if($("#n0").prop('checked')){
             $("#datetime").prop('disabled',true);
         }
-        if($("#datlich").prop('checked')){
+        if($("#n1").prop('checked')){
             $('#datetime').prop('disabled',false);
         }
     })
@@ -57,7 +57,7 @@ $(document).ready(function(){
         a = a.replace(/(ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ)/g,'u');
         a = a.replace(/(ỳ|ý|ỵ|ỷ|ỹ)/g,'y');
         a = a.replace(/\ /g,"-");
-        $("a[target!='_blank']").show();
+        $("a[target=_blank]").show();
     })
 
 
