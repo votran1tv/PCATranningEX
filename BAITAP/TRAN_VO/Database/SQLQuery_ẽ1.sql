@@ -292,7 +292,7 @@ IF  NOT EXISTS (SELECT * FROM sysobjects WHERE name = 'Baiviet')
 	Set Gender='Nam', Email='admin030@mail.com', Phone='01234581', Birthday='20/01/1990', Country=N'Vũng Tàu'
 	Where id =30;
 	
-	select CONVERT(VARCHAR(10), GETDATE(), 103)
+	--select CONVERT(VARCHAR(10), GETDATE(), 103)
 
 
  alter table Baiviet add constraint fkbaiviet  foreign key(id_dm) references Dm_Baiviet
@@ -306,4 +306,3 @@ IF  NOT EXISTS (SELECT * FROM sysobjects WHERE name = 'Baiviet')
 	Select*from Dm_baiviet;
 	Select*from Baiviet;
 	Select*from [dbo].[User];
-
