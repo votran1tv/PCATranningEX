@@ -2,7 +2,7 @@ $(document).ready(function () {
     var reg = /^([A-Za-z0-9\.])+@([A-Za-z\.]+)\.([A-Za-z]{3,4})/i;
 
     var title = $('input[name="title"]');
-    var link = $('input[name="link"]');
+    var link = $('textarea[name="link"]');
     var content = $('textarea[name="content"]');
     var email = $('input[name="email"]');
     var tel = $('input[name="tel"]');
