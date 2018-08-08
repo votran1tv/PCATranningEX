@@ -1,69 +1,242 @@
 <!DOCTYPE html/>
-<html lang="vi-Vn"/>
+<html lang="vi-Vn" />
+
 <head>
-	<meta charset="UTF-8"/>
-	<!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
-	<link rel="shortcut icon" type="image/x-icon" href="Images/logo.png"/>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="shortcut icon" type="image/x-icon" href="Images/logo.png" />
 	<title>News - PCA</title>
-	<link rel="stylesheet" type="text/css" href="Asset/Style/index.css"/>
-	<link rel="stylesheet" type="text/css" href="Asset/Style/newsContent.css"/>
+	<!-- <link rel="stylesheet" type="text/css"  media="screen" href="Asset/Style/bootstrap-4.1.3.min.css"/> -->
+	<link rel="stylesheet" type="text/css" media="screen" href="Asset/Style/index.css" />
 	<script type="text/javascript" src="Asset/JavaScript/jquery-3.3.1.min.js"></script>
+	<!-- <script type="text/javascript" src="Asset/JavaScript/bootstrap-4.1.3.min.js"></script>
+	<script type="text/javascript" src="Asset/JavaScript/popper-v1.min.js"></script> -->
+	<script type="text/javascript" src="Asset/JavaScript/newsContent.js">
+	</script>
 	<!--[if lt IE 9]>
 	<script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
 <![endif]-->
-	<script type="text/javascript" src="Asset/JavaScript/newsContent.js"></script>
+
+	<script>
+		$(document).ready(function () {
+
+
+
+			var float = function () {
+				$('#slide_img').stop(true, true).animate({
+					'margin-left': -300 * 2
+				}, 300, function () {
+					$(this).css({
+						marginLeft: -300
+					})
+					$($(this).find('img')[0]).appendTo($(this));
+				});
+			}
+
+			var slide = setInterval(float, 1000);
+
+			$("#slide_right_top_row").hover(function () {
+				clearInterval(slide);
+			}, function () {
+				slide = setInterval(float, 1000);
+			});
+
+			$("#control_img_prev").click(function () {
+				$('#slide_img').stop(true, true).animate({
+					'margin-left': 0
+				}, 300, function () {
+					$("#slide_img").css({
+						marginLeft: -300
+					})
+					$($("#slide_img").find('img')[2]).prependTo($("#slide_img"));
+				});
+			});
+
+			$("#control_img_next").click(function () {
+
+				float();
+			});
+
+			$(".control_img").hover(function () {
+				$(".control_img img").css({
+					"opacity": "1"
+				});
+			}, function () {
+				$(".control_img img").css({
+					"opacity": "0.25"
+				});
+			});
+
+			$("#control_img_prev").click(function () {
+				$("#control_img_prev img").css({
+					"border": "2px solid yellow",
+					"border-radius": "50%"
+				});
+			}).hover(function () {}, function () {
+				$("#control_img_prev img").css({
+					"border": "none"
+				});
+			});
+
+			$("#control_img_next").click(function () {
+				$("#control_img_next img").css({
+					"border": "2px solid yellow",
+					"border-radius": "50%"
+				});
+			}).hover(function () {}, function () {
+				$("#control_img_next img").css({
+					"border": "none"
+				});
+			});
+
+		});
+	</script>
 
 </head>
+
 <body>
-    <div id="head_swapper">
-    	<div id="head_top_main">
-    		<div id="head_time"></div>
-    	<div id="head_list">
-    		<a href="#"><span>Về Báo Nhân Dân</span></a> - <a href="#"><span>English</span></a> - <a href="#"><span>中文</span></a> - <a href="#"><span>Français</span></a> - <a href="#"><span>Русский Язык</span></a> - <a href="#"><span>Thời Nay</span></a> - <a href="#"><span>ND Cuối Tuần</span></a> - <a href="#"><span>ND Hằng Tháng</span></a> - <a href="#"><span>Hà Nội</span></a> - <a href="#"><span>TP HCM</span></a> - <a href="#"><span>Quảng cáo</span></a>
-    	</div>
-    	<div id="head_search">
-    		<form id="form">
-    			<input id="input_search" type="text" name="search" placeholder="Tìm kiếm">
-    			<div id="search_icon">
-    				<img src="Images/search_64px.png">
-    			</div>
-    		</form>
-    	</div>
-    	</div>
-    </div>
-    
-    <div id="swapper">
-		
+	<div id="head_swapper">
+		<div id="head_top_main">
+			<div id="head_time"></div>
+			<div id="head_list">
+				<a href="#">
+					<span>Về Báo Nhân Dân</span>
+				</a> -
+				<a href="#">
+					<span>English</span>
+				</a> -
+				<a href="#">
+					<span>中文</span>
+				</a> -
+				<a href="#">
+					<span>Français</span>
+				</a> -
+				<a href="#">
+					<span>Русский Язык</span>
+				</a> -
+				<a href="#">
+					<span>Thời Nay</span>
+				</a> -
+				<a href="#">
+					<span>ND Cuối Tuần</span>
+				</a> -
+				<a href="#">
+					<span>ND Hằng Tháng</span>
+				</a> -
+				<a href="#">
+					<span>Hà Nội</span>
+				</a> -
+				<a href="#">
+					<span>TP HCM</span>
+				</a> -
+				<a href="#">
+					<span>Quảng cáo</span>
+				</a>
+			</div>
+			<div id="head_search">
+				<form id="form">
+					<input id="input_search" type="text" name="search" placeholder="Tìm kiếm">
+					<div id="search_icon">
+						<img src="Images/search_64px.png">
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<div id="swapper">
+
 		<div id="banner_logo">
 			<img src="Images/TiitleLogo_mod.jpg" width="354" height="100px">
 			<img src="Images/Banner.jpg" width="780" height="100px">
-        </div>
-        <div id="header">
-				<div id="inside_header">
-						<ul>
-								<li> <a href="#"><span><img src="Images/home.png" width="22" height="24"></span></a></li>
-								<li> <a href="#"><span>chính trị</span></a>
-									
-								</li>
-								<li> <a href="#"><span>kinh tế</span></a></li>
-								<li> <a href="#"><span>văn hóa</span></a></li>
-								<li> <a href="#"><span>xã hội</span></a></li>
-								<li> <a href="#"><span>thế giới</span></a></li>
-								<li> <a href="#"><span>công nghệ</span></a></li>
-								<li> <a href="#"><span>khoa học</span></a></li>
-								<li> <a href="#"><span>giáo dục</span></a></li>
-								<li> <a href="#"><span>sức khỏe</span></a></li>
-								<li> <a href="#"><span>pháp luật</span></a></li>
-								<li> <a href="#"><span>thể thao</span></a></li>
-								<li> <a href="#"><span>bạn đọc</span></a></li>
-								<li> <a href="#"><span>hà nội</span></a></li>
-								<li> <a href="#"><span>tp hcm</span></a></li>
-							</ul>
-				</div>
+		</div>
+		<div id="header">
+			<div id="inside_header">
+				<ul>
+					<li>
+						<a href="#">
+							<span>
+								<img src="Images/home.png" width="22" height="24">
+							</span>
+						</a>
+					</li>
+					<li>
+						<a href="#">
+							<span>chính trị</span>
+						</a>
+
+					</li>
+					<li>
+						<a href="#">
+							<span>kinh tế</span>
+						</a>
+					</li>
+					<li>
+						<a href="#">
+							<span>văn hóa</span>
+						</a>
+					</li>
+					<li>
+						<a href="#">
+							<span>xã hội</span>
+						</a>
+					</li>
+					<li>
+						<a href="#">
+							<span>thế giới</span>
+						</a>
+					</li>
+					<li>
+						<a href="#">
+							<span>công nghệ</span>
+						</a>
+					</li>
+					<li>
+						<a href="#">
+							<span>khoa học</span>
+						</a>
+					</li>
+					<li>
+						<a href="#">
+							<span>giáo dục</span>
+						</a>
+					</li>
+					<li>
+						<a href="#">
+							<span>sức khỏe</span>
+						</a>
+					</li>
+					<li>
+						<a href="#">
+							<span>pháp luật</span>
+						</a>
+					</li>
+					<li>
+						<a href="#">
+							<span>thể thao</span>
+						</a>
+					</li>
+					<li>
+						<a href="#">
+							<span>bạn đọc</span>
+						</a>
+					</li>
+					<li>
+						<a href="#">
+							<span>hà nội</span>
+						</a>
+					</li>
+					<li>
+						<a href="#">
+							<span>tp hcm</span>
+						</a>
+					</li>
+				</ul>
 			</div>
-        <div id="hr"></div>
-        <div id="container">
-            <div id="top_row">
+		</div>
+		<div id="hr"></div>
+		<div id="container">
+			<div id="top_row">
 
 				<div id="left_top_row">
 
@@ -71,205 +244,504 @@
 						<div id="slide">
 							<span>Tin mới nhận: </span>
 							<marquee onmouseover="this.stop()" onmouseout="this.start()" tittle="Tin nóng" behavior="scroll" scrollamount="6" loop="infinite">
-								<a href="#"><span></span>Cơ hội để thị trường hồi phục</a>
+								<a href="newsContent.html">
+									<span></span>Cơ hội để thị trường hồi phục</a>
 								&nbsp;&nbsp;
-								<a href="#"><span></span>Cơ hội để thị trường hồi phục</a>
+								<a href="newsContent.html">
+									<span></span>Cơ hội để thị trường hồi phục</a>
 								&nbsp;&nbsp;
-								<a href="#"><span></span>Cơ hội để thị trường hồi phục</a>
+								<a href="newsContent.html">
+									<span></span>Cơ hội để thị trường hồi phục</a>
 								&nbsp;&nbsp;
-								<a href="#"><span></span>Cơ hội để thị trường hồi phục</a>
+								<a href="newsContent.html">
+									<span></span>Cơ hội để thị trường hồi phục</a>
 								&nbsp;&nbsp;
-								<a href="#"><span></span>Cơ hội để thị trường hồi phục</a>
+								<a href="newsContent.html">
+									<span></span>Cơ hội để thị trường hồi phục</a>
 								&nbsp;&nbsp;
 							</marquee>
 						</div>
-						<img src="Images/main_news.png" width="580" height="315"/>
+						<a></a>
+						<a href="newsContent.html"><img src="Images/main_news.png" width="580" height="315" /></a>
 						<div id="text_main_news">
 							<h3>
-								<a href="#">
+								<a href="newsContent.html">
 									Tổng Bí thư Nguyễn Phú Trọng tiếp; Chủ tịch Quốc hội Nguyễn Thị Kim Ngân đón, hội đàm với Chủ tịch Hạ viện Australia T.Smith
 								</a>
 							</h3>
 							<p>
-								Nhận lời mời của Chủ tịch Quốc hội (QH) Nguyễn Thị Kim Ngân, Đoàn đại biểu cấp cao Hạ viện Australia do Ngài T.Smith, Chủ tịch Hạ viện dẫn đầu, đã đến Hà Nội, bắt đầu thăm chính thức Việt Nam.
+								Nhận lời mời của Chủ tịch Quốc hội (QH) Nguyễn Thị Kim Ngân, Đoàn đại biểu cấp cao Hạ viện Australia do Ngài T.Smith, Chủ
+								tịch Hạ viện dẫn đầu, đã đến Hà Nội, bắt đầu thăm chính thức Việt Nam.
 							</p>
 						</div>
 					</div>
 					<div id="subs_news">
-						
+
 						<div id="sub_news_top">
-							<a href="#"><img src="Images/sub_news.jpg" width="290" height="160"/></a>
+							<a href="newsContent.html">
+								<img src="Images/sub_news.jpg" width="290" height="160" />
+							</a>
 							<div id="hit_sub">
-								<a href="#"><h4>Thủ tướng Nguyễn Xuân Phúc làm việc với Ban Kinh tế T.Ư</h4></a>
+								<a href="newsContent.html">
+									<h4>Thủ tướng Nguyễn Xuân Phúc làm việc với Ban Kinh tế T.Ư</h4>
+								</a>
 							</div>
 						</div>
 						<div class="sub_news">
 							<div class="sub_news_left">
-								<a href="#">Khai thác thế mạnh cây công nghiệp ở Đông Nam Bộ (Kỳ 1)</a>
+								<a href="newsContent.html">Khai thác thế mạnh cây công nghiệp ở Đông Nam Bộ (Kỳ 1)</a>
 							</div>
 							<div class="sub_news_right">
-									<a href="#"><img src="Images/sub_news_right.png"/></a>
+								<a href="newsContent.html">
+									<img src="Images/sub_news_right.png" />
+								</a>
 							</div>
 						</div>
 						<div class="sub_news">
-								<div class="sub_news_left">
-										<a href="#">Khai thác thế mạnh cây công nghiệp ở Đông Nam Bộ (Kỳ 1)</a>
-									</div>
-									<div class="sub_news_right">
-											<a href="#"><img src="Images/sub_news_right.png"/></a>
-									</div>
+							<div class="sub_news_left">
+								<a href="newsContent.html">Khai thác thế mạnh cây công nghiệp ở Đông Nam Bộ (Kỳ 1)</a>
+							</div>
+							<div class="sub_news_right">
+								<a href="newsContent.html">
+									<img src="Images/sub_news_right.png" />
+								</a>
+							</div>
 						</div>
 						<div class="sub_news">
-								<div class="sub_news_left">
-										<a href="#">Khai thác thế mạnh cây công nghiệp ở Đông Nam Bộ (Kỳ 1)</a>
-									</div>
-									<div class="sub_news_right">
-											<a href="#"><img src="Images/sub_news_right.png"/></a>
-									</div>
+							<div class="sub_news_left">
+								<a href="newsContent.html">Khai thác thế mạnh cây công nghiệp ở Đông Nam Bộ (Kỳ 1)</a>
+							</div>
+							<div class="sub_news_right">
+								<a href="newsContent.html">
+									<img src="Images/sub_news_right.png" />
+								</a>
+							</div>
 						</div>
 						<div class="sub_news">
-								<div class="sub_news_left">
-										<a href="#">Khai thác thế mạnh cây công nghiệp ở Đông Nam Bộ (Kỳ 1)</a>
-									</div>
-									<div class="sub_news_right">
-										<a href="#"><img src="Images/sub_news_right.png"/></a>
-									</div>
+							<div class="sub_news_left">
+								<a href="newsContent.html">Khai thác thế mạnh cây công nghiệp ở Đông Nam Bộ (Kỳ 1)</a>
+							</div>
+							<div class="sub_news_right">
+								<a href="newsContent.html">
+									<img src="Images/sub_news_right.png" />
+								</a>
+							</div>
 						</div>
 
 					</div>
-					<div id="img_sub"><a href="#"><img src="Images/img_sub.jpg"/></a></div>
-				
+					<div id="img_sub">
+						<a href="newsContent.html">
+							<img src="Images/img_sub.jpg" />
+						</a>
+					</div>
+
 					<div id="bottom_row">
 						<div id="tittle_bottom">
-							<h3>ẤN TƯỢNG</h3>		
+							<h3>ẤN TƯỢNG</h3>
 						</div>
 						<div class="content_bottom">
 							<div class="content_bottom_news">
 								<div class="border_content_bottom_news">
-									<a href="#">
-										<img class="img_content_bottom_new" src="Images/img_content_bottom_new.png"/>
+									<a href="newsContent.html">
+										<img class="img_content_bottom_new" src="Images/img_content_bottom_new.png" />
 										<h4>Pháp luật: thời sự pháp luật</h4>
 									</a>
 								</div>
 								<div class="tittle_content_bottom_new">
-									<a href="#">Đường đi bí ẩn của 100 bánh cocaine, trị giá 800 tỷ bị bắt giữ</a>
+									<a href="newsContent.html">Đường đi bí ẩn của 100 bánh cocaine, trị giá 800 tỷ bị bắt giữ</a>
 								</div>
 							</div>
 
 							<div class="content_bottom_news">
-									<div class="border_content_bottom_news">
-										<a href="#">
-											<img class="img_content_bottom_new" src="Images/img_content_bottom_new.png"/>
-											<h4>THẾ GIỚI: CỬA SỔ THẾ GIỚI</h4>
-										</a>
-									</div>
-									<div class="tittle_content_bottom_new">
-										<a href="#">Hình ảnh hậu quả của đợt nắng nóng kéo dài tại Anh</a>
-									</div>
+								<div class="border_content_bottom_news">
+									<a href="newsContent.html">
+										<img class="img_content_bottom_new" src="Images/img_content_bottom_new.png" />
+										<h4>THẾ GIỚI: CỬA SỔ THẾ GIỚI</h4>
+									</a>
 								</div>
+								<div class="tittle_content_bottom_new">
+									<a href="newsContent.html">Hình ảnh hậu quả của đợt nắng nóng kéo dài tại Anh</a>
+								</div>
+							</div>
 
-								<div class="content_bottom_news">
-										<div class="border_content_bottom_news">
-											<a href="#">
-												<img class="img_content_bottom_new" src="Images/img_content_bottom_new.png"/>
-												<h4>Văn hóa: du lịch</h4>
-											</a>
-										</div>
-										<div class="tittle_content_bottom_new">
-											<a href="#">10 món ăn đường phố hấp dẫn ở Việt Nam</a>
-										</div>
-									</div>
+							<div class="content_bottom_news">
+								<div class="border_content_bottom_news">
+									<a href="newsContent.html">
+										<img class="img_content_bottom_new" src="Images/img_content_bottom_new.png" />
+										<h4>Văn hóa: du lịch</h4>
+									</a>
+								</div>
+								<div class="tittle_content_bottom_new">
+									<a href="newsContent.html">10 món ăn đường phố hấp dẫn ở Việt Nam</a>
+								</div>
+							</div>
 						</div>
 						<div class="content_bottom">
-								<div class="content_bottom_news">
-										<div class="border_content_bottom_news">
-											<a href="#">
-												<img class="img_content_bottom_new" src="Images/img_content_bottom_new.png"/>
-												<h4>Kinh tế: tin tức</h4>
-											</a>
-										</div>
-										<div class="tittle_content_bottom_new">
-											<a href="#">Khai thác thế mạnh cây công nghiệp ở Ðông Nam Bộ</a>
-										</div>
-									</div>
+							<div class="content_bottom_news">
+								<div class="border_content_bottom_news">
+									<a href="newsContent.html">
+										<img class="img_content_bottom_new" src="Images/img_content_bottom_new.png" />
+										<h4>Kinh tế: tin tức</h4>
+									</a>
+								</div>
+								<div class="tittle_content_bottom_new">
+									<a href="newsContent.html">Khai thác thế mạnh cây công nghiệp ở Ðông Nam Bộ</a>
+								</div>
+							</div>
 
-									<div class="content_bottom_news">
-											<div class="border_content_bottom_news">
-												<a href="#">
-													<img class="img_content_bottom_new" src="Images/img_content_bottom_new.png"/>
-													<h4>Pháp luật: thời sự pháp luật</h4>
-												</a>
-											</div>
-											<div class="tittle_content_bottom_new">
-												<a href="#">Hàng loạt biệt thự "chui lọt lỗ kim" để xây dựng trên đất lâm nghiệp</a>
-											</div>
-										</div>
+							<div class="content_bottom_news">
+								<div class="border_content_bottom_news">
+									<a href="newsContent.html">
+										<img class="img_content_bottom_new" src="Images/img_content_bottom_new.png" />
+										<h4>Pháp luật: thời sự pháp luật</h4>
+									</a>
+								</div>
+								<div class="tittle_content_bottom_new">
+									<a href="newsContent.html">Hàng loạt biệt thự "chui lọt lỗ kim" để xây dựng trên đất lâm nghiệp</a>
+								</div>
+							</div>
 
-										<div class="content_bottom_news">
-												<div class="border_content_bottom_news">
-													<a href="#">
-														<img class="img_content_bottom_new" src="Images/img_content_bottom_new.png"/>
-														<h4>Văn hóa: diễn đàn</h4>
-													</a>
-												</div>
-												<div class="tittle_content_bottom_new">
-													<a href="#">Từ vụ di chỉ Vườn Chuối: Cần phải có quy hoạch khảo cổ</a>
-												</div>
-											</div>
+							<div class="content_bottom_news">
+								<div class="border_content_bottom_news">
+									<a href="newsContent.html">
+										<img class="img_content_bottom_new" src="Images/img_content_bottom_new.png" />
+										<h4>Văn hóa: diễn đàn</h4>
+									</a>
+								</div>
+								<div class="tittle_content_bottom_new">
+									<a href="newsContent.html">Từ vụ di chỉ Vườn Chuối: Cần phải có quy hoạch khảo cổ</a>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
 
 				<div id="right_top_row">
 					<div id="img_right_top_row">
-						<a href="#"><img src="Images/img1_right_top_row.png"/></a>
-						<a href="#"><img src="Images/img2_right_top_row.jpg"/></a>
+						<a href="newsContent.html">
+							<img src="Images/img1_right_top_row.png" />
+						</a>
+						<a href="newsContent.html">
+							<img src="Images/img2_right_top_row.jpg" />
+						</a>
 					</div>
 					<div id="content_right_top_row">
 						<div id="tittle_right_top_row">
-							<a href=""><h3>Tin bài mới</h3></a>
+							<a href="">
+								<h3>Tin bài mới</h3>
+							</a>
 						</div>
 						<div id="scroll_right_top_row">
-							<a href="#"><p>Giao quyền Bộ trưởng Thông tin và Truyền thông đối với Thiếu tướng Nguyễn Mạnh Hùng </p></a>
-							<a href="#"><p>Giao quyền Bộ trưởng Thông tin và Truyền thông đối với Thiếu tướng Nguyễn Mạnh Hùng </p></a>
-							<a href="#"><p>Giao quyền Bộ trưởng Thông tin và Truyền thông đối với Thiếu tướng Nguyễn Mạnh Hùng </p></a>
-							<a href="#"><p>Giao quyền Bộ trưởng Thông tin và Truyền thông đối với Thiếu tướng Nguyễn Mạnh Hùng </p></a>
-							<a href="#"><p>Giao quyền Bộ trưởng Thông tin và Truyền thông đối với Thiếu tướng Nguyễn Mạnh Hùng </p></a>
-							<a href="#"><p>Giao quyền Bộ trưởng Thông tin và Truyền thông đối với Thiếu tướng Nguyễn Mạnh Hùng </p></a>
-							<a href="#"><p>Giao quyền Bộ trưởng Thông tin và Truyền thông đối với Thiếu tướng Nguyễn Mạnh Hùng </p></a>
-							<a href="#"><p>Giao quyền Bộ trưởng Thông tin và Truyền thông đối với Thiếu tướng Nguyễn Mạnh Hùng </p></a>
-							<a href="#"><p>Giao quyền Bộ trưởng Thông tin và Truyền thông đối với Thiếu tướng Nguyễn Mạnh Hùng </p></a>
-							<a href="#"><p>Giao quyền Bộ trưởng Thông tin và Truyền thông đối với Thiếu tướng Nguyễn Mạnh Hùng </p></a>
-							<a href="#"><p>Giao quyền Bộ trưởng Thông tin và Truyền thông đối với Thiếu tướng Nguyễn Mạnh Hùng </p></a>
-							<a href="#"><p>Giao quyền Bộ trưởng Thông tin và Truyền thông đối với Thiếu tướng Nguyễn Mạnh Hùng </p></a>
-							<a href="#"><p>Giao quyền Bộ trưởng Thông tin và Truyền thông đối với Thiếu tướng Nguyễn Mạnh Hùng </p></a>
-							<a href="#"><p>Giao quyền Bộ trưởng Thông tin và Truyền thông đối với Thiếu tướng Nguyễn Mạnh Hùng </p></a>
-							<a href="#"><p>Giao quyền Bộ trưởng Thông tin và Truyền thông đối với Thiếu tướng Nguyễn Mạnh Hùng </p></a>
-							<a href="#"><p>Giao quyền Bộ trưởng Thông tin và Truyền thông đối với Thiếu tướng Nguyễn Mạnh Hùng </p></a>
-							<a href="#"><p>Giao quyền Bộ trưởng Thông tin và Truyền thông đối với Thiếu tướng Nguyễn Mạnh Hùng </p></a>
-							<a href="#"><p>Giao quyền Bộ trưởng Thông tin và Truyền thông đối với Thiếu tướng Nguyễn Mạnh Hùng </p></a>
-							<a href="#"><p>Giao quyền Bộ trưởng Thông tin và Truyền thông đối với Thiếu tướng Nguyễn Mạnh Hùng </p></a>
-							<a href="#"><p>Giao quyền Bộ trưởng Thông tin và Truyền thông đối với Thiếu tướng Nguyễn Mạnh Hùng </p></a>
-							
+							<a href="newsContent.html">
+								<p>Giao quyền Bộ trưởng Thông tin và Truyền thông đối với Thiếu tướng Nguyễn Mạnh Hùng </p>
+							</a>
+							<a href="newsContent.html">
+								<p>Giao quyền Bộ trưởng Thông tin và Truyền thông đối với Thiếu tướng Nguyễn Mạnh Hùng </p>
+							</a>
+							<a href="newsContent.html">
+								<p>Giao quyền Bộ trưởng Thông tin và Truyền thông đối với Thiếu tướng Nguyễn Mạnh Hùng </p>
+							</a>
+							<a href="newsContent.html">
+								<p>Giao quyền Bộ trưởng Thông tin và Truyền thông đối với Thiếu tướng Nguyễn Mạnh Hùng </p>
+							</a>
+							<a href="newsContent.html">
+								<p>Giao quyền Bộ trưởng Thông tin và Truyền thông đối với Thiếu tướng Nguyễn Mạnh Hùng </p>
+							</a>
+							<a href="newsContent.html">
+								<p>Giao quyền Bộ trưởng Thông tin và Truyền thông đối với Thiếu tướng Nguyễn Mạnh Hùng </p>
+							</a>
+							<a href="newsContent.html">
+								<p>Giao quyền Bộ trưởng Thông tin và Truyền thông đối với Thiếu tướng Nguyễn Mạnh Hùng </p>
+							</a>
+							<a href="newsContent.html">
+								<p>Giao quyền Bộ trưởng Thông tin và Truyền thông đối với Thiếu tướng Nguyễn Mạnh Hùng </p>
+							</a>
+							<a href="newsContent.html">
+								<p>Giao quyền Bộ trưởng Thông tin và Truyền thông đối với Thiếu tướng Nguyễn Mạnh Hùng </p>
+							</a>
+							<a href="newsContent.html">
+								<p>Giao quyền Bộ trưởng Thông tin và Truyền thông đối với Thiếu tướng Nguyễn Mạnh Hùng </p>
+							</a>
+							<a href="newsContent.html">
+								<p>Giao quyền Bộ trưởng Thông tin và Truyền thông đối với Thiếu tướng Nguyễn Mạnh Hùng </p>
+							</a>
+							<a href="newsContent.html">
+								<p>Giao quyền Bộ trưởng Thông tin và Truyền thông đối với Thiếu tướng Nguyễn Mạnh Hùng </p>
+							</a>
+							<a href="newsContent.html">
+								<p>Giao quyền Bộ trưởng Thông tin và Truyền thông đối với Thiếu tướng Nguyễn Mạnh Hùng </p>
+							</a>
+							<a href="newsContent.html">
+								<p>Giao quyền Bộ trưởng Thông tin và Truyền thông đối với Thiếu tướng Nguyễn Mạnh Hùng </p>
+							</a>
+							<a href="newsContent.html">
+								<p>Giao quyền Bộ trưởng Thông tin và Truyền thông đối với Thiếu tướng Nguyễn Mạnh Hùng </p>
+							</a>
+							<a href="newsContent.html">
+								<p>Giao quyền Bộ trưởng Thông tin và Truyền thông đối với Thiếu tướng Nguyễn Mạnh Hùng </p>
+							</a>
+							<a href="newsContent.html">
+								<p>Giao quyền Bộ trưởng Thông tin và Truyền thông đối với Thiếu tướng Nguyễn Mạnh Hùng </p>
+							</a>
+							<a href="newsContent.html">
+								<p>Giao quyền Bộ trưởng Thông tin và Truyền thông đối với Thiếu tướng Nguyễn Mạnh Hùng </p>
+							</a>
+							<a href="newsContent.html">
+								<p>Giao quyền Bộ trưởng Thông tin và Truyền thông đối với Thiếu tướng Nguyễn Mạnh Hùng </p>
+							</a>
+							<a href="newsContent.html">
+								<p>Giao quyền Bộ trưởng Thông tin và Truyền thông đối với Thiếu tướng Nguyễn Mạnh Hùng </p>
+							</a>
+
 						</div>
 					</div>
 					<div id="under_right_top_row">
-						<a href="#"><img src="Images/img1under_right_top_row.png" width="290" height="390"></a>
-						<a href="#"><img src="Images/img2under_right_top_row.png" width="290" height="90"></a>
+						<a href="newsContent.html">
+							<img src="Images/img1under_right_top_row.png" width="300" height="390">
+						</a>
+						<a href="newsContent.html">
+							<img src="Images/img2under_right_top_row.png" width="300" height="90">
+						</a>
 					</div>
-					<div id=""></div>
+					<div id="slide_right_top_row">
+						<div id="slide_right_img">
+							<div id="slide_img">
+								<a href="newsContent.html">
+									<img src="Images/slide_right_top_row_1.png" />
+								</a>
+								<a href="newsContent.html">
+									<img src="Images/slide_right_top_row_2.png" />
+								</a>
+								<a href="newsContent.html">
+									<img src="Images/slide_right_top_row_3.png" />
+								</a>
+							</div>
+							<div id="control_img_prev" class="control_img">
+								<img class="img_pre" src="Images/preview_icon.svg" />
+							</div>
+							<div id="control_img_next" class="control_img">
+								<img class="img_next" src="Images/next _icon.svg" />
+							</div>
+						</div>
+					</div>
 				</div>
 
-            </div>
-            <div id="second_row">
-            </div>
-        </div>
+			</div>
+			<div id="second_row">
+				<div class="media">
+					<div class="top_second_row">
+						<div id="title_row_2">
+							<a href="newsContent.html">
+								<span>CHÍNH TRỊ</span>
+							</a>
+						</div>
+						<span class="top_link">
+							<a href="newsContent.html">Tin tức - Sự kiện </a>
+							<a href="newsContent.html">Xã luận</a>
+						</span>
+					</div>
+					<img src="Images/top_second_row.jpg" />
+					<div id="link">
+						<a href="newsContent.html">Bộ Công an trao tiền hỗ trợ Lào khắc phục sự cố đập thủy điện</a>
+					</div>
 
-    </div>
+					<a href="newsContent.html" class="link">25 năm thiết lập quan hệ ngoại giao Việt Nam – Israel: Thành tựu và cơ hội</a>
+					<a href="newsContent.html" class="link">25 năm thiết lập quan hệ ngoại giao Việt Nam – Israel: Thành tựu và cơ hội</a>
+					<a href="newsContent.html" class="link">25 năm thiết lập quan hệ ngoại giao Việt Nam – Israel: Thành tựu và cơ hội</a>
+					<a href="newsContent.html" class="link">25 năm thiết lập quan hệ ngoại giao Việt Nam – Israel: Thành tựu và cơ hội</a>
+				</div>
 
-    <div id="footer_bottom">
+				<div class="media">
+					<div class="top_second_row">
+						<div id="title_row_2">
+							<a href="newsContent.html">
+								<span>CHÍNH TRỊ</span>
+							</a>
+						</div>
+						<span class="top_link">
+							<a href="newsContent.html">Tin tức - Sự kiện </a>
+							<a href="newsContent.html">Xã luận</a>
+						</span>
+					</div>
+					<img src="Images/top_second_row.jpg" />
+					<div id="link">
+						<a href="newsContent.html">Bộ Công an trao tiền hỗ trợ Lào khắc phục sự cố đập thủy điện</a>
+					</div>
+
+					<a href="newsContent.html" class="link">25 năm thiết lập quan hệ ngoại giao Việt Nam – Israel: Thành tựu và cơ hội</a>
+					<a href="newsContent.html" class="link">25 năm thiết lập quan hệ ngoại giao Việt Nam – Israel: Thành tựu và cơ hội</a>
+					<a href="newsContent.html" class="link">25 năm thiết lập quan hệ ngoại giao Việt Nam – Israel: Thành tựu và cơ hội</a>
+					<a href="newsContent.html" class="link">25 năm thiết lập quan hệ ngoại giao Việt Nam – Israel: Thành tựu và cơ hội</a>
+				</div>
+
+				<div class="media">
+					<div class="top_second_row">
+						<div id="title_row_2">
+							<a href="newsContent.html">
+								<span>CHÍNH TRỊ</span>
+							</a>
+						</div>
+						<span class="top_link">
+							<a href="newsContent.html">Tin tức - Sự kiện </a>
+							<a href="newsContent.html">Xã luận</a>
+						</span>
+					</div>
+					<img src="Images/top_second_row.jpg" />
+					<div id="link">
+						<a href="newsContent.html">Bộ Công an trao tiền hỗ trợ Lào khắc phục sự cố đập thủy điện</a>
+					</div>
+
+					<a href="newsContent.html" class="link">25 năm thiết lập quan hệ ngoại giao Việt Nam – Israel: Thành tựu và cơ hội</a>
+					<a href="newsContent.html" class="link">25 năm thiết lập quan hệ ngoại giao Việt Nam – Israel: Thành tựu và cơ hội</a>
+					<a href="newsContent.html" class="link">25 năm thiết lập quan hệ ngoại giao Việt Nam – Israel: Thành tựu và cơ hội</a>
+					<a href="newsContent.html" class="link">25 năm thiết lập quan hệ ngoại giao Việt Nam – Israel: Thành tựu và cơ hội</a>
+				</div>
+
+				<div class="media">
+					<div class="top_second_row">
+						<div id="title_row_2">
+							<a href="newsContent.html">
+								<span>CHÍNH TRỊ</span>
+							</a>
+						</div>
+						<span class="top_link">
+							<a href="newsContent.html">Tin tức - Sự kiện </a>
+							<a href="newsContent.html">Xã luận</a>
+						</span>
+					</div>
+					<img src="Images/top_second_row.jpg" />
+					<div id="link">
+						<a href="newsContent.html">Bộ Công an trao tiền hỗ trợ Lào khắc phục sự cố đập thủy điện</a>
+					</div>
+
+					<a href="newsContent.html" class="link">25 năm thiết lập quan hệ ngoại giao Việt Nam – Israel: Thành tựu và cơ hội</a>
+					<a href="newsContent.html" class="link">25 năm thiết lập quan hệ ngoại giao Việt Nam – Israel: Thành tựu và cơ hội</a>
+					<a href="newsContent.html" class="link">25 năm thiết lập quan hệ ngoại giao Việt Nam – Israel: Thành tựu và cơ hội</a>
+					<a href="newsContent.html" class="link">25 năm thiết lập quan hệ ngoại giao Việt Nam – Israel: Thành tựu và cơ hội</a>
+				</div>
+
+				<div class="media">
+					<div class="top_second_row">
+						<div id="title_row_2">
+							<a href="newsContent.html">
+								<span>CHÍNH TRỊ</span>
+							</a>
+						</div>
+						<span class="top_link">
+							<a href="newsContent.html">Tin tức - Sự kiện </a>
+							<a href="newsContent.html">Xã luận</a>
+						</span>
+					</div>
+					<img src="Images/top_second_row.jpg" />
+					<div id="link">
+						<a href="newsContent.html">Bộ Công an trao tiền hỗ trợ Lào khắc phục sự cố đập thủy điện</a>
+					</div>
+
+					<a href="newsContent.html" class="link">25 năm thiết lập quan hệ ngoại giao Việt Nam – Israel: Thành tựu và cơ hội</a>
+					<a href="newsContent.html" class="link">25 năm thiết lập quan hệ ngoại giao Việt Nam – Israel: Thành tựu và cơ hội</a>
+					<a href="newsContent.html" class="link">25 năm thiết lập quan hệ ngoại giao Việt Nam – Israel: Thành tựu và cơ hội</a>
+					<a href="newsContent.html" class="link">25 năm thiết lập quan hệ ngoại giao Việt Nam – Israel: Thành tựu và cơ hội</a>
+				</div>
+
+				<div class="media">
+					<div class="top_second_row">
+						<div id="title_row_2">
+							<a href="newsContent.html">
+								<span>CHÍNH TRỊ</span>
+							</a>
+						</div>
+						<span class="top_link">
+							<a href="newsContent.html">Tin tức - Sự kiện </a>
+							<a href="newsContent.html">Xã luận</a>
+						</span>
+					</div>
+					<img src="Images/top_second_row.jpg" />
+					<div id="link">
+						<a href="newsContent.html">Bộ Công an trao tiền hỗ trợ Lào khắc phục sự cố đập thủy điện</a>
+					</div>
+
+					<a href="newsContent.html" class="link">25 năm thiết lập quan hệ ngoại giao Việt Nam – Israel: Thành tựu và cơ hội</a>
+					<a href="newsContent.html" class="link">25 năm thiết lập quan hệ ngoại giao Việt Nam – Israel: Thành tựu và cơ hội</a>
+					<a href="newsContent.html" class="link">25 năm thiết lập quan hệ ngoại giao Việt Nam – Israel: Thành tựu và cơ hội</a>
+					<a href="newsContent.html" class="link">25 năm thiết lập quan hệ ngoại giao Việt Nam – Israel: Thành tựu và cơ hội</a>
+				</div>
+
+				<div class="media">
+					<div class="top_second_row">
+						<div id="title_row_2">
+							<a href="newsContent.html">
+								<span>CHÍNH TRỊ</span>
+							</a>
+						</div>
+						<span class="top_link">
+							<a href="newsContent.html">Tin tức - Sự kiện </a>
+							<a href="newsContent.html">Xã luận</a>
+						</span>
+					</div>
+					<img src="Images/top_second_row.jpg" />
+					<div id="link">
+						<a href="newsContent.html">Bộ Công an trao tiền hỗ trợ Lào khắc phục sự cố đập thủy điện</a>
+					</div>
+
+					<a href="newsContent.html" class="link">25 năm thiết lập quan hệ ngoại giao Việt Nam – Israel: Thành tựu và cơ hội</a>
+					<a href="newsContent.html" class="link">25 năm thiết lập quan hệ ngoại giao Việt Nam – Israel: Thành tựu và cơ hội</a>
+					<a href="newsContent.html" class="link">25 năm thiết lập quan hệ ngoại giao Việt Nam – Israel: Thành tựu và cơ hội</a>
+					<a href="newsContent.html" class="link">25 năm thiết lập quan hệ ngoại giao Việt Nam – Israel: Thành tựu và cơ hội</a>
+				</div>
+
+				<div class="media">
+					<div class="top_second_row">
+						<div id="title_row_2">
+							<a href="newsContent.html">
+								<span>CHÍNH TRỊ</span>
+							</a>
+						</div>
+						<span class="top_link">
+							<a href="newsContent.html">Tin tức - Sự kiện </a>
+							<a href="newsContent.html">Xã luận</a>
+						</span>
+					</div>
+					<img src="Images/top_second_row.jpg" />
+					<div id="link">
+						<a href="newsContent.html">Bộ Công an trao tiền hỗ trợ Lào khắc phục sự cố đập thủy điện</a>
+					</div>
+
+					<a href="newsContent.html" class="link">25 năm thiết lập quan hệ ngoại giao Việt Nam – Israel: Thành tựu và cơ hội</a>
+					<a href="newsContent.html" class="link">25 năm thiết lập quan hệ ngoại giao Việt Nam – Israel: Thành tựu và cơ hội</a>
+					<a href="newsContent.html" class="link">25 năm thiết lập quan hệ ngoại giao Việt Nam – Israel: Thành tựu và cơ hội</a>
+					<a href="newsContent.html" class="link">25 năm thiết lập quan hệ ngoại giao Việt Nam – Israel: Thành tựu và cơ hội</a>
+				</div>
+
+				<div class="media">
+					<div class="top_second_row">
+						<div id="title_row_2">
+							<a href="newsContent.html">
+								<span>CHÍNH TRỊ</span>
+							</a>
+						</div>
+						<span class="top_link">
+							<a href="newsContent.html">Tin tức - Sự kiện </a>
+							<a href="newsContent.html">Xã luận</a>
+						</span>
+					</div>
+					<img src="Images/top_second_row.jpg" />
+					<div id="link">
+						<a href="newsContent.html">Bộ Công an trao tiền hỗ trợ Lào khắc phục sự cố đập thủy điện</a>
+					</div>
+
+					<a href="newsContent.html" class="link">25 năm thiết lập quan hệ ngoại giao Việt Nam – Israel: Thành tựu và cơ hội</a>
+					<a href="newsContent.html" class="link">25 năm thiết lập quan hệ ngoại giao Việt Nam – Israel: Thành tựu và cơ hội</a>
+					<a href="newsContent.html" class="link">25 năm thiết lập quan hệ ngoại giao Việt Nam – Israel: Thành tựu và cơ hội</a>
+					<a href="newsContent.html" class="link">25 năm thiết lập quan hệ ngoại giao Việt Nam – Israel: Thành tựu và cơ hội</a>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+	<div id="footer_bottom">
 		<div class="line_bottom"></div>
-    	<div id="top_bottom">
+		<div id="top_bottom">
 			<div id="lk">
 				<span>LIÊN KẾT:</span>
 			</div>
@@ -290,7 +762,7 @@
 			<p>E-mail: nhandandientu@nhandan.org.vn nhandandientutiengviet@gmail.com</p>
 
 		</div>
-    </div>
+	</div>
 </body>
 <script language="JavaScript" type="text/javascript">
 	var view = document.querySelector("#head_time");
@@ -309,19 +781,22 @@
 </script>
 
 <script language="JavaScript" type="text/javascript">
-	window.onscroll = function() {scroll()};
+	window.onscroll = function () {
+		scroll()
+	};
 
 	var navbar = document.getElementById("header");
 	var sticky = navbar.offsetTop;
 	var inside = document.querySelector("#inside_header");
 
 	function scroll() {
-	if (window.pageYOffset >= sticky) {
-		navbar.classList.add("sticky");
-		inside.classList.add("child_sticky");
-	} else {
+		if (window.pageYOffset >= sticky) {
+			navbar.classList.add("sticky");
+			inside.classList.add("child_sticky");
+		} else {
 			navbar.classList.remove("sticky");
 		}
 	}
 </script>
+
 </html>
