@@ -1,0 +1,80 @@
+#container{
+    margin: auto;
+    width: 1010px;
+    height: auto;
+    margin-top: 30px;
+    background-color: #fff;
+}
+
+#title{
+    width: 1010px;
+    height: 120px;
+    margin-bottom: 5px;
+    background-color: #ECEAE3;
+    float: left;
+}
+#title h2{
+    text-align: center;
+    font-weight: bolder;
+    color: #0d7bc5;
+    text-transform: uppercase;
+    margin-top: 30px;
+}
+
+#table_left{
+    width: 700px;
+    height: 410px;
+    float: left;
+    padding: 20px 0px 20px 0px;
+    background-color: #ECEAE3;
+}
+#table_left tr{
+    height: 25px;
+}
+#table_left td{
+    
+}
+
+#table_right{
+    width: 300px;
+    height: 410px;
+    margin-left: 10px;
+    float: left;
+    background-color: #ECEAE3;
+}
+#input_txt{
+    width: 530px;
+    height: 30px;
+    margin-left: 20px;
+    border-radius: 7px;
+    outline: none;
+    font-size: 14px;
+    padding-left: 10px;
+}
+#textarea{
+    width: 530px;
+    margin-left: 20px;
+    border-radius: 7px;
+    padding-top: 65px;
+    padding-left: 10px;
+    font-size: 14px;
+    resize: none;
+    outline: none;
+    box-sizing: border-box;
+}
+#radio{
+    margin-left: 20px;
+}
+#btn{
+    width: 110px;
+    height: 25px;
+    padding: 0%;
+    font-size: 15px;
+    border: 1.5px solid grey;
+    border-radius: 7px;
+    outline: none;
+    background-color: #fff;
+}
+#btn:active{
+    background-color: #0d7bc5;
+}

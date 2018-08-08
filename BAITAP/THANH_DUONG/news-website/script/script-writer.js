@@ -54,6 +54,7 @@ $(document).ready(function () {
         
         $('#showTag').html($('#showTag').html()+show);
         tag.val("");
+	
         // remove tag
         $('.delTag').on('click',function(){
             $(this).parent().remove();
@@ -77,8 +78,8 @@ $(document).ready(function () {
 
 function convert(s){
     s = s.replace(/(à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ)/gi, 'a');
-    s = s.replace(/(è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ)/i,'e');
-    s = s.replace(/(ì|í|ị|ỉ|ĩ)/i,'i');
+    s = s.replace(/(è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ)/gi,'e');
+    s = s.replace(/(ì|í|ị|ỉ|ĩ)/gi,'i');
     s = s.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/gi,'o');
     s = s.replace(/(ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ)/gi,'u');
     s = s.replace(/(ỳ|ý|ỵ|ỷ|ỹ)/gi,'y');
