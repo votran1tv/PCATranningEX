@@ -106,6 +106,7 @@ if not exists (select 1 from sysobjects where name = 'ChiTietPXuat')
             constraint FK_VatTu_ChiTietPXuat foreign key (MaVatTu) references VatTu(MaVatTu)
         )
     end
+
 -- insert du lieu
 insert into VatTu values('tv001','Chais','kg',45)
 insert into VatTu values('tv002','Chang','bags',20)
@@ -144,6 +145,7 @@ insert into DonDatHang values('ddh005','12/6/2018',8)
 insert into DonDatHang values('ddh006','12/5/2018',4)
 insert into DonDatHang values('ddh007','12/4/2018',6)
 insert into DonDatHang values('ddh008','12/3/2018',4)
+insert into DonDatHang values('ddh009','12/3/2018',4)
 insert into DonDatHang values('ddh010','12/2/2018',1)
 insert into DonDatHang values('ddh011','9/2/2018',5)
 insert into DonDatHang values('ddh012','12/1/2018',8)
@@ -214,10 +216,10 @@ insert into ChiTietPNHang values('pnh007','tv006',3,4.1)
 -- tv007 - 12.0
 -- tv008 - 7.5
 -->> insert PhieuXuat & ChiTietPXuat
-insert into PhieuXuat values('px001','10/11/2018','Nguyễn Hải Cường')
-insert into PhieuXuat values('px002','10/11/2018','Trần Văn Võ')
-insert into PhieuXuat values('px003','10/11/2018','Bùi Công Thìn')
-insert into PhieuXuat values('px004','10/11/2018','Nguyễn Duy Anh')
+insert into PhieuXuat values('px001','10/11/2018',N'Nguyễn Hải Cường')
+insert into PhieuXuat values('px002','10/11/2018',N'Trần Văn Võ')
+insert into PhieuXuat values('px003','10/11/2018',N'Bùi Công Thìn')
+insert into PhieuXuat values('px004','10/11/2018',N'Nguyễn Duy Anh')
 
 insert into ChiTietPXuat values('px001','tv001',1,8.0)
 insert into ChiTietPXuat values('px001','tv004',2,20.0)
@@ -233,6 +235,9 @@ insert into ChiTietPXuat values('px004','tv005',2,27.7)
 insert into ChiTietPXuat values('px004','tv003',1,12.9)
 insert into ChiTietPXuat values('px004','tv002',2,10.5)
 insert into ChiTietPXuat values('px004','tv001',3,8.0)
+
+delete ChiTietPXuat
+
 -------------------------------------------------------------------------------------------------------------
 -- update
 update DonDatHang
@@ -241,18 +246,26 @@ where MaDDHang = 'ddh001'
 update DonDatHang
     set NgayDat = '15/4/2018'
 where MaDDHang = 'ddh002'
--- delete
-delete from DonDatHang where MaDDHang = 'ddh008'
-delete from DonDatHang where MaDDHang = 'ddh009'
-delete from DonDatHang where MaDDHang = 'ddh010'
-delete from DonDatHang where MaDDHang = 'ddh011'
-delete from DonDatHang where MaDDHang = 'ddh012'
+-- delete những DonDatHang mà không có chi tiết đơn hàng
+delete DonDatHang 
+    where MaDDHang = 'ddh008' and (select count(MaDDHang) from ChiTietDonHang where MaDDHang = 'ddh008') = 0
+delete DonDatHang 
+    where MaDDHang = 'ddh009' and (select count(MaDDHang) from ChiTietDonHang where MaDDHang = 'ddh009') = 0
+delete DonDatHang 
+    where MaDDHang = 'ddh010' and (select count(MaDDHang) from ChiTietDonHang where MaDDHang = 'ddh010') = 0
+delete DonDatHang 
+    where MaDDHang = 'ddh011' and (select count(MaDDHang) from ChiTietDonHang where MaDDHang = 'ddh011') = 0
+delete DonDatHang 
+    where MaDDHang = 'ddh012' and (select count(MaDDHang) from ChiTietDonHang where MaDDHang = 'ddh012') = 0
+
+select * from DonDatHang
 
 -- lấy danh sách đơn nhập hàng từ 1/1/2018 -> 1/6/2018
 select * from DonDatHang where NgayDat between '1/1/2018' and '1/6/2018'
--- 
+-- Thống kê số lượng mặt hàng theo nhà cung cấp
 
-
-
-
-
+select * from ChiTietPNHang 
+    where MaPNHang in (
+        select MaPNHang from DonDatHang 
+            where  
+    )
