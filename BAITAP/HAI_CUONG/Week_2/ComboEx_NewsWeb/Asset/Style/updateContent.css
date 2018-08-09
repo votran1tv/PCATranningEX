@@ -35,13 +35,6 @@
     
 }
 
-#table_right{
-    width: 300px;
-    height: 410px;
-    margin-left: 10px;
-    float: left;
-    background-color: #ECEAE3;
-}
 #input_txt{
     width: 530px;
     height: 30px;
@@ -50,6 +43,17 @@
     outline: none;
     font-size: 14px;
     padding-left: 10px;
+}
+
+#link{
+    width: 530px;
+    height: 50px;
+    margin-left: 20px;
+    word-wrap: break-word;
+    color: #0d7bc5;
+    text-decoration: underline;
+    resize: none;
+    border: none;
 }
 #textarea{
     width: 530px;
@@ -62,7 +66,7 @@
     outline: none;
     box-sizing: border-box;
 }
-#radio{
+.radio{
     margin-left: 20px;
 }
 #btn{
@@ -77,4 +81,27 @@
 }
 #btn:active{
     background-color: #0d7bc5;
+}
+
+#table_right{
+    width: 300px;
+    height: 410px;
+    margin-left: 10px;
+    float: left;
+    background-color: #ECEAE3;
+}
+#tag{
+    width: 300px;
+    height: 150px;
+    background-color: #ccc;
+}
+#tag_top{
+    width: 300px;
+    height: 50px;
+    background-color: red;
+}
+#tag_bottom{
+    width: 300px;
+    height: 100px;
+    background-color: aqua;
 }
