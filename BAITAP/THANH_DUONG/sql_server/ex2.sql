@@ -11,8 +11,8 @@ if not exists (select 1 from sys.databases where name = 'QLBH')
     end
 
 use QLBH
-use master
-drop database QLBH
+-- use master
+-- drop database QLBH
 -- drop table VatTu,NhaCungCap,DonDatHang,ChiTietDonHang,PhieuNhapHang,ChiTietPNHang,PhieuXuat,ChiTietPNHang
 
 if not exists (select 1 from sysobjects where name = 'VatTu')
@@ -116,6 +116,11 @@ insert into VatTu values('tv005','Chef Anton`s Gumbo Mix ','kg',50)
 insert into VatTu values('tv006','Grandma`s Boysenberry Spread ','box',66)
 insert into VatTu values('tv007','Uncle Bob`s Organic Dried Pears ','box',79)
 insert into VatTu values('tv008','Northwoods Cranberry Sauce','bag',90)
+    -- new data 9/8
+insert into VatTu values('tv009','The Big Cheese','box',0)
+insert into VatTu values('tv010','Alfreds Futterkiste','bag',30)
+insert into VatTu values('tv011','Tortuga Restaurante ','box',0)
+insert into VatTu values('tv012','Toms Spezialitäten','bag',20)
 
 insert into NhaCungCap values('Exotic Liquid ','49 Gilbert St. Londona',0912345671)
 insert into NhaCungCap values('New Orleans Cajun Delights','P.O. Box 78934 New Orleans',0912345672)
@@ -144,6 +149,7 @@ insert into DonDatHang values('ddh004','12/7/2018',6)
 insert into DonDatHang values('ddh005','12/6/2018',8)
 insert into DonDatHang values('ddh006','12/5/2018',4)
 insert into DonDatHang values('ddh007','12/4/2018',6)
+    -- những đơn hàng không có dữ liệu
 insert into DonDatHang values('ddh008','12/3/2018',4)
 insert into DonDatHang values('ddh009','12/3/2018',4)
 insert into DonDatHang values('ddh010','12/2/2018',1)
@@ -235,9 +241,7 @@ insert into ChiTietPXuat values('px004','tv005',2,27.7)
 insert into ChiTietPXuat values('px004','tv003',1,12.9)
 insert into ChiTietPXuat values('px004','tv002',2,10.5)
 insert into ChiTietPXuat values('px004','tv001',3,8.0)
-
-delete ChiTietPXuat
-
+-- 6-7-8
 -------------------------------------------------------------------------------------------------------------
 -- update
 update DonDatHang
@@ -248,24 +252,49 @@ update DonDatHang
 where MaDDHang = 'ddh002'
 -- delete những DonDatHang mà không có chi tiết đơn hàng
 delete DonDatHang 
-    where MaDDHang = 'ddh008' and (select count(MaDDHang) from ChiTietDonHang where MaDDHang = 'ddh008') = 0
+    where MaDDHang = 'ddh008' 
+    and (select count(MaDDHang) from ChiTietDonHang where MaDDHang = 'ddh008') = 0
 delete DonDatHang 
-    where MaDDHang = 'ddh009' and (select count(MaDDHang) from ChiTietDonHang where MaDDHang = 'ddh009') = 0
+    where MaDDHang = 'ddh009' 
+    and (select count(MaDDHang) from ChiTietDonHang where MaDDHang = 'ddh009') = 0
 delete DonDatHang 
-    where MaDDHang = 'ddh010' and (select count(MaDDHang) from ChiTietDonHang where MaDDHang = 'ddh010') = 0
+    where MaDDHang = 'ddh010' 
+    and (select count(MaDDHang) from ChiTietDonHang where MaDDHang = 'ddh010') = 0
 delete DonDatHang 
-    where MaDDHang = 'ddh011' and (select count(MaDDHang) from ChiTietDonHang where MaDDHang = 'ddh011') = 0
+    where MaDDHang = 'ddh011'
+    and (select count(MaDDHang) from ChiTietDonHang where MaDDHang = 'ddh011') = 0
 delete DonDatHang 
-    where MaDDHang = 'ddh012' and (select count(MaDDHang) from ChiTietDonHang where MaDDHang = 'ddh012') = 0
+    where MaDDHang = 'ddh012' 
+    and (select count(MaDDHang) from ChiTietDonHang where MaDDHang = 'ddh012') = 0
 
 select * from DonDatHang
 
 -- lấy danh sách đơn nhập hàng từ 1/1/2018 -> 1/6/2018
 select * from DonDatHang where NgayDat between '1/1/2018' and '1/6/2018'
 -- Thống kê số lượng mặt hàng theo nhà cung cấp
-
-select * from ChiTietPNHang 
-    where MaPNHang in (
-        select MaPNHang from DonDatHang 
-            where  
+    -- VD: lấy số mặt hàng từ nhà cung cấp có id=4
+select count(ID) as 'Số lượng mặt hàng' from ChiTietPNHang where MaPNHang 
+    in (
+        select MaPNHang from PhieuNhapHang where MaDDHang 
+        in (
+            select MaDDHang from DonDatHang where MaNCCap = 4 
+        )
     )
+
+-- ex2 9/8/2018
+-- 7: kiểm tra mặt hàng nào được đặt hàng nhiều nhất
+    -- 3,tv002=33,12,27
+select max(Tong) as Tong
+    from (
+        select sum(SoLuongDat) as Tong from ChiTietDonHang group by MaVatTu
+    ) as tem
+-- 8: tìm các mặt hàng bắt đầu bằng T
+select * from VatTu where Ten like 't%'
+-- 9: thống kê mặt hàng có số lượng đặt hàng nhiều hơn 1000
+select MaVatTu,sum(SoLuongDat) from ChiTietDonHang group by MaVatTu 
+    having sum(SoLuongDat) > 1000
+-- 10: Tìm tất cả các mặt hàng đã nhập về nhưng chưa xuất
+select * from VatTu where MaVatTu not in (select MaVatTu from ChiTietPXuat) and MaVatTu in (select MaVatTu from ChiTietPNHang)
+-- 11: Tìm tất cả các mặt hàng đã nhập về và đã xuất
+select * from VatTu where MaVatTu in (select MaVatTu from ChiTietPXuat) and MaVatTu in (select MaVatTu from ChiTietPNHang)
+
