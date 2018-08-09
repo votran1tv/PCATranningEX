@@ -26,25 +26,31 @@ use db_news --Sử dụng cơ sở dữ liệu vừa tạo ở trên--
 
 create table ThanhVien
 (
-	ID int identity(1, 1) primary key,
+	ID int identity(1, 1) NOT NULL,
 	TaiKhoan varchar(255) not null unique,
-	MatKhau varchar(255) 
+	MatKhau varchar(255),
+	CONSTRAINT PK_ThanhVien PRIMARY KEY(ID)
 )
 
 create table Dm_BaiViet
 (
-	IDBaiViet int identity(1, 1) primary key,
-	TenDm nvarchar(255) not null UNIQUE
+	IDBaiViet int identity(1, 1) NOT NULL,
+	TenDm nvarchar(255) not null UNIQUE,
+	CONSTRAINT PK_Dm_BaiViet PRIMARY KEY(IDBaiViet)
 )
 
 create table BaiViet
 (
-	IDPost int identity(1,1) primary key,
+	IDPost int identity(1,1) not NULL,
 	TieuDe nvarchar(255) not null,
 	NoiDung text not null,
 	HinhAnh text,
-	ID_Dm int foreign key references Dm_BaiViet(IDBaiViet)
+	ID_Dm int not NULL
+	CONSTRAINT PK_BaiViet PRIMARY KEY(IDPost),
+	CONSTRAINT FK_BaiViet FOREIGN KEY(IDPost) REFERENCES Dm_BaiViet(IDBaiViet)
+	-- ID_Dm int foreign key references Dm_BaiViet(IDBaiViet)
 )
+
 
 /*Thêm cơ sở dữ liệu vào các bảng*/
 INSERT INTO ThanhVien VALUES('buicongthinit1', '123')
@@ -146,15 +152,19 @@ INSERT INTO BaiViet values('TieuDe27', 'NoiDung27', null, 2)
 INSERT INTO BaiViet values('TieuDe28', 'NoiDung28', null, 29)
 INSERT INTO BaiViet values('TieuDe29', 'NoiDung29', null, 2)
 INSERT INTO BaiViet values('TieuDe30', 'NoiDung30', null, 20)
-INSERT INTO BaiViet values('TieuDe31', 'NoiDung31', null, 31)
+INSERT INTO BaiViet values('TieuDe31', 'NoiDung31', null, 30)
 
 SELECT * FROM BaiViet
 
+SELECT * from sysobjects
 
 /*Đổi tên bảng Thanhvien thành bảng User*/
-ALTER TABLE 
+
 sp_rename 'ThanhVien', 'User'
+
+
 select * from [User]
+
 
 /*Chèn thêm cột gender, email, phone, birthday, country cho bảng User*/
 ALTER TABLE [User] ADD 
@@ -164,7 +174,7 @@ Phone int,
 BirthDay date,
 Country nvarchar(255)
 
-set dateformat dmy;
+set dateformat dmy
 
 
 /*Thêm dữ liệu cho các cột mới thêm*/
@@ -264,9 +274,14 @@ select ID, Gender, (select convert(varchar, BirthDay, 103) from [User] where ID 
 FROM [User]
 where ID = 1
 
+
 /*Convert Birthday về dạng dd/mm/yyyy*/
 select convert(varchar, BirthDay, 103) AS [Sinh nhật] from [User]
 /*Tìm danh mục Thể Thao trong bảng danh mục và xóa bỏ danh mục đó*/
+ALTER TABLE BaiViet NOCHECK CONSTRAINT ALL
 DELETE FROM Dm_BaiViet
-where TenDm = N'Thể thao'
+where Dm_BaiViet.TenDm = N'Thể thao'
+ALTER TABLE BaiViet WITH CHECK CHECK CONSTRAINT ALL
+ALTER TABLE Dm_BaiViet WITH CHECK CHECK CONSTRAINT ALL
+EXEC sp_MSforeachtable 'ALTER TABLE ? WITH CHECK CHECK CONSTRAINT ALL'
 /*Sử dụng lệnh Truncate Table để xóa bản ghi + xóa luôn index của các trường có thuộc tính tự tăng Identity*/
