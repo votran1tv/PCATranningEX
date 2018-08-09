@@ -98,6 +98,9 @@
 	insert into VATTU values ('MS07','Sauce','kg','100');
 	insert into VATTU values ('MS08','Mishi Kobe Niku','kg','97');
 	insert into VATTU values ('MS09','Ikura ','jars','83');
+	insert into VATTU values ('MS10','Thep ','tan','83');
+	insert into VATTU values ('MS11','teance ','jars','83');
+	insert into VATTU values ('MS12','tea ','kg','83');
 
 	--NHACC
 	insert into NHACC values ('NCC001','Exotic Liquid','49 Gilbert St.','1715552222');
@@ -125,15 +128,19 @@
 	insert into Dondathang values ('DH011','01/01/2018','NCC008');
 
 	--Chitietdonhang
-	insert into Chitietdonhang values ('DH001','MS08','50');
-	insert into Chitietdonhang values ('DH002','MS05','10');
-	insert into Chitietdonhang values ('DH003','MS04','100');
-	insert into Chitietdonhang values ('DH004','MS02','110');
-	insert into Chitietdonhang values ('DH005','MS01','90');
-	insert into Chitietdonhang values ('DH006','MS03','95');
-	insert into Chitietdonhang values ('DH007','MS06','70');
-	insert into Chitietdonhang values ('DH008','MS09','500');
-	insert into Chitietdonhang values ('DH009','MS08','60');
+	insert into Chitietdonhang values ('DH001','MS08','50');insert into Chitietdonhang values ('DH001','MS07','80');
+	insert into Chitietdonhang values ('DH002','MS05','10');insert into Chitietdonhang values ('DH002','MS06','10');
+	insert into Chitietdonhang values ('DH003','MS04','100');insert into Chitietdonhang values ('DH003','MS04','100');
+	insert into Chitietdonhang values ('DH004','MS02','110');insert into Chitietdonhang values ('DH004','MS05','110');
+	insert into Chitietdonhang values ('DH005','MS01','90');insert into Chitietdonhang values ('DH005','MS03','90');
+	insert into Chitietdonhang values ('DH006','MS03','95');insert into Chitietdonhang values ('DH006','MS04','95');
+	insert into Chitietdonhang values ('DH007','MS06','70');insert into Chitietdonhang values ('DH007','MS01','70');
+	insert into Chitietdonhang values ('DH008','MS09','500');insert into Chitietdonhang values ('DH008','MS09','500')
+	insert into Chitietdonhang values ('DH009','MS08','60');	
+	insert into Chitietdonhang values ('DH009','MS07','60');
+	insert into Chitietdonhang values ('DH009','MS09','60');
+	
+	
 
 
 	--Phieunhaphang
@@ -189,8 +196,32 @@
 	select*from Dondathang where Ngaydat between '1/1/2018' and '1/6/2018';
 
 --Thống kê số lượng mặt hàng theo nhà cung cấp 
-	
+	--Thống kê số lượng mặt hàng theo đơn đặt hàng
+	--select Madondathang, sum(soluongdat) as[số lượng đặt hàng] from Chitietdonhang where Madondathang in(select Chitietdonhang.Madondathang from Chitietdonhang inner join Dondathang on Dondathang.Madondathang=Chitietdonhang.Madondathang)
+	--group by Madondathang
+	select madondathang, sum(soluongdat) as[số lượng đặt hàng] from Chitietdonhang group by Madondathang
 
+	--Thống kê số lượng mặt hàng theo đơn nhập hàng
+	select Masophieunhap, sum(Soluongnhap) as[số lượng mặt hàng nhập] from Chitietphieunhap group by Masophieunhap
+
+
+---------UpdateEX2(9/8/2018)--------------------------------
+	--Kiểm tra xem mặt hàng nào được đặt hàng nhiều nhất
+		--select Ten  from VATTU where Mavattu in(select sum(Chitietdonhang.Soluongdat) from Chitietdonhang)
+		 select top 1 Mavattu, SUM(soluongdat) as[số lượng đặt] from Chitietdonhang group by Soluongdat,Mavattu order by SUM(Soluongdat)DESC
+
+	---Tìm tất cả mặt hàng bắt đầu bằng chữ T
+		select *from VATTU where Ten like 'T%'
+
+	--Thống kê các mặt hàng mà có tổng số lượng đặt hàng nhiều hơn 1000
+		SELECT Mavattu, sum(Soluongdat) FROM Chitietdonhang GROUP BY Mavattu HAVING sum(Soluongdat) >= 100
+
+	--Tìm tất cả các mặt hàng đã nhập về nhưng chưa xuất 
+		select distinct mavattu from Chitietphieunhap where Mavattu not in (select  Mavattu from Chitietphieuxuat)
+
+	--Tìm tất cả các mặt hàng đã nhập về và đã xuất 
+		select distinct Chitietphieunhap.Mavattu, vattu.Ten from Chitietphieunhap inner join VATTU on VATTU.mavattu= Chitietphieunhap.mavattu where Chitietphieunhap.Mavattu in (select  Mavattu from Chitietphieuxuat) 
+-------------------------------------------------------------
 	select*from VATTU
 	select*from NHACC
 	select*from Dondathang
