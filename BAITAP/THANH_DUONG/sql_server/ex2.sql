@@ -11,11 +11,11 @@ if not exists (select 1 from sys.databases where name = 'QLBH')
     end
 
 use QLBH
--- use master
--- drop database QLBH
+use master
+drop database QLBH
 -- drop table VatTu,NhaCungCap,DonDatHang,ChiTietDonHang,PhieuNhapHang,ChiTietPNHang,PhieuXuat,ChiTietPNHang
 
-if not exists (select 1 from sysobjects where name = 'VatTu')
+if not exists (select 1 from sysobjects where name = 'VatTu')   
     begin 
         create table VatTu(
             MaVatTu nvarchar(50), -- VD vt001
@@ -51,10 +51,10 @@ if not exists (select 1 from sysobjects where name = 'DonDatHang')
 if not exists (select 1 from sysobjects where name = 'ChiTietDonHang')
     begin 
         create table ChiTietDonHang(
-            ID int primary key identity,
             MaDDHang nvarchar(50),
             MaVatTu nvarchar(50),
             SoLuongDat float(3),
+            constraint PK_ChiTietDonHang_MaDDHang primary key (MaDDHang,MaVatTu),
             constraint FK_DonDatHang_ChiTietDonHang foreign key (MaDDHang) references DonDatHang(MaDDHang),
             constraint FK_VatTu_ChiTietDonHang foreign key (MaVatTu) references VatTu(MaVatTu)
         )
@@ -74,11 +74,11 @@ if not exists (select 1 from sysobjects where name = 'PhieuNhapHang')
 if not exists (select 1 from sysobjects where name = 'ChiTietPNHang')
     begin 
         create table ChiTietPNHang(
-            ID int primary key identity,
             MaPNHang nvarchar(50),
             MaVatTu nvarchar(50),
             SoLuongNhap int,
             DonGiaNhap float, -- dv: $
+            constraint PK_ChiTietPNHang primary key (MaPNHang,MaVatTu),
             constraint FK_PhieuNhapHang_ChiTietPNHang foreign key (MaPNHang) references PhieuNhapHang(MaPNHang),
             constraint FK_VatTu_ChiTietPNHang foreign key (MaVatTu) references VatTu(MaVatTu)
         )
@@ -116,7 +116,6 @@ insert into VatTu values('tv005','Chef Anton`s Gumbo Mix ','kg',50)
 insert into VatTu values('tv006','Grandma`s Boysenberry Spread ','box',66)
 insert into VatTu values('tv007','Uncle Bob`s Organic Dried Pears ','box',79)
 insert into VatTu values('tv008','Northwoods Cranberry Sauce','bag',90)
-    -- new data 9/8
 insert into VatTu values('tv009','The Big Cheese','box',0)
 insert into VatTu values('tv010','Alfreds Futterkiste','bag',30)
 insert into VatTu values('tv011','Tortuga Restaurante ','box',0)
@@ -155,31 +154,49 @@ insert into DonDatHang values('ddh009','12/3/2018',4)
 insert into DonDatHang values('ddh010','12/2/2018',1)
 insert into DonDatHang values('ddh011','9/2/2018',5)
 insert into DonDatHang values('ddh012','12/1/2018',8)
--- select * from DonDatHang
-insert into ChiTietDonHang values('ddh001','tv002',10)
-insert into ChiTietDonHang values('ddh001','tv005',3)
+insert into DonDatHang values('ddh013','12/1/2018',8)
 
-insert into ChiTietDonHang values('ddh002','tv001',3)
-insert into ChiTietDonHang values('ddh002','tv005',4)
-insert into ChiTietDonHang values('ddh002','tv008',7)
+insert into ChiTietDonHang values('ddh001','tv002',100)
+insert into ChiTietDonHang values('ddh001','tv005',200)
 
-insert into ChiTietDonHang values('ddh003','tv002',3)
-insert into ChiTietDonHang values('ddh003','tv003',7)
-insert into ChiTietDonHang values('ddh003','tv006',3)
+insert into ChiTietDonHang values('ddh002','tv001',120)
+insert into ChiTietDonHang values('ddh002','tv005',300)
+insert into ChiTietDonHang values('ddh002','tv008',200)
 
-insert into ChiTietDonHang values('ddh004','tv004',20)
+insert into ChiTietDonHang values('ddh003','tv002',150)
+insert into ChiTietDonHang values('ddh003','tv003',190)
+insert into ChiTietDonHang values('ddh003','tv006',400)
 
-insert into ChiTietDonHang values('ddh005','tv004',7)
-insert into ChiTietDonHang values('ddh005','tv002',3)
-insert into ChiTietDonHang values('ddh005','tv006',3)
-insert into ChiTietDonHang values('ddh005','tv007',5)
-insert into ChiTietDonHang values('ddh005','tv003',3)
+insert into ChiTietDonHang values('ddh004','tv004',250)
 
-insert into ChiTietDonHang values('ddh006','tv003',2)
-insert into ChiTietDonHang values('ddh006','tv006',1)
-insert into ChiTietDonHang values('ddh006','tv002',3)
+insert into ChiTietDonHang values('ddh005','tv004',170)
+insert into ChiTietDonHang values('ddh005','tv002',430)
+insert into ChiTietDonHang values('ddh005','tv006',300)
+insert into ChiTietDonHang values('ddh005','tv007',300)
+insert into ChiTietDonHang values('ddh005','tv003',190)
 
-insert into ChiTietDonHang values('ddh007','tv002',14)
+insert into ChiTietDonHang values('ddh006','tv003',230)
+insert into ChiTietDonHang values('ddh006','tv006',250)
+insert into ChiTietDonHang values('ddh006','tv002',340)
+
+insert into ChiTietDonHang values('ddh007','tv002',160)
+
+insert into ChiTietDonHang values('ddh008','tv003',160)
+insert into ChiTietDonHang values('ddh008','tv002',160)
+
+insert into ChiTietDonHang values('ddh009','tv001',160)
+insert into ChiTietDonHang values('ddh009','tv008',160)
+insert into ChiTietDonHang values('ddh009','tv007',160)
+
+insert into ChiTietDonHang values('ddh010','tv003',160)
+
+insert into ChiTietDonHang values('ddh011','tv004',160)
+
+insert into ChiTietDonHang values('ddh012','tv005',160)
+insert into ChiTietDonHang values('ddh012','tv002',160)
+
+insert into ChiTietDonHang values('ddh013','tv005',100)
+insert into ChiTietDonHang values('ddh013','tv002',100)
 -->> insert PhieuNhapHang & ChiTietPNHang
 insert into PhieuNhapHang values('pnh001','1/10/2018','ddh001')
 insert into PhieuNhapHang values('pnh002','1/7/2018','ddh005')
@@ -188,31 +205,41 @@ insert into PhieuNhapHang values('pnh004','4/5/2018','ddh007')
 insert into PhieuNhapHang values('pnh005','10/6/2018','ddh006')
 insert into PhieuNhapHang values('pnh006','18/8/2018','ddh004')
 insert into PhieuNhapHang values('pnh007','21/8/2018','ddh003')
+insert into PhieuNhapHang values('pnh008','21/10/2018','ddh013')
+insert into PhieuNhapHang values('pnh009','21/10/2018','ddh010')
 
-insert into ChiTietPNHang values('pnh001','tv002',10,5.0)
-insert into ChiTietPNHang values('pnh001','tv005',3,14.4)
+insert into ChiTietPNHang values('pnh001','tv002',100,5.0)
+insert into ChiTietPNHang values('pnh001','tv005',200,14.4)
 
-insert into ChiTietPNHang values('pnh002','tv004',7,12.0)
-insert into ChiTietPNHang values('pnh002','tv002',3,6.0)
-insert into ChiTietPNHang values('pnh002','tv006',3,3.9)
-insert into ChiTietPNHang values('pnh002','tv007',5,8.0)
-insert into ChiTietPNHang values('pnh002','tv003',3,6.8)
+insert into ChiTietPNHang values('pnh002','tv004',170,12.0)
+insert into ChiTietPNHang values('pnh002','tv002',430,6.0)
+insert into ChiTietPNHang values('pnh002','tv006',300,3.9)
+insert into ChiTietPNHang values('pnh002','tv007',300,8.0)
+insert into ChiTietPNHang values('pnh002','tv003',190,6.8)
 
-insert into ChiTietPNHang values('pnh003','tv001',3,5.0)
-insert into ChiTietPNHang values('pnh003','tv005',4,15.0)
-insert into ChiTietPNHang values('pnh003','tv008',7,5.4)
+insert into ChiTietPNHang values('pnh003','tv001',120,5.0)
+insert into ChiTietPNHang values('pnh003','tv005',300,15.0)
+insert into ChiTietPNHang values('pnh003','tv008',200,5.4)
 
-insert into ChiTietPNHang values('pnh004','tv002',14,4.8)
+insert into ChiTietPNHang values('pnh004','tv002',160,4.8)
 
-insert into ChiTietPNHang values('pnh005','tv003',2,5.0)
-insert into ChiTietPNHang values('pnh005','tv006',1,4.0)
-insert into ChiTietPNHang values('pnh005','tv002',3,5.0)
+insert into ChiTietPNHang values('pnh005','tv003',230,5.0)
+insert into ChiTietPNHang values('pnh005','tv006',250,4.0)
+insert into ChiTietPNHang values('pnh005','tv002',340,5.0)
 
-insert into ChiTietPNHang values('pnh006','tv004',20,11.5)
+insert into ChiTietPNHang values('pnh006','tv004',250,11.5)
 
-insert into ChiTietPNHang values('pnh007','tv002',3,5.4)
-insert into ChiTietPNHang values('pnh007','tv003',7,5.5)
-insert into ChiTietPNHang values('pnh007','tv006',3,4.1)
+insert into ChiTietPNHang values('pnh007','tv002',150,5.4)
+insert into ChiTietPNHang values('pnh007','tv003',190,5.5)
+insert into ChiTietPNHang values('pnh007','tv006',400,4.1)
+
+insert into ChiTietPNHang values('pnh008','tv005',100,15.5)
+insert into ChiTietPNHang values('pnh008','tv002',50,4.7)
+
+insert into ChiTietPNHang values('pnh009','tv002',100,5.4)
+insert into ChiTietPNHang values('pnh009','tv003',50,5.5)
+insert into ChiTietPNHang values('pnh009','tv006',40,4.1)
+
 -- tv001 - 8.0
 -- tv002 - 10.5
 -- tv003 - 12.9
@@ -298,3 +325,54 @@ select * from VatTu where MaVatTu not in (select MaVatTu from ChiTietPXuat) and 
 -- 11: Tìm tất cả các mặt hàng đã nhập về và đã xuất
 select * from VatTu where MaVatTu in (select MaVatTu from ChiTietPXuat) and MaVatTu in (select MaVatTu from ChiTietPNHang)
 
+-- EX2 10/08/2018
+-- 11: tạo bảng tồn kho
+if not exists (select 1 from sysobjects where name = 'TonKho')
+    begin 
+        create table TonKho(
+            ID int identity primary key,
+            NamThang char(100),
+            MaVatTu nvarchar(50),
+            SLDau int,
+            TongSLNhap int,
+            TongSLXuat int,
+            SLCuoi int,
+            constraint FK_VatTu_TonKho foreign key (MaVatTu) references VatTu(MaVatTu)
+        )
+    end
+
+-- 12:
+alter table TonKho 
+    alter column NamThang date
+alter TABLE TonKho
+    add constraint CK_NamThang check (NamThang > '1/1/1999' and NamThang < '31/12/2999')
+-- 13:Truy vấn danh sách các phiếu đặt hàng chưa được nhập hàng
+select * from DonDatHang where MaDDHang = any(select MaDDHang from PhieuNhapHang)
+
+-- 14:Lấy thông tin nhà cung cấp có nhiều đơn đặt hàng nhất
+select top 1 tem.SLD as [Số đơn],NhaCungCap.* from NhaCungCap 
+    inner join (
+        select MaNCCap as IDNCC,count(MaNCCap) as SLD from DonDatHang group by MaNCCap
+    ) as tem on NhaCungCap.MaNCCap=tem.IDNCC order by tem.SLD desc
+
+-- 15: Lấy thông tin vật tư được xuất bán nhiều nhất
+select top 1 tem.SLX as [số lượng],VatTu.* from VatTu 
+    inner join (
+        select MaVatTu as MVT_ID, Sum(SoLuongXuat) as SLX from ChiTietPXuat group by MaVatTu
+    ) as tem on VatTu.MaVatTu = tem.MVT_ID order by tem.SLX desc
+-- 16: Tính tổng tiền của các đơn đặt hàng, đưa ra đơn đặt hàng có giá trị lớn nhất
+select DonDatHang.*,tem.Tien from DonDatHang inner join 
+    (
+        select MaDDHang,tem.Tien from PhieuNhapHang 
+        inner join (
+            select MaPNHang as PNH_ID, sum((SoLuongNhap * DonGiaNhap)) as Tien from ChiTietPNHang where MaPNHang in (select MaPNHang from PhieuNhapHang) group by MaPNHang
+        ) as tem on PhieuNhapHang.MaPNHang = tem.PNH_ID
+    ) as tem on DonDatHang.MaDDHang = tem.MaDDHang order by tem.Tien desc
+-- 17: Thống kê những đơn đặt hàng chưa đủ số lượng [tick]
+    -- TODO
+--select * from ChiTietDonHang 
+
+select * from ChiTietPNHang where MaVatTu = 'tv006'
+
+SELECT * from ChiTietDonHang
+SELECT * from ChiTietPNHang
