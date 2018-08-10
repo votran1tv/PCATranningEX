@@ -1,4 +1,3 @@
-
 if not exists(select * from sys.databases where name='db_news')
 begin
 	create database db_news
@@ -200,6 +199,91 @@ UPDATE [User] SET
 Gender = N'Nu', Email = 'email6@gmail.com', Phone = 01234561237, BirthDay = '21/09/1992', Country = N'VNI'
 where ID = 7
 UPDATE [User] SET
+Gender = 'Nam', Email = 'email7@gmail.com', Phone = 01234561238, BirthDay = '21/09/1993', Country = N'VN'
+where ID = 8
+UPDATE [User] SET
+Gender = 'Nam', Email = 'email8@gmail.com', Phone = 01234561239, BirthDay = '22/06/1996', Country = N'VN'
+where ID = 9
+UPDATE [User] SET
+Gender = 'Nam', Email = 'email9@gmail.com', Phone = 01234561240, BirthDay = '28/09/1988', Country = N'Việt Nam'
+where ID = 10
+UPDATE [User] SET
+Gender = 'Nam', Email = 'email10@gmail.com', Phone = 01234561241, BirthDay = '12/09/1991', Country = N'VN'
+where ID = 11
+UPDATE [User] SET
+Gender = N'Nu', Email = 'email11@gmail.com', Phone = 01234561242, BirthDay = '17/09/1994', Country = N'VN'
+where ID = 12
+UPDATE [User] SET
+Gender = 'Nam', Email = 'email12@gmail.com', Phone = 01234561243, BirthDay = '21/11/1992', Country = N'VNI'
+where ID = 13
+UPDATE [User] SET
+Gender = 'Nam', Email = 'email13@gmail.com', Phone = 01234561244, BirthDay = '21/07/1991', Country = N'VN'
+where ID = 14
+UPDATE [User] SET
+Gender = N'Nu', Email = 'email14@gmail.com', Phone = 01234561245, BirthDay = '17/02/1999', Country = N'VN'
+where ID = 15
+UPDATE [User] SET
+Gender = 'Nam', Email = 'email15@gmail.com', Phone = 01234561246, BirthDay = '20/03/1997', Country = N'VN'
+where ID = 16
+UPDATE [User] SET
+Gender = N'Nu', Email = 'email16@gmail.com', Phone = 01234561247, BirthDay = '26/12/1992', Country = N'VN'
+where ID = 17
+UPDATE [User] SET
+Gender = 'Nam', Email = 'email17@gmail.com', Phone = 01234561248, BirthDay = '22/02/1993', Country = N'VN'
+where ID = 18
+UPDATE [User] SET
+Gender = 'Nu', Email = 'email18@gmail.com', Phone = 01234561249, BirthDay = '01/02/1994', Country = N'VN'
+where ID = 19
+UPDATE [User] SET
+Gender = 'Nam', Email = 'email19@gmail.com', Phone = 01234561250, BirthDay = '11/11/1992', Country = N'VN'
+where ID = 20
+UPDATE [User] SET
+Gender = N'Nu', Email = 'email20@gmail.com', Phone = 01234561251, BirthDay = '18/01/1991', Country = N'VN'
+where ID = 21
+UPDATE [User] SET
+Gender = 'Nam', Email = 'email21@gmail.com', Phone = 01234561252, BirthDay = '17/05/1990', Country = N'VNI'
+where ID = 22
+UPDATE [User] SET
+Gender = 'Nam', Email = 'email22@gmail.com', Phone = 01234561253, BirthDay = '02/01/1996', Country = N'VN'
+where ID = 23
+UPDATE [User] SET
+Gender = 'Nam', Email = 'email23@gmail.com', Phone = 01234561254, BirthDay = '29/03/1995', Country = N'VN'
+where ID = 24
+UPDATE [User] SET
+Gender = N'Nu', Email = 'email24@gmail.com', Phone = 01234561255, BirthDay = '22/02/1993', Country = N'VN'
+where ID = 25
+UPDATE [User] SET
+Gender = 'Nam', Email = 'email25@gmail.com', Phone = 01234561256, BirthDay = '05/09/1999', Country = N'VN'
+where ID = 26
+UPDATE [User] SET
+Gender = N'Nu', Email = 'email26@gmail.com', Phone = 01234561257, BirthDay = '04/09/1990', Country = N'VNI'
+where ID = 27
+UPDATE [User] SET
+Gender = 'Nam', Email = 'email27@gmail.com', Phone = 01234561258, BirthDay = '20/06/1989', Country = N'VN'
+where ID = 28
+UPDATE [User] SET
+Gender = N'Nu', Email = 'email28@gmail.com', Phone = 01234561259, BirthDay = '21/02/1992', Country = N'VN'
+where ID = 29
+UPDATE [User] SET
+Gender = 'Nam', Email = 'email29@gmail.com', Phone = 01234561260, BirthDay = '07/01/1991', Country = N'Việt Nam'
+where ID = 30
+
+/*Test thử tính năng convert*/
+select ID, Gender, (select convert(varchar, BirthDay, 103) from [User] where ID = 1) AS [SN]
+FROM [User]
+where ID = 1
+
+
+/*Convert Birthday về dạng dd/mm/yyyy*/
+select convert(varchar, BirthDay, 103) AS [Sinh nhật] from [User]
+/*Tìm danh mục Thể Thao trong bảng danh mục và xóa bỏ danh mục đó*/
+ALTER TABLE BaiViet NOCHECK CONSTRAINT ALL
+DELETE FROM Dm_BaiViet
+where Dm_BaiViet.TenDm = N'Thể thao'
+ALTER TABLE BaiViet WITH CHECK CHECK CONSTRAINT ALL
+ALTER TABLE Dm_BaiViet WITH CHECK CHECK CONSTRAINT ALL
+EXEC sp_MSforeachtable 'ALTER TABLE ? WITH CHECK CHECK CONSTRAINT ALL'
+/*Sử dụng lệnh Truncate Table để xóa bản ghi + xóa luôn index của các trường có thuộc tính tự tăng Identity*/UPDATE [User] SET
 Gender = 'Nam', Email = 'email7@gmail.com', Phone = 01234561238, BirthDay = '21/09/1993', Country = N'VN'
 where ID = 8
 UPDATE [User] SET
