@@ -117,7 +117,7 @@
 	set dateformat dmy;
 	insert into Dondathang values ('DH001','04/07/2018','NCC001');
 	insert into Dondathang values ('DH002','04/02/2018','NCC005');
-	insert into Dondathang values ('DH003','04/03/2018','NCC004');
+	insert into Dondathang values ('DH003','04/03/2018','NCC005');
 	insert into Dondathang values ('DH004','04/04/2018','NCC002');
 	insert into Dondathang values ('DH005','04/05/2018','NCC001');
 	insert into Dondathang values ('DH006','04/06/2018','NCC003');
@@ -127,10 +127,13 @@
 	insert into Dondathang values ('DH010','04/09/2017','NCC008');
 	insert into Dondathang values ('DH011','01/01/2018','NCC008');
 	insert into Dondathang values ('DH012','04/03/2018','NCC004');
+	insert into Dondathang values ('DH013','01/07/2018','NCC008');
+
 
 
 	--Chitietdonhang
 	insert into Chitietdonhang values ('DH001','MS08','50');
+	insert into Chitietdonhang values ('DH001','MS04','115');
 	insert into Chitietdonhang values ('DH001','MS07','80');
 	insert into Chitietdonhang values ('DH002','MS05','10');
 	insert into Chitietdonhang values ('DH002','MS06','10');
@@ -153,7 +156,7 @@
 
 
 	--Phieunhaphang
-	
+	set dateformat dmy
 	insert into Phieunhaphang values ('MSN001','24/07/2018','DH001');
 	insert into Phieunhaphang values ('MSN002','24/02/2018','DH002');
 	insert into Phieunhaphang values ('MSN003','24/03/2018','DH003');
@@ -163,6 +166,7 @@
 	insert into Phieunhaphang values ('MSN007','15/07/2018','DH007');
 	insert into Phieunhaphang values ('MSN008','19/08/2018','DH008');
 	insert into Phieunhaphang values ('MSN009','20/09/2018','DH009');
+	insert into Phieunhaphang values ('MSN010','30/10/2018','DH005');
 
 	--Chitietphieunhap
 	insert into Chitietphieunhap values ('MSN009','MS01','50','10');
@@ -174,6 +178,7 @@
 	insert into Chitietphieunhap values ('MSN003','MS09','90','12');
 	insert into Chitietphieunhap values ('MSN002','MS04','300','35');
 	insert into Chitietphieunhap values ('MSN001','MS02','250','40');
+	insert into Chitietphieunhap values ('MSN010','MS03','300','15');
 
 
 	
@@ -200,6 +205,7 @@
 	insert into Chitietphieuxuat values ('MSX008','MS07','80','10');
 	insert into Chitietphieuxuat values ('MSX009','MS09','50','12');
 	insert into Chitietphieuxuat values ('MSX008','MS07','80','10');
+	insert into Chitietphieuxuat values ('MSX008','MS08','305','10');
 
 	UPDATE Dondathang SET Ngaydat = '7/8/2018', Mancc = 'NCC009' where Madondathang='DH001';
 	delete from Dondathang where Madondathang='DH010'; 
@@ -211,16 +217,16 @@
 	--Thống kê số lượng mặt hàng theo đơn đặt hàng
 	--select Madondathang, sum(soluongdat) as[số lượng đặt hàng] from Chitietdonhang where Madondathang in(select Chitietdonhang.Madondathang from Chitietdonhang inner join Dondathang on Dondathang.Madondathang=Chitietdonhang.Madondathang)
 	--group by Madondathang
-	select madondathang, sum(soluongdat) as[số lượng đặt hàng] from Chitietdonhang group by Madondathang
+	select madondathang, sum(soluongdat)[số lượng đặt hàng] from Chitietdonhang group by Madondathang
 
 	--Thống kê số lượng mặt hàng theo đơn nhập hàng
-	select Masophieunhap, sum(Soluongnhap) as[số lượng mặt hàng nhập] from Chitietphieunhap group by Masophieunhap
+	select Masophieunhap, sum(Soluongnhap)[số lượng mặt hàng nhập] from Chitietphieunhap group by Masophieunhap
 
 
 ---------UpdateEX2(9/8/2018)--------------------------------
 	--Kiểm tra xem mặt hàng nào được đặt hàng nhiều nhất
 		--select Ten  from VATTU where Mavattu in(select sum(Chitietdonhang.Soluongdat) from Chitietdonhang)
-		 select top 1 Mavattu, SUM(soluongdat) as[số lượng đặt] from Chitietdonhang group by Soluongdat,Mavattu order by SUM(Soluongdat)DESC
+		 select top 1 Mavattu, SUM(soluongdat)[số lượng đặt] from Chitietdonhang group by Soluongdat,Mavattu order by SUM(Soluongdat)DESC
 
 	---Tìm tất cả mặt hàng bắt đầu bằng chữ T
 		select *from VATTU where Ten like 'T%'
@@ -283,9 +289,54 @@
 		group by Madondathang,Chitietdonhang.mavattu,Chitietdonhang.Soluongdat--, Chitietphieuxuat.Soluongxuat
 		having sum(Chitietdonhang.Soluongdat)>sum(Chitietphieuxuat.Soluongxuat)
 		order by Madondathang asc
+		select madondathang,Chitietdonhang.mavattu,Chitietdonhang.Soluongdat,Chitietphieuxuat.Soluongxuat[số lượng xuất] from Chitietdonhang inner join Chitietphieuxuat on Chitietdonhang.Mavattu=Chitietphieuxuat.Mavattu 
+		group by Madondathang,Chitietdonhang.mavattu,Chitietdonhang.Soluongdat, Chitietphieuxuat.Soluongxuat
+		having sum(Chitietdonhang.Soluongdat)<sum(Chitietphieuxuat.Soluongxuat)
+		order by Madondathang asc
+
+		--Thống kê những đơn đặt hàng chưa nhập đủ số lượng
+		select Phieunhaphang.Madondathang,Chitietphieunhap.mavattu,Chitietdonhang.Soluongdat,sum(Chitietphieunhap.Soluongnhap) from Chitietphieunhap inner join Chitietdonhang on Chitietdonhang.Mavattu=Chitietphieunhap.Mavattu inner join Phieunhaphang on Phieunhaphang.Madondathang=Chitietdonhang.Madondathang
+		group by Phieunhaphang.Madondathang,Chitietphieunhap.mavattu,Chitietdonhang.Soluongdat,Chitietphieunhap.Soluongnhap
+		having sum(Chitietdonhang.Soluongdat)>sum(Chitietphieunhap.Soluongnhap)
+		order by Phieunhaphang.Madondathang asc
 
 
 
+		select Chitietdonhang.madondathang, Chitietdonhang.Mavattu,Chitietphieunhap.Masophieunhap,Chitietdonhang.Soluongdat, sum(distinct Chitietphieunhap.Soluongnhap) from Chitietdonhang inner join Phieunhaphang on Chitietdonhang.Madondathang=Phieunhaphang.Madondathang inner join Chitietphieunhap on Phieunhaphang.Masophieunhap=Chitietphieunhap.Masophieunhap
+		group by Chitietdonhang.madondathang, Chitietdonhang.Mavattu,Chitietphieunhap.Masophieunhap, Chitietdonhang.Soluongdat
+		having sum(Chitietdonhang.Soluongdat)>sum(Chitietphieunhap.Soluongnhap)  chitietdonhang.mavattu=chiphieunhap.mavattu
+		order by Chitietdonhang.Madondathang asc
+
+----------Update EX2(13/8)----------------------------------------------------------------
+--18) Tạo View  vw_DMVT gồm (MAVTu và TenVTu) dùng liệt kê các danh sách trong bảng vật tư
+		CREATE VIEW vw_DMVT AS
+		SELECT Mavattu, ten
+		FROM VATTU
+--19) Tạo View vw_DonDH_Tong SLDatNhap gồm (SoHD, TongSLDat và TongSLNhap) dùng để thống kê những đơn đặt hàng đã được nhập hàng đầy đủ
+		create view vw_DonDH_Tong_SLDatNhap as
+		select Chitietdonhang.Madondathang, sum(chitietdonhang.soluongdat)TongSLDat, sum(Chitietphieunhap.Soluongnhap)TongSLNhap
+		from Chitietdonhang inner join Chitietphieunhap on Chitietdonhang.Mavattu=Chitietphieunhap.Mavattu
+		group by Chitietdonhang.Madondathang
+		having sum(chitietdonhang.soluongdat)< sum(Chitietphieunhap.Soluongnhap)
+
+
+--20) Tạo View vw_DonDH_DaNhapDu gồm (Số DH, DaNhapDu) có hai giá trị là “Da Nhap Du” nếu đơn hàng đó đã nhập đủ hoặc “Chu Nhap Du” nếu đơn đặt hàng chưa nhập đủ
+		create view vw_DonDH_DaNhapDu as
+		select 
+
+
+
+--21) Tạo View vw_TongNhap gồm (NamThang, MaVTu và TongSLNhap) dùng để thống kê số lượng nhập của các vật tư trong năm tháng tương ứng (Không sử dụng bảng tồn kho)
+		create view vw_TongNhap as
+		select Phieunhaphang.Ngaynhap, Chitietphieunhap.Mavattu, Chitietphieunhap.Soluongnhap
+		from Phieunhaphang inner join Chitietphieunhap on Phieunhaphang.Masophieunhap=Chitietphieunhap.Masophieunhap
+		group by Phieunhaphang.Ngaynhap, Chitietphieunhap.Mavattu, Chitietphieunhap.Soluongnhap
+
+--22) Tạo View vw_TongXuat gồm (NamThang, MaVTu và TongSLXuat) dùng để thống kê SL xuất của vật tư trong từng năm tương ứng (Không sử dụng bảng tồn kho)
+		create view vw_TongXuat as
+		select Phieuxuat.Ngayxuat, Chitietphieuxuat.Mavattu, Chitietphieuxuat.Soluongxuat
+		from Phieuxuat inner join Chitietphieuxuat on Chitietphieuxuat.Maphieuxuat=Phieuxuat.Maphieuxuat
+		group by Phieuxuat.Ngayxuat, Chitietphieuxuat.Mavattu, Chitietphieuxuat.Soluongxuat
 
 -------------------------------------------------------------
 	select*from VATTU
@@ -297,4 +348,9 @@
 	select*from Phieuxuat
 	select*from Chitietphieuxuat
 	select*from Tonkho
+	SELECT * FROM vw_DMVT
+	SELECT * FROM vw_DonDH_Tong_SLDatNhap
+	select * from vw_TongNhap
+	select*from vw_TongXuat
 	drop database QuanLyBanHang
+	use master
