@@ -124,12 +124,13 @@ SELECT MONTH(NgayDat) [Tháng], YEAR(NgayDat) [Năm] FROM DonDatHang
 --In ra Ngày Đặt theo định dạng dd/mm/yyyy (103)--
 SELECT CONVERT([varchar], NgayDat, 103) from DonDatHang
 
+INSERT INTO ChiTietDonHang VALUES('DDH01', 'VT02', 780)
 INSERT INTO ChiTietDonHang VALUES('DDH02', 'VT03', 150)
 INSERT INTO ChiTietDonHang VALUES('DDH02', 'VT01', 190)
 INSERT INTO ChiTietDonHang VALUES('DDH03', 'VT04', 90)
-INSERT INTO ChiTietDonHang VALUES('DDH05', 'VT05', 270)
-INSERT INTO ChiTietDonHang VALUES('DDH01', 'VT02', 780)
 INSERT INTO ChiTietDonHang VALUES('DDH03', 'VT05', 900)
+INSERT INTO ChiTietDonHang VALUES('DDH04', 'VT02', 99)
+INSERT INTO ChiTietDonHang VALUES('DDH05', 'VT05', 270)
 SELECT * FROM ChiTietDonHang
 
 SET DATEFORMAT DMY
@@ -138,17 +139,19 @@ INSERT INTO PhieuNhapHang VALUES('PN02', '02/11/2017', 'DDH04')
 INSERT INTO PhieuNhapHang VALUES('PN03', '18/05/2017', 'DDH03')
 INSERT INTO PhieuNhapHang VALUES('PN04', '16/02/2017', 'DDH01')
 INSERT INTO PhieuNhapHang VALUES('PN05', '22/12/2017', 'DDH02')
+INSERT INTO PhieuNhapHang VALUES('PN06', '21/09/2018', 'DDH05')
 SELECT * FROM PhieuNhapHang
 SELECT CONVERT([varchar], NgayNhap, 103) FROM PhieuNhapHang
 
-INSERT INTO ChiTietPhieuNhap VALUES('PN03', 'VT04', 193, 200000)
-INSERT INTO ChiTietPhieuNhap VALUES('PN02', 'VT01', 123, 315000)
-INSERT INTO ChiTietPhieuNhap VALUES('PN05', 'VT02', 23, 240000)
 INSERT INTO ChiTietPhieuNhap VALUES('PN01', 'VT04', 131, 205000)
+INSERT INTO ChiTietPhieuNhap VALUES('PN02', 'VT01', 123, 315000)
 INSERT INTO ChiTietPhieuNhap VALUES('PN02', 'VT03', 113, 300000)
-INSERT INTO ChiTietPhieuNhap VALUES('PN03', 'VT05', 623, 500000)
 INSERT INTO ChiTietPhieuNhap VALUES('PN02', 'VT05', 269, 198000)
+INSERT INTO ChiTietPhieuNhap VALUES('PN03', 'VT04', 193, 200000)
+INSERT INTO ChiTietPhieuNhap VALUES('PN03', 'VT05', 623, 500000)
 INSERT INTO ChiTietPhieuNhap VALUES('PN04', 'VT02', 99, 20000)
+INSERT INTO ChiTietPhieuNhap VALUES('PN05', 'VT02', 23, 240000)
+INSERT INTO ChiTietPhieuNhap VALUES('PN06', 'VT02', 200, 100000)
 SELECT * FROM ChiTietPhieuNhap
 
 INSERT INTO PhieuXuatHang VALUES('PX01', '22/02/2018', N'Khách hàng 01')
@@ -280,7 +283,6 @@ CREATE TABLE TonKho
     select * from TonKho
 --Đặt điều kiện ràng buộc giá trị nhập vào cho các trường số lượng lớn hơn 0--
     ALTER TABLE TonKho ADD CONSTRAINT chk_SL CHECK(SLDau >= 0 AND TongSLNhap >= 0 AND TongSLXuat >= 0 AND SLCuoi >= 0)  
-    ALTER TABLE TonKho DROP CONSTRAINT chk_SL
 --Truy vấn danh sách các phiếu đặt hàng nhưng chưa được nhập hàng--
 SELECT * FROM DonDatHang
 WHERE MaDDH NOT IN
@@ -316,3 +318,56 @@ SELECT DISTINCT MaDDH, ChiTietDonHang.MaVatTu, (SoLuong) [Số lượng hàng đ
 FROM ChiTietDonHang INNER JOIN ChiTietPhieuNhap ON ChiTietDonHang.MaVatTu = ChiTietPhieuNhap.MaVatTu
 WHERE SoLuong >= SoLuongNhap
 -- GROUP BY MaDDH, ChiTietDonHang.MaVatTu, SoLuong, SoLuongNhap
+
+/*  View - Bài tập ngày 13/08/2018    */
+--Câu 18: Tạo View vw_DMVT gồm Mã vật tư và Tên vật tư dùng liệt kê sanh sách trong bảng vật tư--
+CREATE VIEW vw_DMVT AS
+SELECT MaVatTu, TenVatTu FROM VatTu
+WITH CHECK OPTION
+SELECT * FROM vw_DMVT
+/*Câu 19: Tao View vw_DonDH_TongSLDatNhap gồmm Mã hóa đơn, Số lượng đặt, Tổng số lượng nhập
+dùng để thống kê những đơn đặt hàng đã được nhập hàng đầy đủ*/
+CREATE VIEW vw_DonDH_TongSLDatNhap AS
+SELECT MaDDH, SoLuong, SoLuongNhap FROM ChiTietDonHang INNER JOIN ChiTietPhieuNhap ON ChiTietDonHang.MaVatTu = ChiTietPhieuNhap.MaVatTu
+WHERE SoLuongNhap = SoLuong
+-- DROP VIEW vw_DonDH_TongSLDatNhap
+SELECT * FROM vw_DonDH_TongSLDatNhap
+/*Câu 20: Tạo View vw_DonDH_DaNhapDu gồm (Số DH, DaNhapDu) có hai giá trị là 
+- “Da Nhap Du” nếu đơn hàng đó đã nhập đủ.
+- “Chua Nhap Du” nếu đơn đặt hàng chưa nhập đủ*/
+CREATE VIEW vw_DonDH_DaNhapDu AS
+SELECT DISTINCT MaDDH, ChiTietDonHang.MaVatTu, CASE
+WHEN SoLuong = SoLuongNhap THEN N'Đã nhập đủ'
+ELSE N'Chưa nhập đủ'
+END
+AS [Tình trạng]
+FROM ChiTietDonHang INNER JOIN ChiTietPhieuNhap ON ChiTietDonHang.MaVatTu = ChiTietPhieuNhap.MaVatTu
+
+SELECT * FROM vw_DonDH_DaNhapDu
+
+/*Câu 21: Tạo View vw_TongNhap gồm (NamThang, MaVTu và TongSLNhap) 
+dùng để thống kê số lượng nhập của các vật tư trong năm tháng tương ứng (Không sử dụng bảng tồn kho)*/
+----
+CREATE VIEW vw_TongNhap1 AS
+SELECT CAST(MONTH(NgayNhap) AS varchar)+'/'+CAST(YEAR(NgayNhap) AS VARCHAR) AS [Thời gian], MaVatTu [Mã vật tư], SUM(SoLuongNhap) [Tổng số lượng nhập] FROM ChiTietPhieuNhap INNER JOIN PhieuNhapHang ON ChiTietPhieuNhap.MaSoPhieuNhap = PhieuNhapHang.MaSoPhieuNhap
+WHERE MONTH(NgayNhap) = '12' AND YEAR(NgayNhap) = '2017'
+GROUP BY MONTH(NgayNhap), YEAR(NgayNhap), MaVatTu
+
+SELECT * FROM vw_TongNhap1
+----
+CREATE VIEW vw_TongNhap2 AS
+SELECT CONCAT(MONTH(NgayNhap),'/',YEAR(NgayNhap)) AS [Thời gian],MaVatTu [Mã vật tư] ,SUM(SoLuongNhap) [Tổng số lượng nhập] 
+FROM ChiTietPhieuNhap INNER JOIN PhieuNhapHang ON ChiTietPhieuNhap.MaSoPhieuNhap = PhieuNhapHang.MaSoPhieuNhap
+WHERE MONTH(NgayNhap) = '12' AND YEAR(NgayNhap) = '2017'
+GROUP BY MONTH(NgayNhap), YEAR(NgayNhap), MaVatTu
+
+SELECT * from vw_TongNhap2
+/*Câu 22: Tạo View vw_TongXuat gồm (NamThang, MaVTu và TongSLXuat) 
+dùng để thống kê SL xuất của vật tư trong từng năm tương ứng (Không sử dụng bảng tồn kho)*/
+CREATE VIEW vw_TongXuat AS
+SELECT CONCAT(MONTH(NgayXuat), '/', YEAR(NgayXuat)) [Thời gian], MaVatTu [Mã vật tư], SUM(SoLuongXuat) [Tổng số lượng]
+FROM PhieuXuatHang INNER JOIN ChiTietPhieuXuat ON PhieuXuatHang.MaSoPhieuXuat = ChiTietPhieuXuat.MaSoPhieuXuat
+WHERE MONTH(NgayXuat) = '2' AND YEAR(NgayXuat) = '2018'
+GROUP BY MONTH(NgayXuat), YEAR(NgayXuat), MaVatTu
+
+SELECT * FROM vw_TongXuat
