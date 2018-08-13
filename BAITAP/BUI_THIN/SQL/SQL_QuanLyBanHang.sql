@@ -145,13 +145,11 @@ SELECT CONVERT([varchar], NgayNhap, 103) FROM PhieuNhapHang
 
 INSERT INTO ChiTietPhieuNhap VALUES('PN01', 'VT04', 131, 205000)
 INSERT INTO ChiTietPhieuNhap VALUES('PN02', 'VT01', 123, 315000)
-INSERT INTO ChiTietPhieuNhap VALUES('PN02', 'VT03', 113, 300000)
+INSERT INTO ChiTietPhieuNhap VALUES('PN02', 'VT03', 150, 300000)
 INSERT INTO ChiTietPhieuNhap VALUES('PN02', 'VT05', 269, 198000)
 INSERT INTO ChiTietPhieuNhap VALUES('PN03', 'VT04', 193, 200000)
 INSERT INTO ChiTietPhieuNhap VALUES('PN03', 'VT05', 623, 500000)
 INSERT INTO ChiTietPhieuNhap VALUES('PN04', 'VT02', 99, 20000)
-INSERT INTO ChiTietPhieuNhap VALUES('PN05', 'VT02', 23, 240000)
-INSERT INTO ChiTietPhieuNhap VALUES('PN06', 'VT02', 200, 100000)
 SELECT * FROM ChiTietPhieuNhap
 
 INSERT INTO PhieuXuatHang VALUES('PX01', '22/02/2018', N'Khách hàng 01')
@@ -316,8 +314,13 @@ WHERE MaVatTu IN
 --Thống kê những đơn đặt hàng chưa đủ số lượng--
 SELECT DISTINCT MaDDH, ChiTietDonHang.MaVatTu, (SoLuong) [Số lượng hàng đặt], (SoLuongNhap) [Số lượng hàng nhập về]
 FROM ChiTietDonHang INNER JOIN ChiTietPhieuNhap ON ChiTietDonHang.MaVatTu = ChiTietPhieuNhap.MaVatTu
-WHERE SoLuong >= SoLuongNhap
+WHERE SoLuong > SoLuongNhap
 -- GROUP BY MaDDH, ChiTietDonHang.MaVatTu, SoLuong, SoLuongNhap
+
+-- SELECT * FROM
+-- ChiTietDonHang INNER JOIN PhieuNhapHang ON ChiTietDonHang.MaDDH = PhieuNhapHang.MaDDH
+-- INNER JOIN ChiTietPhieuNhap ON PhieuNhapHang.MaSoPhieuNhap = ChiTietPhieuNhap.MaSoPhieuNhap
+-- WHERE SoLuong > SoLuongNhap
 
 /*  View - Bài tập ngày 13/08/2018    */
 --Câu 18: Tạo View vw_DMVT gồm Mã vật tư và Tên vật tư dùng liệt kê sanh sách trong bảng vật tư--
