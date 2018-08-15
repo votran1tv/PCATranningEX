@@ -342,6 +342,60 @@
 		from Phieuxuat inner join Chitietphieuxuat on Chitietphieuxuat.Maphieuxuat=Phieuxuat.Maphieuxuat
 		group by Phieuxuat.Ngayxuat, Chitietphieuxuat.Mavattu, Chitietphieuxuat.Soluongxuat
 
+
+------------------------------------- Upddate EX2(15/8) – Store Procedure, Trigger, Fuction And Transaction----------------------------------------------------------------------
+-- Câu 23. Tạo Stored procedure (SP) cho biết tổng số lượng cuối của vật tư với mã vật tư là tham số vào.
+		CREATE PROCEDURE sp_TongluongcuoiVT
+			@mavattu VARCHAR(255)
+		AS
+		SELECT ((select SUM(soluongnhap)FROM Chitietphieunhap WHERE Mavattu=@mavattu)-
+		(select SUM(Soluongxuat) FROM Chitietphieuxuat WHERE Mavattu=@mavattu))
+
+		EXECUTE sp_TongluongcuoiVT @mavattu='MS01'
+-- Câu 24. Tạo SP cho biết tổng tiền xuất của vật tư với mã vật tư là tham số vào.
+		CREATE PROCEDURE sp_TongTienXuat
+			@Mavattu VARCHAR(255)
+		AS
+		SELECT SUM(dongia*soluongxuat) FROM Chitietphieuxuat WHERE Mavattu=@Mavattu
+
+
+-- Câu 25. Tạo SP cho biết tổng số lượng đặt theo số đơn hàng với số đơn hàng là tham số vào.
+		CREATE PROCEDURE sp_Tongluongdat
+			@madondathang VARCHAR(255)
+		AS
+		SELECT SUM(soluongdat) FROM Chitietdonhang WHERE Madondathang=@madondathang
+
+-- Câu 26. Tạo SP dùng để thêm một đơn đặt hàng
+		CREATE PROCEDURE sp_Donhangnew
+			@Madondathang varchar(255),
+			@Ngaydat date, 
+			@Mancc varchar(255)
+		AS
+		INSERT INTO Dondathang(Madondathang,Ngaydat,Mancc) values(@Madondathang,@Ngaydat,@Mancc )
+
+		sp_Donhangnew 'DH014','15/8/2018','NCC002'
+		-- drop PROCEDURE sp_Donhangnew
+
+
+-- Câu 27. Tạo SP dùng để thêm một chi tiết đơn đặt hang
+		CREATE PROCEDURE sp_chitietdonhang
+			@Madondathang varchar(255), 
+			@Mavattu varchar(255), 
+			@Soluongdat int
+		AS
+		INSERT into Chitietdonhang(Madondathang,Mavattu,Soluongdat) VALUES(@Madondathang,@Mavattu,@Soluongdat)
+		sp_chitietdonhang 'DH014','MS02','150'
+
+
+-- Câu 28. Tạo trigger kiểm soát quá trình thêm dữ liệu vào bảng vật tư, đưa ra thông báo khi số lượng vật tư vượt quá 100 sp.
+		ALTER TRIGGER nhapvattu ON VATTU FOR INSERT
+		AS
+		 IF (select COUNT(Mavattu) FROM VATTU)>12
+		 ROLLBACK
+		 PRINT N'Số lượng vật tư không lớn hơn 12'
+
+
+	insert into VATTU values ('MS13','tea11 ','kg','83');
 -------------------------------------------------------------
 	select*from VATTU
 	select*from NHACC
@@ -354,6 +408,7 @@
 	select*from Tonkho
 	SELECT * FROM vw_DMVT
 	SELECT * FROM vw_DonDH_Tong_SLDatNhap
+	SELECT*FROM vw_DonDH_DaNhapDu
 	select * from vw_TongNhap
 	select*from vw_TongXuat
 	drop database QuanLyBanHang
