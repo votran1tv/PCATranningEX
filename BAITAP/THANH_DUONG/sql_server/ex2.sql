@@ -120,6 +120,7 @@ insert into VatTu values('tv009',N'Máy tính asus','Chiec',0)
 insert into VatTu values('tv010',N'Điện thoại asus','Chiec',30)
 insert into VatTu values('tv011',N'Điện thoại sony','Chiec',0)
 insert into VatTu values('tv012',N'Điện thoại viettel','Chiec',20)
+select * from VatTu
 
 insert into NhaCungCap values('Exotic Liquid ','49 Gilbert St. Londona',0912345671)
 insert into NhaCungCap values('New Orleans Cajun Delights','P.O. Box 78934 New Orleans',0912345672)
@@ -136,6 +137,7 @@ insert into NhaCungCap values('Plutzer Lebensmittelgroßmärkte AG ','Bogenallee
 insert into NhaCungCap values('Nord-Ost-Fisch Handelsgesellschaft mbH ','Frahmredder 112a Cuxhaven ',0912345613)
 insert into NhaCungCap values('Formaggi Fortini s.r.l.','Viale Dante, 75 Ravenna ',0912345614)
 select * from NhaCungCap
+
 set dateformat dmy;
 -->> insert DonDatHang & ChiTietDonHang
 insert into DonDatHang(MaDDHang,NgayDat,MaNCCap) values
@@ -174,7 +176,7 @@ insert into ChiTietDonHang(MaDDHang,MaVatTu,SoLuongDat) values
 	('ddh010','tv012',500),
 	('ddh011','tv009',500)
 	select * from ChiTietDonHang
-	delete from ChiTietDonHang
+	
 -->> insert PhieuNhapHang & ChiTietPNHang
 insert into PhieuNhapHang(MaPNHang,NgayNhap,MaDDHang) values
     ('pnh001','15/3/2018','ddh002'),
@@ -186,6 +188,7 @@ insert into PhieuNhapHang(MaPNHang,NgayNhap,MaDDHang) values
 	('pnh007','23/7/2018','ddh007'),
 	('pnh008','28/8/2018','ddh009'),
 	('pnh009','1/09/2018','ddh008')
+	select * from PhieuNhapHang
 	-- insert ChiTietPNHang
 	-- tv001 - 8.0
 	-- tv002 - 10.5
@@ -216,9 +219,8 @@ insert into ChiTietPNHang(MaPNHang,MaVatTu,SoLuongNhap,DonGiaNhap) values
 	('pnh008','tv010',350,15.0),--ed
 	('pnh009','tv004',300,20.4),--ed
 	('pnh009','tv007',400,12.0)
-
 	select * from ChiTietPNHang
-	drop table ChiTietPNHang
+	
 -->> insert PhieuXuat & ChiTietPXuat
 insert into PhieuXuat values('px001','10/11/2018',N'Nguyễn Hải Cường')
 insert into PhieuXuat values('px002','10/11/2018',N'Trần Văn Võ')
@@ -228,12 +230,9 @@ insert into PhieuXuat values('px004','10/11/2018',N'Nguyễn Duy Anh')
 insert into ChiTietPXuat values('px001','tv001',1,8.0)
 insert into ChiTietPXuat values('px001','tv004',2,20.0)
 insert into ChiTietPXuat values('px001','tv002',1,10.0)
-
 insert into ChiTietPXuat values('px002','tv001',1,8.0)
 insert into ChiTietPXuat values('px002','tv002',1,10.0)
-
 insert into ChiTietPXuat values('px003','tv001',2,8.0)
-
 insert into ChiTietPXuat values('px004','tv004',1,20.0)
 insert into ChiTietPXuat values('px004','tv005',2,27.7)
 insert into ChiTietPXuat values('px004','tv003',1,12.9)
@@ -284,7 +283,7 @@ select count(MaPNHang) as 'Số lượng mặt hàng' from ChiTietPNHang where M
     
 select max(Tong) as Tong
     from (
-        select sum(SoLuongDat) as Tong from ChiTietDonHang group by MaVatTu
+        select ChiTietDonHang.MaVatTu as MVT, sum(SoLuongDat) as Tong from ChiTietDonHang group by MaVatTu
     ) as tem
 -- 8: tìm các mặt hàng bắt đầu bằng T
 select * from VatTu where Ten like 't%'
@@ -327,11 +326,13 @@ select top 1 tem.SLD as [Số đơn],NhaCungCap.* from NhaCungCap
     ) as tem on NhaCungCap.MaNCCap=tem.IDNCC order by tem.SLD desc
 
 -- 15: Lấy thông tin vật tư được xuất bán nhiều nhất
+
 select top 1 tem.SLX as [số lượng],VatTu.* from VatTu 
     inner join (
         select MaVatTu as MVT_ID, Sum(SoLuongXuat) as SLX from ChiTietPXuat group by MaVatTu
     ) as tem on VatTu.MaVatTu = tem.MVT_ID order by tem.SLX desc
 -- 16: Tính tổng tiền của các đơn đặt hàng, đưa ra đơn đặt hàng có giá trị lớn nhất
+
 select DonDatHang.*,tem.Tien from DonDatHang inner join 
     (
         select MaDDHang,tem.Tien from PhieuNhapHang 
@@ -339,15 +340,16 @@ select DonDatHang.*,tem.Tien from DonDatHang inner join
             select MaPNHang as PNH_ID, sum((SoLuongNhap * DonGiaNhap)) as Tien from ChiTietPNHang where MaPNHang in (select MaPNHang from PhieuNhapHang) group by MaPNHang
         ) as tem on PhieuNhapHang.MaPNHang = tem.PNH_ID
     ) as tem on DonDatHang.MaDDHang = tem.MaDDHang order by tem.Tien desc
+
 -- 17: Thống kê những đơn đặt hàng chưa đủ số lượng [tick]
 
-select MaDDHang,ChiTietPNHang.MaPNHang,MaVatTu,SoLuongNhap
-from ChiTietPNHang inner join PhieuNhapHang on ChiTietPNHang.MaPNHang=PhieuNhapHang.MaPNHang
-
-select distinct MaDDHang,ChiTietDonHang.MaVatTu,SoLuongDat,SoLuongNhap from ChiTietDonHang 
-inner join ChiTietPNHang on ChiTietDonHang.MaVatTu=ChiTietPNHang.MaVatTu
-where SoLuongDat > SoLuongNhap
---group by MaDDHang,ChiTietDonHang.MaVatTu,SoLuongDat,SoLuongNhap
+select ChiTietDonHang.MaDDHang,ChiTietDonHang.MaVatTu,SoLuongDat,SoLuongNhap from ChiTietDonHang,(
+	select MaDDHang,ChiTietPNHang.MaPNHang,MaVatTu,SoLuongNhap 
+	from ChiTietPNHang inner join PhieuNhapHang 
+	on ChiTietPNHang.MaPNHang=PhieuNhapHang.MaPNHang
+)[tem] where ChiTietDonHang.MaDDHang=tem.MaDDHang and ChiTietDonHang.
+MaVatTu=tem.MaVatTu and SoLuongDat>SoLuongNhap
+order by ChiTietDonHang.MaDDHang asc
 
 --------------------------------------------------------------------------
 -- ex2 (13/08/18)--
@@ -358,11 +360,29 @@ create view vw_DMVT as
 -- 19:
     --TODO
 create view vw_DDH_TongSLDatNhap as 
-    select ChiTietDonHang.MaDDHang,SoLuongDat,SoLuongNhap from ChiTietDonHang 
-    inner join ChiTietPNHang on ChiTietDonHang.MaVatTu=ChiTietPNHang.MaVatTu
-    where SoLuongDat <= SoLuongNhap
+    select ChiTietDonHang.MaDDHang,ChiTietDonHang.MaVatTu,SoLuongDat,SoLuongNhap from ChiTietDonHang,(
+		select MaDDHang,ChiTietPNHang.MaPNHang,MaVatTu,SoLuongNhap 
+		from ChiTietPNHang inner join PhieuNhapHang 
+		on ChiTietPNHang.MaPNHang=PhieuNhapHang.MaPNHang
+	)[tem] where ChiTietDonHang.MaDDHang=tem.MaDDHang and ChiTietDonHang.
+	MaVatTu=tem.MaVatTu and SoLuongDat<=SoLuongNhap
+	order by ChiTietDonHang.MaDDHang asc
 -- 20:
     --TODO
+create view vw_DonDH_DaNhapDu as
+	select ChiTietDonHang.MaDDHang,
+		(case
+			when sum(SoLuongDat)<=sum(SoLuongNhap) then 'Da Nhap Du'
+			when sum(SoLuongDat)>sum(SoLuongNhap) then 'Chu Nhap Du'
+		end)[DaNhapDu]
+	from ChiTietDonHang,(
+		select MaDDHang,ChiTietPNHang.MaPNHang,MaVatTu,SoLuongNhap 
+		from ChiTietPNHang inner join PhieuNhapHang 
+		on ChiTietPNHang.MaPNHang=PhieuNhapHang.MaPNHang
+	)[tem] where ChiTietDonHang.MaDDHang=tem.MaDDHang and ChiTietDonHang.
+	MaVatTu=tem.MaVatTu
+	group by ChiTietDonHang.MaDDHang
+	order by ChiTietDonHang.MaDDHang asc
 -- 21:
 create view vw_TongNhap AS 
     select concat(cast(year(NgayNhap) as char),cast(month(NgayNhap) as char)) as ngay,MaVatTu,sum(SoLuongNhap) as SoLuong
@@ -379,6 +399,8 @@ create view vw_TongXuat as
 ----------------------------------
     select * from PhieuXuat
     select * from ChiTietPXuat
+    select * from PhieuNhapHang
+    select * from ChiTietPNHang
 
 
 
