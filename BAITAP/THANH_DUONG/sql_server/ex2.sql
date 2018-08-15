@@ -1,13 +1,13 @@
 if not exists (select 1 from sys.databases where name = 'QLBH')
     begin 
         create database QLBH
-        on primary(
-            size=5,
-            maxsize=50,
-            filegrowth=5,
-            filename = 'D:\DB\qlbh.mdf',
-            name = 'QLBH'
-        )
+        -- on primary(
+        --     size=5,
+        --     maxsize=50,
+        --     filegrowth=5,
+        --     filename = '\mnt\DATA\DB\qlbh.mdf',
+        --     name = 'QLBH'
+        -- )
     end
 
 use QLBH
