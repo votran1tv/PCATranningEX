@@ -322,19 +322,23 @@
 
 --20) Tạo View vw_DonDH_DaNhapDu gồm (Số DH, DaNhapDu) có hai giá trị là “Da Nhap Du” nếu đơn hàng đó đã nhập đủ hoặc “Chu Nhap Du” nếu đơn đặt hàng chưa nhập đủ
 		create view vw_DonDH_DaNhapDu as
-		select 
+		select distinct madondathang, Chitietdonhang.Mavattu, case
+		when soluongdat <= soluongnhap then N'Đã nhập đủ'
+		else N'Chưa nhập đủ' end
+		[Trạng thái hàng]
+		from chitietdonhang inner join chitietphieunhap on chitietdonhang.mavattu=chitietdonhang.mavattu
 
 
 
 --21) Tạo View vw_TongNhap gồm (NamThang, MaVTu và TongSLNhap) dùng để thống kê số lượng nhập của các vật tư trong năm tháng tương ứng (Không sử dụng bảng tồn kho)
 		create view vw_TongNhap as
-		select Phieunhaphang.Ngaynhap, Chitietphieunhap.Mavattu, Chitietphieunhap.Soluongnhap
+		select cast (MONTH(Ngaynhap)as varchar) +'/'+CAST(YEAR(Ngaynhap)as varchar)[Thời gian], Chitietphieunhap.Mavattu, Chitietphieunhap.Soluongnhap
 		from Phieunhaphang inner join Chitietphieunhap on Phieunhaphang.Masophieunhap=Chitietphieunhap.Masophieunhap
 		group by Phieunhaphang.Ngaynhap, Chitietphieunhap.Mavattu, Chitietphieunhap.Soluongnhap
 
 --22) Tạo View vw_TongXuat gồm (NamThang, MaVTu và TongSLXuat) dùng để thống kê SL xuất của vật tư trong từng năm tương ứng (Không sử dụng bảng tồn kho)
 		create view vw_TongXuat as
-		select Phieuxuat.Ngayxuat, Chitietphieuxuat.Mavattu, Chitietphieuxuat.Soluongxuat
+		select CAST(YEAR(Ngayxuat) as varchar)[Thời gian], Chitietphieuxuat.Mavattu, Chitietphieuxuat.Soluongxuat
 		from Phieuxuat inner join Chitietphieuxuat on Chitietphieuxuat.Maphieuxuat=Phieuxuat.Maphieuxuat
 		group by Phieuxuat.Ngayxuat, Chitietphieuxuat.Mavattu, Chitietphieuxuat.Soluongxuat
 
