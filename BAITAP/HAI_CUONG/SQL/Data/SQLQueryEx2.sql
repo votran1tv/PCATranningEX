@@ -4,6 +4,7 @@ go
 drop database if exists  QLBanHang
 go
 
+"mssql.intelliSense.enableErrorChecking": false
 --go
 --Tạo cơ sở dữ liệu QLBH--
 if not exists (select 1 from sys.databases where name = 'QLBanHang')
@@ -143,6 +144,17 @@ else
 
 go
 
+--9_TonKho:
+create table TonKho(
+NamThang char,
+MaVT char(20),
+SLDau int CHECK(SLDau>0), --Check SL > 0 <Cách 2>
+SLCuoi int CHECK(SLCuoi>0),
+TongSLNhap int CHECK(TongSLNhap>0),
+TongSLXuat int CHECK(TongSLXuat>0),
+constraint fk_TonKho_MaVT foreign key(MaVT) references VatTu(MaVT)
+);
+go
 ---------------------------------------------------------------------------
 --Chèn dữ liệu vào bảng--
 
@@ -280,34 +292,55 @@ go
 
 --8_ChiTiePhieutXuat:
 insert into ChiTietPhieuXuat(MaCTPX,MaPX,MaVT,SoLuongXuat,DonGiaXuat) values
-('CTPX01','PX01','VT01',200,9000000),
-('CTPX02','PX02','VT01',200,9000000),
-('CTPX03','PX03','VT01',200,9000000),
-('CTPX04','PX04','VT02',200,11000000),
-('CTPX05','PX05','VT02',200,11000000),
-('CTPX06','PX06','VT02',200,11000000),
-('CTPX07','PX07','VT03',100,12000000),
-('CTPX08','PX08','VT03',100,12000000),
-('CTPX09','PX09','VT03',100,12000000),
-('CTPX10','PX10','VT04',500,5000000),
-('CTPX11','PX11','VT04',200,6000000),
-('CTPX12','PX12','VT04',400,5500000),
-('CTPX13','PX13','VT05',200,4000000),
-('CTPX14','PX14','VT05',200,4000000),
-('CTPX15','PX15','VT05',700,3500000);
+('CTPX01','PX01','VT01',100,9000000),
+('CTPX02','PX02','VT01',100,9000000),
+('CTPX03','PX03','VT01',100,9000000),
+('CTPX04','PX04','VT02',100,11000000),
+('CTPX05','PX05','VT02',100,11000000),
+('CTPX06','PX06','VT02',100,11000000),
+('CTPX07','PX07','VT03',50,12000000),
+('CTPX08','PX08','VT03',50,12000000),
+('CTPX09','PX09','VT03',50,12000000),
+('CTPX10','PX10','VT04',400,5000000),
+('CTPX11','PX11','VT04',100,6000000),
+('CTPX12','PX12','VT04',300,5500000),
+('CTPX13','PX13','VT05',100,4000000),
+('CTPX14','PX14','VT05',100,4000000),
+('CTPX15','PX15','VT05',600,3500000);
 
 select * from ChiTietPhieuXuat;
 go
 
+----9_TonKho:
+--set dateformat dmy;
+--insert into TonKho(MaVT, NamThang, SLCuoi, SLDau, TongSLNhap, TongSLXuat) values
+--('VT01', '1/1/2019', 100, 200, 600, 300),
+--('VT01', '1/2/2019', 100, 200, 600, 300),
+--('VT01', '1/3/2019', 100, 100, 600, 300),
+--('VT02', '1/4/2019', 100, 200, 600, 300),
+--('VT02', '1/5/2019', 100, 200, 600, 300),
+--('VT02', '1/6/2019', 100, 200, 600, 300),
+--('VT03', '1/7/2019', 50, 100, 300, 150),
+--('VT03', '1/8/2019', 50, 100, 300, 150),
+--('VT03', '1/9/2019', 50, 100, 300, 150),
+--('VT04', '1/10/2019', 400, 500, 600, 300),
+--('VT04', '1/11/2019', 100, 200, 600, 300),
+--('VT04', '1/12/2019', 300, 400, 600, 300),
+--('VT05', '1/1/2020', 100, 200, 600, 300),
+--('VT05', '1/2/2020', 100, 200, 600, 300),
+--('VT05', '1/3/2020', 600, 700, 600, 300);
 ---------------------------------------END---------------------------------
 
 ------Bài Tập------
 --\\EX2 (8/8/2018)//
 --1_Tạo CSDL trên SQL Server.
+--Done--
 -----
 --2_Thiết lập khóa chính, khóa ngoại, tạo liên kết giữa các bảng.
+--Done--
 -----
 --3_Chèn dữ liệu vào các bảng.
+--Done--
 -----
 --4.Thực hiện truy vấn thêm, sửa, xóa trên các bảng:
 
@@ -336,25 +369,87 @@ truncate table ChiTietPhieuNhap; --//Xoa cả Index
 -----
 --5_Lấy ra danh sách các đơn đặt hàng từ 1/1/2018 đến 1/6/2018:
 select * from DonDatHang where NgayDat between '1/1/2018' and '1/6/2018';
+
 -----
---6_Thống kê số lượng mặt hàng theo nhà cung cấp:
+--6_Thống kê số lượng mặt hàng theo nhà cung cấp - Sắp xếp theo miền:
+select NhaCungCap.TenNhaCungCap, VatTu.TenVatTu, sum(ChiTietPhieuNhap.SoLuongNhap)[Số lượng theo miền] from NhaCungCap, VatTu, ChiTietPhieuNhap group by TenNhaCungCap, TenVatTu;
 
 -----
 
 --\\Update EX2 (9/8/2018)//
 --7_Kiểm tra xem mặt hàng nào được đặt hàng nhiều nhất:
-
------
+SELECT MaVT, Min(SoLuongDat)[VT Đặt Nhiều Nhất] FROM ChiTietDonDatHang GROUP BY MaVT;
 --8_Tìm tất cả mặt hàng bắt đầu bằng chữ T:
-
+SELECT VatTu.TenVatTu FROM VatTu WHERE TenVatTu LIKE 'T%';
 -----
 --9_Thống kê các mặt hàng  mà có tổng số lượng đặt hàng nhiều hơn 1000:
+SELECT ChiTietDonDatHang.MaVT, SUM(ChiTietDonDatHang.SoLuongDat)[Tổng MH > 1000] FROM ChiTietDonDatHang GROUP BY MaVT HAVING SUM(ChiTietDonDatHang.SoLuongDat) > 1000;
+SELECT * FROM ChiTietDonDatHang;
+-----
+--10.1_Tìm tất cả các mặt hàng đã nhập về nhưng chưa xuất:
 
 -----
---10_Tìm tất cả các mặt hàng đã nhập về nhưng chưa xuất:
+--10.2_Tìm tất cả các mặt hàng đã nhập về và đã xuất:
 
 -----
---11_Tìm tất cả các mặt hàng đã nhập về và đã xuất:
+--\\Update EX2 (10/8/2018)//
+--11_Tạo bảng tồn kho:
+--Done--
+-----
+--12_Đặt điều kiện ràng buộc giá trị nhập vào cho các trường số lượng có giá trị lớn hơn không, giá trị ngày tháng lớn hơn 1/1/1999 và nhỏ hơn 31/12/2999:
+check(SLDau > 0 and SLCuoi > 0 and TongSLNhap > 0 and TongSLXuat > 0); --Check SL > 0 <Cách 1>
+go
+alter table TonKho alter column NamThang date; --Check Ngày Tháng
+alter table TonKho add constraint ck_TonKho_NamThang check(NamThang > 1/1/1991 and NamThang < 31/12/2999);
+go
+-----
+--13_Truy vấn danh sách các phiếu đặt hàng chưa được nhập hàng:
+
+-----
+--14_Lấy thông tin nhà cung cấp có nhiều đơn đặt hàng nhất:
+SELECT NhaCungCap.MaNCC, NhaCungCap.TenNhaCungCap, MAX(DonDatHang.MaDDH) FROM NhaCungCap, DonDatHang GROUP BY NhaCungCap.MaNCC;
+-----
+--15_Lấy thông tin vật tư được xuất bán nhiều nhất:
+
+-----
+--16_Tính tổng tiền của các đơn đặt hàng, đưa ra đơn đặt hàng có giá trị lớn nhất:
+
+-----
+--17_Thống kê những đơn đặt hàng chưa đủ nhập số lượng:
+
+-----
+--18_Tạo View  vw_DMVT gồm (MAVTu và TenVTu) dùng liệt kê các danh sách trong bảng vật tư:
+
+-----
+--19_Tạo View vw_DonDH_Tong SLDatNhap gồm (SoHD, TongSLDat và TongSLNhap) dùng để thống kê những đơn đặt hàng đã được nhập hàng đầy đủ:
+
+-----
+--20_Tạo View vw_DonDH_DaNhapDu gồm (Số DH, DaNhapDu) có hai giá trị là “Da Nhap Du” nếu đơn hàng đó đã nhập đủ hoặc “Chu Nhap Du” nếu đơn đặt hàng chưa nhập đủ:
+
+-----
+--21_Tạo View vw_TongNhap gồm (NamThang, MaVTu và TongSLNhap) dùng để thống kê số lượng nhập của các vật tư trong năm tháng tương ứng (Không sử dụng bảng tồn kho):
+
+-----
+--22_Tạo View vw_TongXuat gồm (NamThang, MaVTu và TongSLXuat) dùng để thống kê SL xuất của vật tư trong từng năm tương ứng (Không sử dụng bảng tồn kho):
+
+-----
+--//Upddate EX2(15/8) – Store Procedure, Trigger, Fuction And Transaction\\
+--23_Tạo Stored procedure (SP) cho biết tổng số lượng cuối của vật tư với mã vật tư là tham số vào:
+
+-----
+--24_Tạo SP cho biết tổng tiền xuất của vật tư với mã vật tư là tham số vào:
+
+-----
+--25_Tạo SP cho biết tổng số lượng đặt theo số đơn hàng với số đơn hàng là tham số vào:
+
+-----
+--26_Tạo SP dùng để thêm một đơn đặt hàng:
+
+-----
+--27_Tạo SP dùng để thêm một chi tiết đơn đặt hang:
+
+-----
+--28_Tạo trigger kiểm soát quá trình thêm dữ liệu vào bảng vật tư, đưa ra thông báo khi số lượng vật tư vượt quá 100 sp:
 
 -----
 ----------
