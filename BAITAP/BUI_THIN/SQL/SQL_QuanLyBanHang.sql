@@ -467,3 +467,108 @@ DELETE FROM VatTu WHERE MaVatTu = 'VT15'
 DELETE FROM VatTu WHERE MaVatTu = 'VT16'
 
 SELECT * FROM VatTu
+
+/*Câu 29: Thêm cột thành tiền  cho bảng Chi tiết phiếu nhập.
+ viết hàm tính thành tiền với biến đầu vào là đơn giá và số lượng.
+ Tạo trigger cho phép tự động tính thành tiền trong bảng Chi tiết phiếu nhập mỗi khi có 1 bảng ghi mới được thêm vào*/
+ --Thêm cột ThanhTien cho bảng Chi tiết phiếu nhập--
+ ALTER TABLE ChiTietPhieuNhap ADD ThanhTien int 
+ SELECT * from ChiTietPhieuNhap
+--Viết hàm tính thành tiền với biến đầu vào là đơn giá và số lượng--
+CREATE FUNCTION fn_ThanhTien_ChiTietPhieuNhap(@SL int, @DG int)
+RETURNS int AS
+BEGIN
+DECLARE @TT INT
+SET @TT = @SL * @DG
+RETURN @TT
+END
+SELECT dbo.fn_ThanhTien_ChiTietPhieuNhap(5,10)
+--Tạo trigger cho phép tự động tính thành tiền trong bảng Chi tiết phiếu nhập mỗi khi có 1 bảng ghi mới được thêm vào--
+ALTER TRIGGER trg_ThanhTien_ChiTietPhieuNhap ON ChiTietPhieuNhap
+AFTER INSERT
+AS
+BEGIN
+    DECLARE @SL int, @DG int, @TT INT, @MPN VARCHAR(10), @MVT VARCHAR(10)
+    SELECT @MPN = MaSoPhieuNhap FROM inserted
+    SELECT @MVT = MaVatTu FROM inserted
+    SELECT @SL = SoLuongNhap FROM inserted
+    SELECT @DG = DonGia FROM inserted
+    -- SET @TT = @SL * @DG
+    -- PRINT(@TT)
+    UPDATE ChiTietPhieuNhap SET ThanhTien = dbo.fn_ThanhTien_ChiTietPhieuNhap(@SL, @DG) 
+    WHERE MaSoPhieuNhap = @MPN AND MaVatTu = @MVT
+END
+
+INSERT INTO ChiTietPhieuNhap(MaSoPhieuNhap, MaVatTu, SoLuongNhap, DonGia) VALUES('PN02', 'VT03', 100, 10000)
+SELECT * FROM ChiTietPhieuNhap
+/*Câu 30: Thêm cột tinhtrang (tình trạng) vào bảng Vattu (quy định 0 = “hết hàng’, 1=”còn hàng”).
+ Viết thủ tục kiểm tra trạng thái của các vật tư hiện đang có*/
+--Thêm cột TinhTrang vào bảng VậtTư--
+ALTER TABLE VatTu ADD TinhTrang Bit
+SELECT * FROM VatTu
+--Viết thủ tục kiểm tra trạng thái của các vật tư hiện đang có trong bảng VậtTư--
+ALTER PROCEDURE sp_Check_VatTu AS
+BEGIN
+    SELECT MaVatTu, CASE
+    WHEN TinhTrang = 0 THEN N'Hết hàng'
+    ELSE N'Còn hàng'
+    END
+    AS [Tình trạng]
+    FROM VatTu
+END
+
+sp_Check_VatTu
+ /*Câu 31: Viết trigger cho phép tự động cập nhật trạng thái của vật tư mỗi khi có sự thay đổi nhập hoặc xuất.*/
+CREATE TRIGGER trg_Update_Stt_VatTu ON ChiTietPhieuNhap
+FOR INSERT, UPDATE
+AS
+BEGIN
+    DECLARE @SLN int, @SLX INT
+    SELECT @SLN = SUM(ChiTietPhieuNhap.SoLuongNhap) FROM ChiTietPhieuNhap INNER JOIN inserted i ON i.MaVatTu = ChiTietPhieuNhap.MaVatTu
+    SELECT @SLX = SUM(ChiTietPhieuXuat.SoLuongXuat) FROM ChiTietPhieuXuat INNER JOIN inserted i ON i.MaVatTu = ChiTietPhieuXuat.MaVatTu
+    IF(@SLN > @SLX)
+    UPDATE VatTu
+        SET TinhTrang = 1
+        FROM inserted
+        WHERE VatTu.MaVatTu = inserted.MaVatTu
+    ELSE
+    UPDATE VatTu 
+        SET TinhTrang = 0
+        FROM inserted
+        WHERE VatTu.MaVatTu = inserted.MaVatTu
+END
+
+INSERT INTO ChiTietPhieuNhap(MaSoPhieuNhap, MaVatTu, SoLuongNhap, DonGia) VALUES('PN05', 'VT10', 100000, 2000)
+INSERT INTO ChiTietPhieuNhap(MaSoPhieuNhap, MaVatTu, SoLuongNhap, DonGia) VALUES('PN03', 'VT01', 1000, 1950)
+
+SELECT * FROM VatTu
+SELECT * FROM ChiTietPhieuNhap
+SELECT * FROM ChiTietPhieuXuat
+
+CREATE TRIGGER trg_Update_Stt_VatTu1 ON ChiTietPhieuXuat
+FOR INSERT, UPDATE
+AS
+BEGIN
+    DECLARE @SLN int, @SLX INT
+    SELECT @SLN = SUM(ChiTietPhieuNhap.SoLuongNhap) FROM ChiTietPhieuNhap INNER JOIN inserted i ON i.MaVatTu = ChiTietPhieuNhap.MaVatTu
+    SELECT @SLX = SUM(ChiTietPhieuXuat.SoLuongXuat) FROM ChiTietPhieuXuat INNER JOIN inserted i ON i.MaVatTu = ChiTietPhieuXuat.MaVatTu
+    IF(@SLN > @SLX)
+    UPDATE VatTu
+        SET TinhTrang = 1
+        FROM inserted
+        WHERE VatTu.MaVatTu = inserted.MaVatTu
+    ELSE
+    UPDATE VatTu 
+        SET TinhTrang = 0
+        FROM inserted
+        WHERE VatTu.MaVatTu = inserted.MaVatTu
+END
+
+
+-- SELECT * FROM sys.columns WHERE object_id = OBJECT_ID('dbo.VatTu')
+
+
+ /*Câu 32: Viết thủ tục tính lượng hàng tồn kho hiện tại cho mỗi loại vật tư và áp dụng lên bảng vật tư*/
+CREATE PROCEDURE sp_HangTonKho_Vattu ON 
+ /*Câu 33: Tạo trigger cho phép thay đổi số lượng tồn kho vật tư mỗi khi có sự thay đổi vể nhập xuất. 
+ Đưa ra thông báo “Không Đủ Vật Tư Đề Xuất” trong trường hợp không đủ vật tư theo phiếu chi tiết xuất*/
