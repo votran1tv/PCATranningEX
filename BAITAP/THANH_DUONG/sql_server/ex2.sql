@@ -1,13 +1,13 @@
 if not exists (select 1 from sys.databases where name = 'QLBH')
     begin 
         create database QLBH
-        on primary(
-            size=5,
-            maxsize=50,
-            filegrowth=5,
-            filename = 'D:\DB\qlbh.mdf',
-            name = 'QLBH'
-        )
+        -- on primary(
+        --     size=5,
+        --     maxsize=50,
+        --     filegrowth=5,
+        --     filename = '\mnt\DATA\DB\qlbh.mdf',
+        --     name = 'QLBH'
+        -- )
     end
 
 use QLBH
@@ -97,11 +97,11 @@ if not exists (select 1 from sysobjects where name = 'PhieuXuat')
 if not exists (select 1 from sysobjects where name = 'ChiTietPXuat')
     begin 
         create table ChiTietPXuat(
-            ID int PRIMARY key identity,
             MaPhieuXuat nvarchar(50),
             MaVatTu nvarchar(50),
             SoLuongXuat int,
             DonGia float, -- dv: $
+            constraint PK_ChiTietPhieuXuat primary key (MaPhieuXuat,MaVatTu),
             constraint FK_PhieuXuat_ChiTietPXuat foreign key (MaPhieuXuat) references PhieuXuat(MaPhieuXuat),
             constraint FK_VatTu_ChiTietPXuat foreign key (MaVatTu) references VatTu(MaVatTu)
         )
@@ -226,6 +226,7 @@ insert into PhieuXuat values('px001','10/11/2018',N'Nguyễn Hải Cường')
 insert into PhieuXuat values('px002','10/11/2018',N'Trần Văn Võ')
 insert into PhieuXuat values('px003','10/11/2018',N'Bùi Công Thìn')
 insert into PhieuXuat values('px004','10/11/2018',N'Nguyễn Duy Anh')
+insert into PhieuXuat values('px005','11/12/2018',N'Thanh Dương')
 
 insert into ChiTietPXuat values('px001','tv001',1,8.0)
 insert into ChiTietPXuat values('px001','tv004',2,20.0)
@@ -238,6 +239,8 @@ insert into ChiTietPXuat values('px004','tv005',2,27.7)
 insert into ChiTietPXuat values('px004','tv003',1,12.9)
 insert into ChiTietPXuat values('px004','tv002',2,10.5)
 insert into ChiTietPXuat values('px004','tv001',3,8.0)
+insert into ChiTietPXuat values('px005','tv005',20,27.7)
+insert into ChiTietPXuat values('px005','tv004',30,20.0)
 -- 6-7-8
 -------------------------------------------------------------------------------------------------------------
 -- update
@@ -249,20 +252,9 @@ update DonDatHang
 where MaDDHang = 'ddh002'
 -- delete những DonDatHang mà không có chi tiết đơn hàng
 delete DonDatHang 
-    where MaDDHang = 'ddh008' 
-    and (select count(MaDDHang) from ChiTietDonHang where MaDDHang = 'ddh008') = 0
-delete DonDatHang 
-    where MaDDHang = 'ddh009' 
-    and (select count(MaDDHang) from ChiTietDonHang where MaDDHang = 'ddh009') = 0
-delete DonDatHang 
-    where MaDDHang = 'ddh010' 
-    and (select count(MaDDHang) from ChiTietDonHang where MaDDHang = 'ddh010') = 0
-delete DonDatHang 
-    where MaDDHang = 'ddh011'
-    and (select count(MaDDHang) from ChiTietDonHang where MaDDHang = 'ddh011') = 0
-delete DonDatHang 
-    where MaDDHang = 'ddh012' 
-    and (select count(MaDDHang) from ChiTietDonHang where MaDDHang = 'ddh012') = 0
+    where MaDDHang not in (
+        select MaDDHang from ChiTietDonHang group by MaDDHang
+    )
 
 select * from DonDatHang
 
@@ -280,11 +272,9 @@ select count(MaPNHang) as 'Số lượng mặt hàng' from ChiTietPNHang where M
 
 -- ex2 9/8/2018
 -- 7: kiểm tra mặt hàng nào được đặt hàng nhiều nhất
-    
-select max(Tong) as Tong
-    from (
-        select ChiTietDonHang.MaVatTu as MVT, sum(SoLuongDat) as Tong from ChiTietDonHang group by MaVatTu
-    ) as tem
+select top 1 MaVatTu,sum(SoLuongDat)[SoLuong] from ChiTietDonHang
+    group by MaVatTu
+    order by sum(SoLuongDat) desc
 -- 8: tìm các mặt hàng bắt đầu bằng T
 select * from VatTu where Ten like 't%'
 -- 9: thống kê mặt hàng có số lượng đặt hàng nhiều hơn 1000
@@ -395,12 +385,73 @@ create view vw_TongXuat as
     select cast(year(NgayXuat) as char) as nam,MaVatTu,sum(SoLuongXuat) as SoLuong from ChiTietPXuat 
     inner join PhieuXuat on ChiTietPXuat.MaPhieuXuat=PhieuXuat.MaPhieuXuat
     group by cast(year(NgayXuat) as char),MaVatTu
+
+-- ex2 update (15/08/18)
+-- 23. Tạo Stored procedure (SP) cho biết tổng số lượng cuối của vật tư với mã vật tư là tham số vào.
+create procedure sp_SoLuongCuoiVatTu 
+    @MaVatTu nvarchar(50)
+as
+   select (
+        select sum(SoLuongNhap) from ChiTietPNHang where MaVatTu = @MaVatTu
+    )-(
+        select sum(SoLuongXuat) from ChiTietPXuat where MaVatTu = @MaVatTu
+    )[Tổng số lượng cuối]
+
+sp_SoLuongCuoiVatTu 'tv004'
+
+-- 24: 
+create procedure sp_TongTienXuatVatTu
+    @MaVatTu nvarchar(50)
+as
+    select sum(SoLuongXuat*DonGia)[Tổng tiền xuất] from ChiTietPXuat where MaVatTu = @MaVatTu
+
+sp_TongTienXuatVatTu 'tv001'
+
+-- 25:
+create procedure sp_TongSoLuongDatHang
+    @DonDatHang nvarchar(50)
+AS
+    select sum(SoLuongDat)[So luong dat] from ChiTietDonHang where MaDDHang = @DonDatHang
+
+sp_TongSoLuongDatHang 'ddh001'
+
+-- 26, 27:
+    -- sp them don hang
+create procedure sp_ThemDonhang
+    @MaDonHang nvarchar(50),
+    @NgayDat date,
+    @MaNCCap int
+AS
+    insert into DonDatHang(MaDDHang,NgayDat,MaNCCap) VALUES (@MaDonHang,@NgayDat,@MaNCCap);
+    -- sp them chi tiet don hang
+create procedure sp_ThemChiTietDonHang
+    @MaDonHang nvarchar(50),
+    @MaVatTu nvarchar(50),
+    @SoLuongDat float(3)
+AS
+    insert into ChiTietDonHang(MaDDHang,MaVatTu,SoLuongDat) VALUES (@MaDonHang,@MaVatTu,@SoLuongDat);
+
+sp_ThemDonhang 'ddh012','21-07-2018','11';
+sp_ThemChiTietDonHang 'ddh012','tv005',100;
+
+-- 28: kiem tra so luong vat tu khong duoc > 100
+alter trigger tg_KienTraSLVatTu on VatTu for INSERT
+as 
+    if(select count(MaVatTu) from VatTu) > 15
+        begin
+            print 'So luong vat tu da lon hon 15'
+        end
     
+
+    -- test
+insert into VatTu values('tv034','test','kg',30)
+select * from VatTu
+delete VatTu where Ten = 'test'
+
 ----------------------------------
+    
+    select * from DonDatHang
     select * from PhieuXuat
     select * from ChiTietPXuat
-    select * from PhieuNhapHang
+    -- select * from PhieuNhapHang
     select * from ChiTietPNHang
-
-
-
