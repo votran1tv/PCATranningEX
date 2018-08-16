@@ -1,29 +1,34 @@
-﻿use master
+﻿use [master]
 go
-drop database qlbh
+
+drop database if exists  QLBanHang
 go
---Tạo cơ sở dữ liệu QLBH:
-if not exists (select 1 from sys.databases where name = 'qlbh')
-	create database qlbh
+
+"mssql.intelliSense.enableErrorChecking": false
+--go
+--Tạo cơ sở dữ liệu QLBH--
+if not exists (select 1 from sys.databases where name = 'QLBanHang')
+	create database QLBanHang
 	on primary(
-	name = qlbh,
-	filename = 'D:\SQL EXE\Sql Ex 2\qlbh.mdf',
+	name = QLBanHang,
+	filename = 'D:\SQL EXE\Sql Ex 2\QLBanHang.mdf',
 	size = 5,
 	maxsize = 50,
 	filegrowth = 5);
 else
 	print(N'Cơ sở dữ liệu đã tồn tại T.T');
-go
-------
 
-use qlbh;
 go
 
---Tạo và thêm mới dữ liệu vào bảng--
+--Trỏ đến CSDL QLBanHang:
+use QLBanHang;
+go
+
+--Tạo bảng--
 --1_VatTu:
 if not exists (select 1 from sys.objects where name = 'VatTu')
 	create table VatTu(
-		MaVT int identity unique not null,
+		MaVT char(20) unique not null,
 		TenVatTu nvarchar(50),
 		DonViTinh nchar(10),
 		TiLePhanTram int,
@@ -31,24 +36,13 @@ if not exists (select 1 from sys.objects where name = 'VatTu')
 	);
 else
 	print(N'Bảng đã tồn tại T.T');
+
 go
----
-insert into VatTu(TenVatTu,DonViTinh,TiLePhanTram) values
-(N'Nokia N73',N'Máy',10),
-(N'Nokia N86',N'Máy',10),
-(N'Nokia N86',N'Máy',10),
-(N'Nokia N92',N'Máy',10),
-(N'TellMobile S8800',N'Máy',10),
-(N'TellMobile S6300',N'Máy',20),
-(N'TellMobile S1200',N'Máy',20),
-(N'TellMobile S110i',N'Máy',20);
-go
------
 
 --2_NhaCungCap:
 if not exists (select 1 from sys.objects where name = 'NhaCungCap')
 	create table NhaCungCap(
-		MaNCC int identity unique not null,
+		MaNCC char(20) unique not null,
 		TenNhaCungCap nvarchar(50),
 		DiaChi nvarchar(50),
 		DienThoai char(20),
@@ -56,226 +50,297 @@ if not exists (select 1 from sys.objects where name = 'NhaCungCap')
 	);
 else
 	print(N'Bảng đã tồn tại T.T');
+
 go
----
-insert into NhaCungCap(TenNhaCungCap,DiaChi,DienThoai) values
-(N'Nokia Miền Bắc',N'TP.Hà Nội','+84 0226668889'),
-(N'Nokia Miền Trung',N'TP.Đồng Hới','+84 0256668889'),
-(N'Nokia Miền Nam',N'TP.Hồ Chí Minh','+84 0286668889');
-go
------
 
 --3_DonDatHang:
 if not exists (select 1 from sys.objects where name = 'DonDatHang')
 	create table DonDatHang(
-		MaDDH int identity unique not null,
-		MaNCC int not null,
+		MaDDH char(20) unique not null,
+		MaNCC char(20) not null,
 		NgayDat date,
 		constraint pk_DonDatHang_MaDDH primary key(MaDDH),
 		constraint fk_DonDatHang_MaNCC foreign key(MaNCC) references NhaCungCap(MaNCC)
 	);
 else
 	print(N'Bảng đã tồn tại T.T');
-go
----
-set dateformat dmy;
-go
-insert into DonDatHang(MaNCC,NgayDat) values
-(1,'1-1-2018'),
-(2,'11-1-2018'),
-(3,'21-1-2018'),
-(1,'1-3-2018'),
-(2,'11-3-2018'),
-(3,'21-3-2018'),
-(1,'1-6-2018'),
-(2,'11-6-2018'),
-(3,'21-6-2018'),
-(1,'1-9-2018'),
-(2,'11-9-2018'),
-(3,'21-9-2018'),
-(1,'1-12-2018'),
-(2,'11-12-2018'),
-(3,'21-12-2018');
-go
------
 
---4_ChiTietDonHang:
-if not exists (select 1 from sys.objects where name = 'ChiTietDonHang')
-	create table ChiTietDonHang(
-		MaDDH int not null,
-		MaVT int not null,
+go
+
+--4_ChiTietDonDatHang:
+if not exists (select 1 from sys.objects where name = 'ChiTietDonDatHang')
+	create table ChiTietDonDatHang(
+		MaCTDDH char(20) unique not null,
+		MaDDH char(20) not null,
+		MaVT char(20) not null,
 		SoLuongDat int,
-		constraint fk_ChiTietDonHang_MaDDH foreign key(MaDDH) references DonDatHang(MaDDH),
-		constraint fk_ChiTietDonHang_MaVT foreign key(MaVT) references VatTu(MaVT)
+		constraint pk_ChiTietDonDatHang_MaCTDDH primary key(MaCTDDH),
+		constraint fk_ChiTietDonDatHang_MaDDH foreign key(MaDDH) references DonDatHang(MaDDH),
+		constraint fk_ChiTietDonDatHang_MaVT foreign key(MaVT) references VatTu(MaVT)
 	);
 else
 	print(N'Bảng đã tồn tại T.T');
+
 go
----
-insert into ChiTietDonHang(MaDDH,MaVT,SoLuongDat) values
-(1,1,200),
-(2,1,200),
-(3,1,200),
-(4,2,200),
-(5,2,200),
-(6,2,200),
-(7,3,100),
-(8,3,100),
-(9,3,100),
-(10,4,500),
-(11,4,200),
-(12,4,400),
-(13,5,200),
-(14,5,200),
-(15,5,700);
-go
------
 
 --5_PhieuNhapHang:
 if not exists (select 1 from sys.objects where name = 'PhieuNhapHang')
 	create table PhieuNhapHang(
-		MaSPN int identity unique not null,
-		MaDDH int not null,
+		MaPN char(20) unique not null,
+		MaDDH char(20) not null,
 		NgayNhap date,
-		constraint pk_PhieuNhapHang_MaSPN primary key(MaSPN),
+		constraint pk_PhieuNhapHang_MaPN primary key(MaPN),
 		constraint fk_PhieuNhapHang_MaDDH foreign key(MaDDH) references DonDatHang(MaDDH)
 	);
 else
 	print(N'Bảng đã tồn tại T.T');
+
 go
----
-set dateformat dmy;
-go
-insert into PhieuNhapHang(MaDDH,NgayNhap) values
-(1,'10-1-2018'),
-(2,'22-1-2018'),
-(3,'28-1-2018'),
-(4,'10-3-2018'),
-(5,'22-3-2018'),
-(6,'28-3-2018'),
-(7,'10-6-2018'),
-(8,'22-6-2018'),
-(9,'28-6-2018'),
-(10,'10-9-2018'),
-(11,'22-9-2018'),
-(12,'28-9-2018'),
-(13,'10-12-2018'),
-(14,'22-12-2018'),
-(15,'28-12-2018');
-go
------
 
 --6_ChiTietPhieuNhap:
 if not exists (select 1 from sys.objects where name = 'ChiTietPhieuNhap')
 	create table ChiTietPhieuNhap(
-		MaSPN int not null,
-		MaVT int not null,
+		MaCTPN char(20) unique not null,
+		MaPN char(20) not null,
+		MaVT char(20) not null,
 		SoLuongNhap int,
 		DonGiaNhap int,
-		constraint fk_ChiTietPhieuNhap_MaSPN foreign key(MaSPN) references PhieuNhapHang(MaSPN),
+		constraint pk_ChiTietPhieuNhap_MaCTPN primary key(MaCTPN),
+		constraint fk_ChiTietPhieuNhap_MaPN foreign key(MaPN) references PhieuNhapHang(MaPN),
 		constraint fk_ChiTietPhieuNhap_MaVT foreign key(MaVT) references VatTu(MaVT)
 	);
 else
 	print(N'Bảng đã tồn tại T.T');
+
 go
----
-insert into ChiTietPhieuNhap(MaSPN,MaVT,SoLuongNhap,DonGiaNhap) values
-(1,1,200,8000000),
-(2,1,200,8000000),
-(3,1,200,8000000),
-(4,2,200,10000000),
-(5,2,200,10000000),
-(6,2,200,10000000),
-(7,3,100,11000000),
-(8,3,100,11000000),
-(9,3,100,11000000),
-(10,4,500,4000000),
-(11,4,200,5000000),
-(12,4,400,4500000),
-(13,5,200,3000000),
-(14,5,200,3000000),
-(15,5,700,2500000);
-go
------
 
 --7_PhieuXuatHang:
 if not exists (select 1 from sys.objects where name = 'PhieuXuatHang')
 	create table PhieuXuatHang(
-		MaPX int identity unique not null,
+		MaPX char(20) unique not null,
 		NgayXuat date,
 		TenKhachHang nvarchar(255),
-		constraint pk_ChiTietXuatHang primary key(MaPX)
+		constraint pk_PhieuXuatHang primary key(MaPX)
 	);
 else
 	print(N'Bảng đã tồn tại T.T');
-go
----
-set dateformat dmy;
-go
---set ansi_warnings off
---go
 
-
-insert into PhieuXuatHang(NgayXuat,TenKhachHang) values
-('15-1-2018',N'Nguyễn Hải A'),
-('25-1-2018',N'Nguyễn Hải B'),
-('28-1-2018',N'Nguyễn Hải C'),
-('15-3-2018',N'Nguyễn Hải D'),
-('25-3-2018',N'Nguyễn Hải E'),
-('28-3-2018',N'Nguyễn Hải F'),
-('15-6-2018',N'Nguyễn Hải G'),
-('25-6-2018',N'Nguyễn Hải H'),
-('28-6-2018',N'Nguyễn Hải I'),
-('15-9-2018',N'Nguyễn Hải J'),
-('25-9-2018',N'Nguyễn Hải K'),
-('28-9-2018',N'Nguyễn Hải L'),
-('15-12-2018',N'Nguyễn Hải M'),
-('25-12-2018',N'Nguyễn Hải N'),
-('28-12-2018',N'Nguyễn Hải P');
 go
------
 
---8_ChiTietXuatHang:
-if not exists (select 1 from sys.objects where name = 'ChiTietXuatHang')
-	create table ChiTietXuatHang(
-		MaPX int not null,
-		MaVT int not null,
+--8_ChiTiePhieutXuat:
+if not exists (select 1 from sys.objects where name = 'ChiTietPhieuXuat')
+	create table ChiTietPhieuXuat(
+		MaCTPX char(20) unique not null,
+		MaPX char(20) not null,
+		MaVT char(20) not null,
 		SoLuongXuat int,
 		DonGiaXuat int,
-		constraint fk_ChiTietXuatHang_MaPX foreign key(MaPX) references PhieuXuatHang(MaPX),
-		constraint fk_ChiTietXuatHang_MaVT foreign key(MaVT) references VatTu(MaVT)
+		constraint pk_ChiTietPhieuXuat primary key (MaCTPX),
+		constraint fk_ChiTietPhieuXuat foreign key (MaPX) references PhieuXuatHang(MaPX),
+		constraint fk_ChiTietPhieuXuat_MaVT foreign key (MaVT) references VatTu(MaVT)
 	);
 else
 	print(N'Bảng đã tồn tại T.T');
-go
----
-insert into ChiTietXuatHang(MaPX,MaVT,SoLuongXuat,DonGiaXuat) values
-(1,1,200,9000000),
-(2,1,200,9000000),
-(3,1,200,9000000),
-(4,2,200,11000000),
-(5,2,200,11000000),
-(6,2,200,11000000),
-(7,3,100,12000000),
-(8,3,100,12000000),
-(9,3,100,12000000),
-(10,4,500,5000000),
-(11,4,200,6000000),
-(12,4,400,5500000),
-(13,5,200,4000000),
-(14,5,200,4000000),
-(15,5,700,3500000);
-go
------
-----------
 
---Bài Tập--
+go
+
+--9_TonKho:
+create table TonKho(
+NamThang char,
+MaVT char(20),
+SLDau int CHECK(SLDau>0), --Check SL > 0 <Cách 2>
+SLCuoi int CHECK(SLCuoi>0),
+TongSLNhap int CHECK(TongSLNhap>0),
+TongSLXuat int CHECK(TongSLXuat>0),
+constraint fk_TonKho_MaVT foreign key(MaVT) references VatTu(MaVT)
+);
+go
+---------------------------------------------------------------------------
+--Chèn dữ liệu vào bảng--
+
+--1_VatTu:
+insert into VatTu(MaVT,TenVatTu,DonViTinh,TiLePhanTram) values
+('VT01',N'Nokia N73',N'Máy',10),
+('VT02',N'Nokia N86',N'Máy',10),
+('VT03',N'Nokia N86',N'Máy',10),
+('VT04',N'Nokia N92',N'Máy',10),
+('VT05',N'TellMobile S8800',N'Máy',10),
+('VT06',N'TellMobile S6300',N'Máy',20),
+('VT07',N'TellMobile S1200',N'Máy',20),
+('VT08',N'TellMobile S110i',N'Máy',20);
+
+select * from VatTu;
+go
+
+--2_NhaCungCap:
+insert into NhaCungCap(MaNCC,TenNhaCungCap,DiaChi,DienThoai) values
+('NCC01',N'MobibeVn Miền Bắc',N'TP.Hà Nội','+84 0226668889'),
+('NCC02',N'MobileVn Miền Trung',N'TP.Đồng Hới','+84 0256668889'),
+('NCC03',N'MobileVn Miền Nam',N'TP.Hồ Chí Minh','+84 0286668889');
+
+select * from NhaCungCap;
+go
+
+--3_DonDatHang:
+set dateformat dmy;
+go
+insert into DonDatHang(MaDDH, MaNCC,NgayDat) values
+('DDH01','NCC01','1-1-2018'),
+('DDH02','NCC02','11-1-2018'),
+('DDH03','NCC03','21-1-2018'),
+('DDH04','NCC01','1-3-2018'),
+('DDH05','NCC02','11-3-2018'),
+('DDH06','NCC03','21-3-2018'),
+('DDH07','NCC01','1-6-2018'),
+('DDH08','NCC02','11-6-2018'),
+('DDH09','NCC03','21-6-2018'),
+('DDH10','NCC01','1-9-2018'),
+('DDH11','NCC02','11-9-2018'),
+('DDH12','NCC03','21-9-2018'),
+('DDH13','NCC01','1-12-2018'),
+('DDH14','NCC02','11-12-2018'),
+('DDH15','NCC03','21-12-2018');
+
+select * from DonDatHang;
+go
+
+--4_ChiTietDonDatHang:
+insert into ChiTietDonDatHang(MaCTDDH,MaDDH,MaVT,SoLuongDat) values
+('CTDDH01','DDH01','VT01',200),
+('CTDDH02','DDH02','VT01',200),
+('CTDDH03','DDH03','VT01',200),
+('CTDDH04','DDH04','VT02',200),
+('CTDDH05','DDH06','VT02',200),
+('CTDDH06','DDH07','VT03',100),
+('CTDDH07','DDH08','VT03',100),
+('CTDDH08','DDH09','VT03',100),
+('CTDDH09','DDH10','VT04',500),
+('CTDDH11','DDH11','VT04',200),
+('CTDDH12','DDH12','VT04',400),
+('CTDDH13','DDH13','VT05',200),
+('CTDDH14','DDH14','VT05',200),
+('CTDDH15','DDH15','VT05',700);
+
+select * from ChiTietDonDatHang;
+go
+
+--5_PhieuNhapHang:
+set dateformat dmy;
+go
+insert into PhieuNhapHang(MaPN,MaDDH,NgayNhap) values
+('PN01','DDH01','10-1-2018'),
+('PN02','DDH02','22-1-2018'),
+('PN03','DDH03','28-1-2018'),
+('PN04','DDH04','10-3-2018'),
+('PN05','DDH05','22-3-2018'),
+('PN06','DDH06','28-3-2018'),
+('PN07','DDH07','10-6-2018'),
+('PN08','DDH08','22-6-2018'),
+('PN09','DDH09','28-6-2018'),
+('PN10','DDH10','10-9-2018'),
+('PN11','DDH11','22-9-2018'),
+('PN12','DDH12','28-9-2018'),
+('PN13','DDH13','10-12-2018'),
+('PN14','DDH14','22-12-2018'),
+('PN15','DDH15','28-12-2018');
+
+select * from PhieuNhapHang;
+go
+
+--6_ChiTietPhieuNhap:
+insert into ChiTietPhieuNhap(MaCTPN,MaPN,MaVT,SoLuongNhap,DonGiaNhap) values
+('CTPN01','PN01','VT01',200,8000000),
+('CTPN02','PN02','VT01',200,8000000),
+('CTPN03','PN03','VT01',200,8000000),
+('CTPN04','PN04','VT02',200,10000000),
+('CTPN05','PN05','VT02',200,10000000),
+('CTPN06','PN06','VT02',200,10000000),
+('CTPN07','PN07','VT03',100,11000000),
+('CTPN08','PN08','VT03',100,11000000),
+('CTPN09','PN09','VT03',100,11000000),
+('CTPN10','PN10','VT04',500,4000000),
+('CTPN11','PN11','VT04',200,5000000),
+('CTPN12','PN12','VT04',400,4500000),
+('CTPN13','PN13','VT05',200,3000000),
+('CTPN14','PN14','VT05',200,3000000),
+('CTPN15','PN15','VT05',700,2500000);
+
+select * from ChiTietPhieuNhap;
+go
+
+--7_PhieuXuatHang:
+set dateformat dmy;
+insert into PhieuXuatHang(MaPX,NgayXuat,TenKhachHang) values
+('PX01','15-1-2018',N'Nguyễn Hải A'),
+('PX02','25-1-2018',N'Nguyễn Hải B'),
+('PX03','28-1-2018',N'Nguyễn Hải C'),
+('PX04','15-3-2018',N'Nguyễn Hải D'),
+('PX05','25-3-2018',N'Nguyễn Hải E'),
+('PX06','28-3-2018',N'Nguyễn Hải F'),
+('PX07','15-6-2018',N'Nguyễn Hải G'),
+('PX08','25-6-2018',N'Nguyễn Hải H'),
+('PX09','28-6-2018',N'Nguyễn Hải I'),
+('PX10','15-9-2018',N'Nguyễn Hải J'),
+('PX11','25-9-2018',N'Nguyễn Hải K'),
+('PX12','28-9-2018',N'Nguyễn Hải L'),
+('PX13','15-12-2018',N'Nguyễn Hải M'),
+('PX14','25-12-2018',N'Nguyễn Hải N'),
+('PX15','28-12-2018',N'Nguyễn Hải P');
+
+select * from PhieuXuatHang;
+go
+
+--8_ChiTiePhieutXuat:
+insert into ChiTietPhieuXuat(MaCTPX,MaPX,MaVT,SoLuongXuat,DonGiaXuat) values
+('CTPX01','PX01','VT01',100,9000000),
+('CTPX02','PX02','VT01',100,9000000),
+('CTPX03','PX03','VT01',100,9000000),
+('CTPX04','PX04','VT02',100,11000000),
+('CTPX05','PX05','VT02',100,11000000),
+('CTPX06','PX06','VT02',100,11000000),
+('CTPX07','PX07','VT03',50,12000000),
+('CTPX08','PX08','VT03',50,12000000),
+('CTPX09','PX09','VT03',50,12000000),
+('CTPX10','PX10','VT04',400,5000000),
+('CTPX11','PX11','VT04',100,6000000),
+('CTPX12','PX12','VT04',300,5500000),
+('CTPX13','PX13','VT05',100,4000000),
+('CTPX14','PX14','VT05',100,4000000),
+('CTPX15','PX15','VT05',600,3500000);
+
+select * from ChiTietPhieuXuat;
+go
+
+----9_TonKho:
+--set dateformat dmy;
+--insert into TonKho(MaVT, NamThang, SLCuoi, SLDau, TongSLNhap, TongSLXuat) values
+--('VT01', '1/1/2019', 100, 200, 600, 300),
+--('VT01', '1/2/2019', 100, 200, 600, 300),
+--('VT01', '1/3/2019', 100, 100, 600, 300),
+--('VT02', '1/4/2019', 100, 200, 600, 300),
+--('VT02', '1/5/2019', 100, 200, 600, 300),
+--('VT02', '1/6/2019', 100, 200, 600, 300),
+--('VT03', '1/7/2019', 50, 100, 300, 150),
+--('VT03', '1/8/2019', 50, 100, 300, 150),
+--('VT03', '1/9/2019', 50, 100, 300, 150),
+--('VT04', '1/10/2019', 400, 500, 600, 300),
+--('VT04', '1/11/2019', 100, 200, 600, 300),
+--('VT04', '1/12/2019', 300, 400, 600, 300),
+--('VT05', '1/1/2020', 100, 200, 600, 300),
+--('VT05', '1/2/2020', 100, 200, 600, 300),
+--('VT05', '1/3/2020', 600, 700, 600, 300);
+---------------------------------------END---------------------------------
+
+------Bài Tập------
 --\\EX2 (8/8/2018)//
 --1_Tạo CSDL trên SQL Server.
+--Done--
 -----
 --2_Thiết lập khóa chính, khóa ngoại, tạo liên kết giữa các bảng.
+--Done--
 -----
 --3_Chèn dữ liệu vào các bảng.
+--Done--
 -----
 --4.Thực hiện truy vấn thêm, sửa, xóa trên các bảng:
 
@@ -283,11 +348,11 @@ go
 alter table ChiTietPhieuNhap add DemoThemCot int;
 
 --[Thao tác thêm bản ghi mới trong cột DemoThemCot]:
-update ChiTietPhieuNhap set DemoThemCot = 8888888 where MaSPN = 1;
-update ChiTietPhieuNhap set DemoThemCot = 8888888 where MaSPN = 2;
-update ChiTietPhieuNhap set DemoThemCot = 8888888 where MaSPN = 3;
-update ChiTietPhieuNhap set DemoThemCot = 8888888 where MaSPN = 4;
-update ChiTietPhieuNhap set DemoThemCot = 8888888 where MaSPN = 5;
+update ChiTietPhieuNhap set DemoThemCot = 8888888 where MaPN = 1;
+update ChiTietPhieuNhap set DemoThemCot = 8888888 where MaPN = 2;
+update ChiTietPhieuNhap set DemoThemCot = 8888888 where MaPN = 3;
+update ChiTietPhieuNhap set DemoThemCot = 8888888 where MaPN = 4;
+update ChiTietPhieuNhap set DemoThemCot = 8888888 where MaPN = 5;
 
 --[Thao tác sửa thuộc tính của cột DemoThemCot trong bảng ChiTietPhieuNhap]:
 alter table ChiTietPhieuNhap alter column DemoThemCot numeric;
@@ -304,25 +369,87 @@ truncate table ChiTietPhieuNhap; --//Xoa cả Index
 -----
 --5_Lấy ra danh sách các đơn đặt hàng từ 1/1/2018 đến 1/6/2018:
 select * from DonDatHang where NgayDat between '1/1/2018' and '1/6/2018';
+
 -----
---6_Thống kê số lượng mặt hàng theo nhà cung cấp:
+--6_Thống kê số lượng mặt hàng theo nhà cung cấp - Sắp xếp theo miền:
+select NhaCungCap.TenNhaCungCap, VatTu.TenVatTu, sum(ChiTietPhieuNhap.SoLuongNhap)[Số lượng theo miền] from NhaCungCap, VatTu, ChiTietPhieuNhap group by TenNhaCungCap, TenVatTu;
 
 -----
 
 --\\Update EX2 (9/8/2018)//
 --7_Kiểm tra xem mặt hàng nào được đặt hàng nhiều nhất:
-
------
+SELECT MaVT, Min(SoLuongDat)[VT Đặt Nhiều Nhất] FROM ChiTietDonDatHang GROUP BY MaVT;
 --8_Tìm tất cả mặt hàng bắt đầu bằng chữ T:
-
+SELECT VatTu.TenVatTu FROM VatTu WHERE TenVatTu LIKE 'T%';
 -----
 --9_Thống kê các mặt hàng  mà có tổng số lượng đặt hàng nhiều hơn 1000:
+SELECT ChiTietDonDatHang.MaVT, SUM(ChiTietDonDatHang.SoLuongDat)[Tổng MH > 1000] FROM ChiTietDonDatHang GROUP BY MaVT HAVING SUM(ChiTietDonDatHang.SoLuongDat) > 1000;
+SELECT * FROM ChiTietDonDatHang;
+-----
+--10.1_Tìm tất cả các mặt hàng đã nhập về nhưng chưa xuất:
 
 -----
---10_Tìm tất cả các mặt hàng đã nhập về nhưng chưa xuất:
+--10.2_Tìm tất cả các mặt hàng đã nhập về và đã xuất:
 
 -----
---11_Tìm tất cả các mặt hàng đã nhập về và đã xuất:
+--\\Update EX2 (10/8/2018)//
+--11_Tạo bảng tồn kho:
+--Done--
+-----
+--12_Đặt điều kiện ràng buộc giá trị nhập vào cho các trường số lượng có giá trị lớn hơn không, giá trị ngày tháng lớn hơn 1/1/1999 và nhỏ hơn 31/12/2999:
+check(SLDau > 0 and SLCuoi > 0 and TongSLNhap > 0 and TongSLXuat > 0); --Check SL > 0 <Cách 1>
+go
+alter table TonKho alter column NamThang date; --Check Ngày Tháng
+alter table TonKho add constraint ck_TonKho_NamThang check(NamThang > 1/1/1991 and NamThang < 31/12/2999);
+go
+-----
+--13_Truy vấn danh sách các phiếu đặt hàng chưa được nhập hàng:
+
+-----
+--14_Lấy thông tin nhà cung cấp có nhiều đơn đặt hàng nhất:
+SELECT NhaCungCap.MaNCC, NhaCungCap.TenNhaCungCap, MAX(DonDatHang.MaDDH) FROM NhaCungCap, DonDatHang GROUP BY NhaCungCap.MaNCC;
+-----
+--15_Lấy thông tin vật tư được xuất bán nhiều nhất:
+
+-----
+--16_Tính tổng tiền của các đơn đặt hàng, đưa ra đơn đặt hàng có giá trị lớn nhất:
+
+-----
+--17_Thống kê những đơn đặt hàng chưa đủ nhập số lượng:
+
+-----
+--18_Tạo View  vw_DMVT gồm (MAVTu và TenVTu) dùng liệt kê các danh sách trong bảng vật tư:
+
+-----
+--19_Tạo View vw_DonDH_Tong SLDatNhap gồm (SoHD, TongSLDat và TongSLNhap) dùng để thống kê những đơn đặt hàng đã được nhập hàng đầy đủ:
+
+-----
+--20_Tạo View vw_DonDH_DaNhapDu gồm (Số DH, DaNhapDu) có hai giá trị là “Da Nhap Du” nếu đơn hàng đó đã nhập đủ hoặc “Chu Nhap Du” nếu đơn đặt hàng chưa nhập đủ:
+
+-----
+--21_Tạo View vw_TongNhap gồm (NamThang, MaVTu và TongSLNhap) dùng để thống kê số lượng nhập của các vật tư trong năm tháng tương ứng (Không sử dụng bảng tồn kho):
+
+-----
+--22_Tạo View vw_TongXuat gồm (NamThang, MaVTu và TongSLXuat) dùng để thống kê SL xuất của vật tư trong từng năm tương ứng (Không sử dụng bảng tồn kho):
+
+-----
+--//Upddate EX2(15/8) – Store Procedure, Trigger, Fuction And Transaction\\
+--23_Tạo Stored procedure (SP) cho biết tổng số lượng cuối của vật tư với mã vật tư là tham số vào:
+
+-----
+--24_Tạo SP cho biết tổng tiền xuất của vật tư với mã vật tư là tham số vào:
+
+-----
+--25_Tạo SP cho biết tổng số lượng đặt theo số đơn hàng với số đơn hàng là tham số vào:
+
+-----
+--26_Tạo SP dùng để thêm một đơn đặt hàng:
+
+-----
+--27_Tạo SP dùng để thêm một chi tiết đơn đặt hang:
+
+-----
+--28_Tạo trigger kiểm soát quá trình thêm dữ liệu vào bảng vật tư, đưa ra thông báo khi số lượng vật tư vượt quá 100 sp:
 
 -----
 ----------
@@ -332,9 +459,9 @@ select * from DonDatHang where NgayDat between '1/1/2018' and '1/6/2018';
 Select * from VatTu;
 Select * from NhaCungCap;
 Select * from DonDatHang;
-Select * from ChiTietDonHang;
+Select * from ChiTietDonDatHang;
 Select * from PhieuNhapHang;
 Select * from ChiTietPhieuNhap;
 Select * from PhieuXuatHang;
-Select * from ChiTietXuatHang;
+Select * from ChiTietPhieuXuat;
 -----
