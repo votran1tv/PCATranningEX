@@ -435,7 +435,7 @@ sp_ThemDonhang 'ddh012','21-07-2018','11';
 sp_ThemChiTietDonHang 'ddh012','tv005',100;
 
 -- 28: kiem tra so luong vat tu khong duoc > 100
-alter trigger tg_KienTraSLVatTu on VatTu for INSERT
+create trigger tg_KienTraSLVatTu on VatTu for INSERT
 as 
     if(select count(MaVatTu) from VatTu) > 15
         begin
@@ -448,10 +448,151 @@ insert into VatTu values('tv034','test','kg',30)
 select * from VatTu
 delete VatTu where Ten = 'test'
 
-----------------------------------
+-- ex2 update 16/08
+-- 29:
+    -- them cot ThanhTien
+alter table ChiTietPNHang
+    add ThanhTien float(3)
+    -- function tinh ThanhTien
+create function fn_ThanhTien ( @DonGia float(3),@SoLuong int)
+returns float(3) as
+    begin 
+        DECLARE @Tong float(3)
+        set @Tong = @DonGia*@SoLuong
+        return @Tong
+    end
+
+    -- tu dong tinh ThanhTien trong ChiTietPhieuNhap
+create trigger tg_TinhTongTien on ChiTietPNHang for INSERT
+as
+    begin
+        DECLARE @DonGia float(3) = (
+            select ChiTietPNHang.DonGiaNhap 
+            from ChiTietPNHang,inserted
+            where ChiTietPNHang.MaVatTu = inserted.MaVatTu and ChiTietPNHang.MaPNHang = inserted.MaPNHang
+        )
+        DECLARE @SoLuong int = (
+            select ChiTietPNHang.SoLuongNhap 
+            from ChiTietPNHang,inserted
+            where ChiTietPNHang.MaVatTu = inserted.MaVatTu and ChiTietPNHang.MaPNHang = inserted.MaPNHang
+        )
+        UPDATE ChiTietPNHang 
+            set ThanhTien = dbo.fn_ThanhTien(@DonGia,@SoLuong)
+            from inserted
+            where ChiTietPNHang.MaPNHang = inserted.MaPNHang and ChiTietPNHang.MaPNHang=inserted.MaPNHang
+    end
+
+    --insert into PhieuNhapHang values ('pnh010','23/07/2018','ddh012')
+    -- test du lieu (1)
+    insert into ChiTietPNHang (MaPNHang,MaVatTu,SoLuongNhap,DonGiaNhap,ThanhTien) values ('pnh010','tv005',100,27.7,0) -- (1)
+    delete ChiTietPNHang where MaPNHang = 'pnh010' and MaVatTu = 'tv005' -- (2)
+
+-- 30:
+    -- them cot TinhTrang vao bang VatTu
+alter table VatTu
+   add TinhTrang bit not null DEFAULT 0
     
+    -- thu tuc kiem tra TinhTrang of VatTu
+create PROCEDURE sp_TinhTrangVatTu
+AS
+    select MaVatTu,(
+        case
+            when TinhTrang = 1 then 'Còn hàng'
+            else 'Không còn hàng'
+        end
+    )[TrangThai] from VatTu
+
+-- 31: 
+    -- trigger thay doi VatTu.TinhTrang khi ChiTietPNHang thay doi
+create trigger tg_insert_PhieuNhap on ChiTietPNHang for INSERT,UPDATE
+AS
+    BEGIN
+        DECLARE @SL_Nhap int =(
+            select sum(ChiTietPNHang.SoLuongNhap)
+            from ChiTietPNHang,inserted 
+            where ChiTietPNHang.MaVatTu = inserted.MaVatTu
+        )
+        DECLARE @SL_Xuat int = (
+            select sum(ChiTietPXuat.SoLuongXuat) 
+            from ChiTietPXuat,inserted
+            where ChiTietPXuat.MaVatTu = inserted.MaVatTu
+        )
+        if (@SL_Nhap>@SL_Xuat)
+            UPDATE VatTu 
+                set TinhTrang = 1
+            from inserted
+            where VatTu.MaVatTu = inserted.MaVatTu
+        if(@SL_Nhap<=@SL_Xuat)
+            UPDATE VatTu 
+                set TinhTrang = 0
+            from inserted
+            where VatTu.MaVatTu = inserted.MaVatTu
+    end
+
+    -- trigger thay doi VatTu.TinhTrang khi ChiTietPXuat thay doi
+create trigger tg_insert_PhieuXuat on ChiTietPXuat for INSERT,UPDATE
+as
+    BEGIN
+        DECLARE @SL_Nhap int =(
+            select sum(ChiTietPNHang.SoLuongNhap)
+            from ChiTietPNHang,inserted 
+            where ChiTietPNHang.MaVatTu = inserted.MaVatTu
+        )
+        DECLARE @SL_Xuat int = (
+            select sum(ChiTietPXuat.SoLuongXuat) 
+            from ChiTietPXuat,inserted
+            where ChiTietPXuat.MaVatTu = inserted.MaVatTu
+        )
+        if (@SL_Nhap>@SL_Xuat)
+            UPDATE VatTu 
+                set TinhTrang = 1
+            from inserted
+            where VatTu.MaVatTu = inserted.MaVatTu
+        if(@SL_Nhap<=@SL_Xuat)
+            UPDATE VatTu 
+                set TinhTrang = 1
+            from inserted
+            where VatTu.MaVatTu = inserted.MaVatTu
+    END
+    -- test du lieu (1)
+    insert into ChiTietPNHang (MaPNHang,MaVatTu,SoLuongNhap,DonGiaNhap,ThanhTien) values ('pnh010','tv005',100,27.7,0) -- (1)
+    delete ChiTietPNHang where MaPNHang = 'pnh010' and MaVatTu = 'tv005' -- (2)
+
+-- 32:
+create PROCEDURE sp_CapNhat_VatTu_TinhTrang
+AS  
+    BEGIN
+
+        update VatTu
+        set TinhTrang = (bang01.sl-bang02.sl)
+        from (
+            select MaVatTu,sum(SoLuongNhap)[sl] from ChiTietPNHang group by MaVatTu
+        )[bang01],(
+            select MaVatTu,sum(SoLuongXuat)[sl] from ChiTietPXuat GROUP by MaVatTu
+        )[bang02]
+        WHERE VatTu.MaVatTu=bang01.MaVatTu and VatTu.MaVatTu=bang02.MaVatTu
+
+        -- DECLARE @sl_Nhap int = select MaVatTu,sum(SoLuongNhap)[sl] from ChiTietPNHang group by MaVatTu
+        -- DECLARE @sl_Xuat int = select MaVatTu,sum(SoLuongXuat)[sl] from ChiTietPXuat GROUP by MaVatTu
+        -- if exists ()
+        
+    end
+
+    -- test du lieu
+    insert into VatTu(MaVatTu,Ten,DonViTinh,TiLePhanTram) values('tv013',N'Điện thoại BlackBerry','Chiec',30.0)
+    delete VatTu where MaVatTu = 'tv013'
+
+    
+
+----------------------------------
+    use QLBH;
+    set dateformat dmy;
+
+    select * from VatTu
     select * from DonDatHang
+    select * from ChiTietDonHang
+    select * from PhieuNhapHang
+    select * from ChiTietPNHang
     select * from PhieuXuat
     select * from ChiTietPXuat
-    -- select * from PhieuNhapHang
-    select * from ChiTietPNHang
+    select * from TonKho
