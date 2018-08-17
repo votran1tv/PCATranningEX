@@ -260,7 +260,7 @@ select * from DonDatHang
 
 -- lấy danh sách đơn nhập hàng từ 1/1/2018 -> 1/6/2018
 select * from DonDatHang where NgayDat between '1/1/2018' and '1/6/2018'
--- Thống kê số lượng mặt hàng theo nhà cung cấp
+-- 6: Thống kê số lượng mặt hàng theo nhà cung cấp
     -- VD: lấy số mặt hàng từ nhà cung cấp có id=4
 select count(MaPNHang) as 'Số lượng mặt hàng' from ChiTietPNHang where MaPNHang 
     in (
@@ -290,24 +290,23 @@ select * from VatTu where MaVatTu in (select MaVatTu from ChiTietPXuat) and MaVa
 if not exists (select 1 from sysobjects where name = 'TonKho')
     begin 
         create table TonKho(
-            ID int identity primary key,
-            NamThang char(100),
+            NamThang char(50),
             MaVatTu nvarchar(50),
             SLDau int,
             TongSLNhap int,
             TongSLXuat int,
             SLCuoi int,
+            constraint PK_TonKho PRIMARY key(NamThang,MaVatTu),
             constraint FK_VatTu_TonKho foreign key (MaVatTu) references VatTu(MaVatTu)
         )
     end
 
 -- 12:
-alter table TonKho 
-    alter column NamThang date
 alter TABLE TonKho
     add constraint CK_NamThang check (NamThang > '1/1/1999' and NamThang < '31/12/2999')
+
 -- 13:Truy vấn danh sách các phiếu đặt hàng chưa được nhập hàng
-select * from DonDatHang where MaDDHang = any(select MaDDHang from PhieuNhapHang)
+select * from DonDatHang where MaDDHang not in(select MaDDHang from PhieuNhapHang)
 
 -- 14:Lấy thông tin nhà cung cấp có nhiều đơn đặt hàng nhất
 select top 1 tem.SLD as [Số đơn],NhaCungCap.* from NhaCungCap 
@@ -316,11 +315,11 @@ select top 1 tem.SLD as [Số đơn],NhaCungCap.* from NhaCungCap
     ) as tem on NhaCungCap.MaNCCap=tem.IDNCC order by tem.SLD desc
 
 -- 15: Lấy thông tin vật tư được xuất bán nhiều nhất
-
 select top 1 tem.SLX as [số lượng],VatTu.* from VatTu 
     inner join (
         select MaVatTu as MVT_ID, Sum(SoLuongXuat) as SLX from ChiTietPXuat group by MaVatTu
     ) as tem on VatTu.MaVatTu = tem.MVT_ID order by tem.SLX desc
+    
 -- 16: Tính tổng tiền của các đơn đặt hàng, đưa ra đơn đặt hàng có giá trị lớn nhất
 
 select DonDatHang.*,tem.Tien from DonDatHang inner join 
@@ -563,27 +562,105 @@ create PROCEDURE sp_CapNhat_VatTu_TinhTrang
 AS  
     BEGIN
 
-        update VatTu
-        set TinhTrang = (bang01.sl-bang02.sl)
-        from (
-            select MaVatTu,sum(SoLuongNhap)[sl] from ChiTietPNHang group by MaVatTu
-        )[bang01],(
-            select MaVatTu,sum(SoLuongXuat)[sl] from ChiTietPXuat GROUP by MaVatTu
-        )[bang02]
-        WHERE VatTu.MaVatTu=bang01.MaVatTu and VatTu.MaVatTu=bang02.MaVatTu
+        DECLARE @i int = 1
+        DECLARE @n int = (select Count(MaVatTu) from VatTu)
+        DECLARE @VatTu_ID nvarchar(50)
 
-        -- DECLARE @sl_Nhap int = select MaVatTu,sum(SoLuongNhap)[sl] from ChiTietPNHang group by MaVatTu
-        -- DECLARE @sl_Xuat int = select MaVatTu,sum(SoLuongXuat)[sl] from ChiTietPXuat GROUP by MaVatTu
-        -- if exists ()
-        
-    end
+        DECLARE @DonNhap_ID int
+        DECLARE @DonXuat_ID int
+        DECLARE @ab int
 
-    -- test du lieu
+        while @i <= @n
+            BEGIN
+                --print @i
+                set @VatTu_ID = (
+                    select MaVatTu from (
+                        select ROW_NUMBER() Over(order by MaVatTu) as index_id,MaVatTu
+                        from VatTu
+                    ) as tem_VatTu 
+                    where index_id = @i
+                )
+                set @DonNhap_ID = (select sum(SoLuongNhap) from ChiTietPNHang where MaVatTu = @VatTu_ID)
+                set @DonXuat_ID = (select sum(SoLuongXuat) from ChiTietPXuat where MaVatTu = @VatTu_ID)
+
+                if (@DonNhap_ID <= @DonXuat_ID) 
+                    BEGIN
+                        UPDATE VatTu
+                        set TinhTrang = 0
+                        where MaVatTu = @VatTu_ID
+                    end
+                ELSE
+                    BEGIN
+                        UPDATE VatTu
+                        set TinhTrang = 1
+                        WHERE MaVatTu = @VatTu_ID
+                    end
+
+                set @i = @i + 1
+            END
+    end--32
+
+    -- test du lieu 
     insert into VatTu(MaVatTu,Ten,DonViTinh,TiLePhanTram) values('tv013',N'Điện thoại BlackBerry','Chiec',30.0)
     delete VatTu where MaVatTu = 'tv013'
 
+    -- test dulieu cau 32:
+    insert into PhieuXuat(MaPhieuXuat,NgayXuat,TenKhachHang)
+        VALUES ('px006','12/12/2018','Duongth')
+
+    insert into ChiTietPXuat (MaPhieuXuat,MaVatTu,SoLuongXuat,DonGia)
+        VALUES ('px006','tv006',800,9)
     
 
+    select MaVatTu,sum(SoLuongNhap) from ChiTietPNHang group by MaVatTu
+-- 33:
+alter trigger tg_UpdateTonKho on ChiTietPNHang for INSERT
+AS
+    BEGIN
+        DECLARE @SL_Tong1VatTu int = (
+            select sum(ChiTietPNHang.SoLuongNhap) from ChiTietPNHang,inserted WHERE ChiTietPNHang.MaVatTu =inserted.MaVatTu
+        )
+        DECLARE @toMonth char(50) = (
+            select cast(month(GETDATE()) as char) + cast(year(getdate()) as char)
+        )
+        DECLARE @SL_Tong1VatTu_1Thang int = (
+            select sum(ChiTietPXuat.SoLuongXuat) from ChiTietPXuat,PhieuXuat,inserted
+            where ChiTietPXuat.MaPhieuXuat=PhieuXuat.MaPhieuXuat and 
+                ChiTietPXuat.MaVatTu=inserted.MaVatTu
+            group by (CAST(MONTH(NgayXuat) as char) + CAST(year(NgayXuat) as char))
+        )
+        if exists (select TonKho.MaVatTu from TonKho,inserted where TonKho.MaVatTu=inserted.MaVatTu)
+            BEGIN
+                --@SL_Tong1VatTu - sl_PhieuXuat_of_ThangNam
+                UPDATE TonKho
+                set NamThang = @toMonth,
+                    MaVatTu = inserted.MaVatTu,
+                    SLDau = @SL_Tong1VatTu,
+                    TongSLNhap = @SL_Tong1VatTu,
+                    TongSLXuat = @SL_Tong1VatTu_1Thang,
+                    SLCuoi = (@SL_Tong1VatTu - @SL_Tong1VatTu_1Thang)
+                from inserted
+            END
+        ELSE
+            BEGIN
+                DECLARE @MVT nvarchar(50) = (select MaVatTu from inserted)
+                alter TABLE TonKho
+                    drop constraint CK_NamThang
+                insert into TonKho(NamThang,MaVatTu,SLDau,TongSLNhap,TongSLXuat,SLCuoi)
+                    VALUES (
+                        @toMonth,
+                        @MVT,
+                        @SL_Tong1VatTu,
+                        @SL_Tong1VatTu,
+                        isnull(@SL_Tong1VatTu_1Thang,0),
+                        (@SL_Tong1VatTu - isnull(@SL_Tong1VatTu_1Thang,0))
+                    )
+                alter TABLE TonKho WITH NOCHECK
+                    add constraint CK_NamThang check (NamThang > '1/1/1999' and NamThang < '31/12/2999')
+            end
+        -- print @SL_Tong1VatTu
+        -- PRINT @SL_Tong1VatTu_1Thang
+    end
 ----------------------------------
     use QLBH;
     set dateformat dmy;
