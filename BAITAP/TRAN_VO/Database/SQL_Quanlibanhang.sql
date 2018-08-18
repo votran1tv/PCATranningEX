@@ -167,6 +167,7 @@
 	insert into Phieunhaphang values ('MSN008','19/08/2018','DH008');
 	insert into Phieunhaphang values ('MSN009','20/09/2018','DH009');
 	insert into Phieunhaphang values ('MSN010','30/10/2018','DH005');
+	insert into Phieunhaphang values ('MSN011','16/08/2018','DH007');
 
 	--Chitietphieunhap
 	insert into Chitietphieunhap values ('MSN009','MS01','50','10');
@@ -179,6 +180,9 @@
 	insert into Chitietphieunhap values ('MSN002','MS04','300','35');
 	insert into Chitietphieunhap values ('MSN001','MS02','250','40');
 	insert into Chitietphieunhap values ('MSN010','MS03','300','15');
+	insert into Chitietphieunhap values ('MSN011','MS07','400','15');
+
+
 
 
 	
@@ -322,21 +326,133 @@
 
 --20) Tạo View vw_DonDH_DaNhapDu gồm (Số DH, DaNhapDu) có hai giá trị là “Da Nhap Du” nếu đơn hàng đó đã nhập đủ hoặc “Chu Nhap Du” nếu đơn đặt hàng chưa nhập đủ
 		create view vw_DonDH_DaNhapDu as
-		select 
+		select distinct madondathang, Chitietdonhang.Mavattu, case
+		when soluongdat <= soluongnhap then N'Đã nhập đủ'
+		else N'Chưa nhập đủ' end
+		[Trạng thái hàng]
+		from chitietdonhang inner join chitietphieunhap on chitietdonhang.mavattu=chitietdonhang.mavattu
 
 
 
 --21) Tạo View vw_TongNhap gồm (NamThang, MaVTu và TongSLNhap) dùng để thống kê số lượng nhập của các vật tư trong năm tháng tương ứng (Không sử dụng bảng tồn kho)
 		create view vw_TongNhap as
-		select Phieunhaphang.Ngaynhap, Chitietphieunhap.Mavattu, Chitietphieunhap.Soluongnhap
+		select cast (MONTH(Ngaynhap)as varchar) +'/'+CAST(YEAR(Ngaynhap)as varchar)[Thời gian], Chitietphieunhap.Mavattu, Chitietphieunhap.Soluongnhap
 		from Phieunhaphang inner join Chitietphieunhap on Phieunhaphang.Masophieunhap=Chitietphieunhap.Masophieunhap
 		group by Phieunhaphang.Ngaynhap, Chitietphieunhap.Mavattu, Chitietphieunhap.Soluongnhap
 
 --22) Tạo View vw_TongXuat gồm (NamThang, MaVTu và TongSLXuat) dùng để thống kê SL xuất của vật tư trong từng năm tương ứng (Không sử dụng bảng tồn kho)
 		create view vw_TongXuat as
-		select Phieuxuat.Ngayxuat, Chitietphieuxuat.Mavattu, Chitietphieuxuat.Soluongxuat
+		select CAST(YEAR(Ngayxuat) as varchar)[Thời gian], Chitietphieuxuat.Mavattu, Chitietphieuxuat.Soluongxuat
 		from Phieuxuat inner join Chitietphieuxuat on Chitietphieuxuat.Maphieuxuat=Phieuxuat.Maphieuxuat
 		group by Phieuxuat.Ngayxuat, Chitietphieuxuat.Mavattu, Chitietphieuxuat.Soluongxuat
+
+
+------------------------------------- Upddate EX2(15/8) – Store Procedure, Trigger, Fuction And Transaction----------------------------------------------------------------------
+-- Câu 23. Tạo Stored procedure (SP) cho biết tổng số lượng cuối của vật tư với mã vật tư là tham số vào.
+		CREATE PROCEDURE sp_TongluongcuoiVT
+			@mavattu VARCHAR(255)
+		AS
+		SELECT ((select SUM(soluongnhap)FROM Chitietphieunhap WHERE Mavattu=@mavattu)-
+		(select SUM(Soluongxuat) FROM Chitietphieuxuat WHERE Mavattu=@mavattu))
+
+		EXECUTE sp_TongluongcuoiVT @mavattu='MS01'
+-- Câu 24. Tạo SP cho biết tổng tiền xuất của vật tư với mã vật tư là tham số vào.
+		CREATE PROCEDURE sp_TongTienXuat
+			@Mavattu VARCHAR(255)
+		AS
+		SELECT SUM(dongia*soluongxuat) FROM Chitietphieuxuat WHERE Mavattu=@Mavattu
+
+
+-- Câu 25. Tạo SP cho biết tổng số lượng đặt theo số đơn hàng với số đơn hàng là tham số vào.
+		CREATE PROCEDURE sp_Tongluongdat
+			@madondathang VARCHAR(255)
+		AS
+		SELECT SUM(soluongdat) FROM Chitietdonhang WHERE Madondathang=@madondathang
+
+-- Câu 26. Tạo SP dùng để thêm một đơn đặt hàng
+		CREATE PROCEDURE sp_Donhangnew
+			@Madondathang varchar(255),
+			@Ngaydat date, 
+			@Mancc varchar(255)
+		AS
+		INSERT INTO Dondathang(Madondathang,Ngaydat,Mancc) values(@Madondathang,@Ngaydat,@Mancc )
+
+		sp_Donhangnew 'DH014','15/8/2018','NCC002'
+		-- drop PROCEDURE sp_Donhangnew
+
+
+-- Câu 27. Tạo SP dùng để thêm một chi tiết đơn đặt hang
+		CREATE PROCEDURE sp_chitietdonhang
+			@Madondathang varchar(255), 
+			@Mavattu varchar(255), 
+			@Soluongdat int
+		AS
+		INSERT into Chitietdonhang(Madondathang,Mavattu,Soluongdat) VALUES(@Madondathang,@Mavattu,@Soluongdat)
+		sp_chitietdonhang 'DH014','MS02','150'
+
+
+-- Câu 28. Tạo trigger kiểm soát quá trình thêm dữ liệu vào bảng vật tư, đưa ra thông báo khi số lượng vật tư vượt quá 100 sp.
+		ALTER TRIGGER nhapvattu ON VATTU FOR INSERT
+		AS
+		 IF (select COUNT(Mavattu) FROM VATTU)>12
+		 ROLLBACK
+		 PRINT N'Số lượng vật tư không lớn hơn 12'
+
+
+	insert into VATTU values ('MS13','tea11 ','kg','83');
+
+--------------------------- Update (16/8) – Store Procedure, Trigger, Function And Transaction---------------------------------------------------
+-- Câu 29: Thêm cột thành tiền  cho bảng Chi tiết phiếu nhập, viết hàm tính thành tiền với biến đầu vào là đơn giá và số lượng.  Tạo trigger cho phép tự động tính thành tiền trong bảng Chi tiết phiếu nhập mỗi khi có 1 bảng ghi mới được thêm vào
+		ALTER TABLE Chitietphieunhap add Thanhtien FLOAT(3)
+		ALTER TABLE Chitietphieunhap ALTER COLUMN Thanhtien int
+		CREATE FUNCTION fn_tinhtien
+			(@soluongnhap int,
+			@dongianhap int)
+		RETURNS INT
+		AS BEGIN
+			DECLARE @Thanhtien INT
+			set @Thanhtien=@soluongnhap*@dongianhap
+			RETURN @Thanhtien;
+		END
+		SELECT dbo.fn_tinhtien (13,40)
+
+	--Tạo trigger cho phép tự động tính thành tiền trong bảng Chi tiết phiếu nhập mỗi khi có 1 bảng ghi mới được thêm vào
+		CREATE TRIGGER tg_tinhtien on chitietphieunhap FOR INSERT, UPDATE 
+		AS 
+		DECLARE @
+-- Câu 30: Thêm cột tinhtrang (tình trạng) vào bảng Vattu (quy định 0 = “hết hàng’, 1=”còn hàng”). Viết thủ tục kiểm tra trạng thái của các vật tư hiện đang có.
+		ALTER TABLE VATTU add tinhtrang bit NOT NULL
+		BEGIN
+		select Mavattu, (case
+		when tinhtrang=0 THEN N'Hết hàng'
+		else N'Còn hàng'
+		END)[Tình trạng] FROM VATTU
+		END
+		
+-- Câu 31: Viết trigger cho phép tự động cập nhật trạng thái của vật tư mỗi khi có sự thay đổi nhập hoặc xuất.
+		CREATE TRIGGER trg_capnhathang on chitietphieunhap after UPDATE  AS
+		BEGIN
+        DECLARE @SL_Nhap int =( 
+			select sum(Chitietphieunhap.Soluongnhap)
+        	from Chitietphieunhap,inserted where Chitietphieunhap.Mavattu = inserted.Mavattu)
+        DECLARE @SL_Xuat int = (
+            select sum(Chitietphieuxuat.Soluongxuat) 
+            from Chitietphieuxuat,inserted where Chitietphieuxuat.Mavattu = inserted.Mavattu)
+        if (@SL_Nhap>@SL_Xuat)
+            UPDATE VATTU 
+                set tinhtrang = 1
+            from inserted
+            where VATTU.Mavattu = inserted.Mavattu
+        if(@SL_Nhap<=@SL_Xuat)
+            UPDATE VatTu 
+                set TinhTrang = 0
+            from inserted
+            where VATTU.Mavattu = inserted.Mavattu
+    end
+
+-- Câu 32: Viết thủ tục tính lượng hàng tồn kho hiện tại cho mỗi loại vật tư và áp dụng lên bảng vật tư
+
+-- Câu 33: Tạo trigger cho phép thay đổi số lượng tồn kho vật tư mỗi khi có sự thay đổi vể nhập xuất, đưa ra thông báo “Không Đủ Vật Tư Đề Xuất” trong trường hợp không đủ vật tư theo phiếu chi tiết xuất
 
 -------------------------------------------------------------
 	select*from VATTU
@@ -350,6 +466,7 @@
 	select*from Tonkho
 	SELECT * FROM vw_DMVT
 	SELECT * FROM vw_DonDH_Tong_SLDatNhap
+	SELECT*FROM vw_DonDH_DaNhapDu
 	select * from vw_TongNhap
 	select*from vw_TongXuat
 	drop database QuanLyBanHang
