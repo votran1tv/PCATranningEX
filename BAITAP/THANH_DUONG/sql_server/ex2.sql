@@ -614,33 +614,104 @@ AS
 
     select MaVatTu,sum(SoLuongNhap) from ChiTietPNHang group by MaVatTu
 -- 33:
-alter trigger tg_UpdateTonKho on ChiTietPNHang for INSERT
+create trigger tg_UpdateTonKho on ChiTietPNHang for INSERT,UPDATE
 AS
+BEGIN
+    DECLARE @toMonth char(50) = (
+        select cast(month(GETDATE()) as char) + cast(year(getdate()) as char)
+    )
+    DECLARE @SL_Tong1VatTu int = (
+        select sum(ChiTietPNHang.SoLuongNhap) from ChiTietPNHang,inserted WHERE ChiTietPNHang.MaVatTu =inserted.MaVatTu
+    )
+    DECLARE @SL_Tong1VatTu_1Thang int = (
+        select sum(ChiTietPXuat.SoLuongXuat) from ChiTietPXuat,PhieuXuat,inserted
+        where ChiTietPXuat.MaPhieuXuat=PhieuXuat.MaPhieuXuat and 
+            ChiTietPXuat.MaVatTu=inserted.MaVatTu
+        group by (CAST(MONTH(NgayXuat) as char) + CAST(year(NgayXuat) as char))
+    )
+    if exists ( select TonKho.MaVatTu from TonKho,inserted where TonKho.MaVatTu=inserted.MaVatTu ) 
+        and exists (select TonKho.NamThang from TonKho where TonKho.NamThang = @toMonth)
+        BEGIN -- neu trong TonKho da ton tai thi update
+            --@SL_Tong1VatTu - sl_PhieuXuat_of_ThangNam
+            UPDATE TonKho
+            set 
+                SLDau = 0, -- chua biet cach su ly
+                TongSLNhap = TongSLNhap - deleted.SoLuongNhap + inserted.SoLuongNhap,
+                TongSLXuat = isnull(@SL_Tong1VatTu_1Thang,0),
+                SLCuoi = (TongSLNhap - deleted.SoLuongNhap + inserted.SoLuongNhap) - TongSLXuat
+            from TonKho,deleted,inserted
+            where TonKho.MaVatTu=deleted.MaVatTu and TonKho.MaVatTu=inserted.MaVatTu
+
+            PRINT 'upd'
+        END
+    ELSE 
+        BEGIN
+            DECLARE @MVT nvarchar(50) = (select MaVatTu from inserted)
+            alter TABLE TonKho
+                drop constraint CK_NamThang
+            insert into TonKho(NamThang,MaVatTu,SLDau,TongSLNhap,TongSLXuat,SLCuoi)
+                VALUES (
+                    @toMonth,
+                    @MVT,
+                    0,
+                    @SL_Tong1VatTu,
+                    isnull(@SL_Tong1VatTu_1Thang,0),
+                    (@SL_Tong1VatTu - isnull(@SL_Tong1VatTu_1Thang,0))
+                )
+            alter TABLE TonKho WITH NOCHECK
+                add constraint CK_NamThang check (NamThang > '1/1/1999' and NamThang < '31/12/2999')
+                print 'ins'
+        end
+    -- print @SL_Tong1VatTu
+    -- PRINT @SL_Tong1VatTu_1Thang
+end--tg_UpdateTonKho
+
+create trigger tg_DeleteTonKho on ChiTietPNHang for DELETE
+as 
+BEGIN
+    update TonKho 
+    set TongSLNhap = TongSLNhap - (
+        select SoLuongNhap from deleted where MaVatTu = ChiTietPNHang.MaVatTu
+    ),
+        SLCuoi = TongSLNhap - (
+            select SoLuongNhap from deleted where MaVatTu = ChiTietPNHang.MaVatTu
+        ) - TongSLXuat
+    from ChiTietPNHang
+    inner JOIN deleted on ChiTietPNHang.MaVatTu = deleted.MaVatTu
+END-- tg_DeleteTonKho
+
+
+    -- trigger insert,update,delete from ChiTietPXuat
+create trigger tg_DataChange_ChiTietPhieuXuat on ChiTietPXuat for insert,update,delete 
+as 
+BEGIN
+    DECLARE @Activity nvarchar(50)
+
+    DECLARE @toMonth char(50) = (
+        select cast(month(GETDATE()) as char) + cast(year(getdate()) as char)
+    )
+    DECLARE @SL_Tong1VatTu int = (
+        select sum(ChiTietPNHang.SoLuongNhap) from ChiTietPNHang,inserted WHERE ChiTietPNHang.MaVatTu =inserted.MaVatTu
+    )
+    DECLARE @SL_Tong1VatTu_1Thang int = (
+        select sum(ChiTietPXuat.SoLuongXuat) from ChiTietPXuat,PhieuXuat,inserted
+        where ChiTietPXuat.MaPhieuXuat=PhieuXuat.MaPhieuXuat and 
+            ChiTietPXuat.MaVatTu=inserted.MaVatTu
+        group by (CAST(MONTH(NgayXuat) as char) + CAST(year(NgayXuat) as char))
+    )
+
+    if exists (select 1 from inserted) and exists (select 1 from deleted) -- for update
     BEGIN
-        DECLARE @SL_Tong1VatTu int = (
-            select sum(ChiTietPNHang.SoLuongNhap) from ChiTietPNHang,inserted WHERE ChiTietPNHang.MaVatTu =inserted.MaVatTu
-        )
-        DECLARE @toMonth char(50) = (
-            select cast(month(GETDATE()) as char) + cast(year(getdate()) as char)
-        )
-        DECLARE @SL_Tong1VatTu_1Thang int = (
-            select sum(ChiTietPXuat.SoLuongXuat) from ChiTietPXuat,PhieuXuat,inserted
-            where ChiTietPXuat.MaPhieuXuat=PhieuXuat.MaPhieuXuat and 
-                ChiTietPXuat.MaVatTu=inserted.MaVatTu
-            group by (CAST(MONTH(NgayXuat) as char) + CAST(year(NgayXuat) as char))
-        )
-        if exists (select TonKho.MaVatTu from TonKho,inserted where TonKho.MaVatTu=inserted.MaVatTu)
-            BEGIN
-                --@SL_Tong1VatTu - sl_PhieuXuat_of_ThangNam
-                UPDATE TonKho
-                set NamThang = @toMonth,
-                    MaVatTu = inserted.MaVatTu,
-                    SLDau = @SL_Tong1VatTu,
-                    TongSLNhap = @SL_Tong1VatTu,
-                    TongSLXuat = @SL_Tong1VatTu_1Thang,
-                    SLCuoi = (@SL_Tong1VatTu - @SL_Tong1VatTu_1Thang)
-                from inserted
-            END
+        set @Activity = 'update'
+        if exists (select TonKho.MaVatTu from TonKho,inserted where TonKho.MaVatTu=inserted.MaVatTu) 
+        and exists ( select TonKho.NamThang from TonKho where TonKho.NamThang = @toMonth)
+            begin
+                update TonKho
+                    set TongSLXuat - deleted.SoLuongXuat + inserted.SoLuongXuat,
+                        SLCuoi = (TongSLXuat - deleted.SoLuongXuat + inserted.SoLuongXuat) - TongSLXuat
+                    from TonKho,inserted,deleted
+                    where TonKho.MaVatTu=inserted.MaVatTu and TonKho.MaVatTu=deleted.MaVatTu
+            end
         ELSE
             BEGIN
                 DECLARE @MVT nvarchar(50) = (select MaVatTu from inserted)
@@ -650,7 +721,7 @@ AS
                     VALUES (
                         @toMonth,
                         @MVT,
-                        @SL_Tong1VatTu,
+                        0,
                         @SL_Tong1VatTu,
                         isnull(@SL_Tong1VatTu_1Thang,0),
                         (@SL_Tong1VatTu - isnull(@SL_Tong1VatTu_1Thang,0))
@@ -658,9 +729,20 @@ AS
                 alter TABLE TonKho WITH NOCHECK
                     add constraint CK_NamThang check (NamThang > '1/1/1999' and NamThang < '31/12/2999')
             end
-        -- print @SL_Tong1VatTu
-        -- PRINT @SL_Tong1VatTu_1Thang
     end
+    
+    if exists (select 1 from inserted) and not exists (select 1 from deleted) -- for insert
+    BEGIN
+        set @Activity = 'insert' 
+    end
+
+    if exists (select 1 from deleted) and not exists (select 1 from inserted) -- for delete
+    BEGIN
+        set @Activity = 'deleted'
+    end
+
+    print 'ok'
+end--tg_DataChange_ChiTietPhieuXuat
 ----------------------------------
     use QLBH;
     set dateformat dmy;
