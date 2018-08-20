@@ -4,7 +4,6 @@ go
 drop database if exists  QLBanHang
 go
 
-"mssql.intelliSense.enableErrorChecking": false
 --go
 --Tạo cơ sở dữ liệu QLBH--
 if not exists (select 1 from sys.databases where name = 'QLBanHang')
@@ -155,6 +154,7 @@ TongSLXuat int CHECK(TongSLXuat>0),
 constraint fk_TonKho_MaVT foreign key(MaVT) references VatTu(MaVT)
 );
 go
+SELECT * FROM TonKho;
 ---------------------------------------------------------------------------
 --Chèn dữ liệu vào bảng--
 
@@ -289,6 +289,7 @@ insert into PhieuXuatHang(MaPX,NgayXuat,TenKhachHang) values
 
 select * from PhieuXuatHang;
 go
+SELECT * FROM V
 
 --8_ChiTiePhieutXuat:
 insert into ChiTietPhieuXuat(MaCTPX,MaPX,MaVT,SoLuongXuat,DonGiaXuat) values
@@ -378,7 +379,8 @@ select NhaCungCap.TenNhaCungCap, VatTu.TenVatTu, sum(ChiTietPhieuNhap.SoLuongNha
 
 --\\Update EX2 (9/8/2018)//
 --7_Kiểm tra xem mặt hàng nào được đặt hàng nhiều nhất:
-SELECT MaVT, Min(SoLuongDat)[VT Đặt Nhiều Nhất] FROM ChiTietDonDatHang GROUP BY MaVT;
+SELECT TOP 1 MaVT, MAX(SoLuongDat)[VT Đặt Nhiều Nhất] FROM ChiTietDonDatHang GROUP BY MaVT ORDER BY MAX(SoLuongDat) DESC;
+SELECT * FROM ChiTietDonDatHang;
 --8_Tìm tất cả mặt hàng bắt đầu bằng chữ T:
 SELECT VatTu.TenVatTu FROM VatTu WHERE TenVatTu LIKE 'T%';
 -----
@@ -387,30 +389,35 @@ SELECT ChiTietDonDatHang.MaVT, SUM(ChiTietDonDatHang.SoLuongDat)[Tổng MH > 100
 SELECT * FROM ChiTietDonDatHang;
 -----
 --10.1_Tìm tất cả các mặt hàng đã nhập về nhưng chưa xuất:
-
+SELECT * FROM VatTu WHERE MaVT IN (SELECT MaVT FROM ChiTietPhieuNhap) AND MaVT NOT IN (SELECT MaVT FROM ChiTietPhieuXuat);
 -----
 --10.2_Tìm tất cả các mặt hàng đã nhập về và đã xuất:
-
+SELECT * FROM VatTu WHERE MaVT IN (SELECT MaVT FROM ChiTietPhieuNhap) AND MaVT IN (SELECT MaVT FROM ChiTietPhieuXuat);
 -----
 --\\Update EX2 (10/8/2018)//
 --11_Tạo bảng tồn kho:
 --Done--
 -----
 --12_Đặt điều kiện ràng buộc giá trị nhập vào cho các trường số lượng có giá trị lớn hơn không, giá trị ngày tháng lớn hơn 1/1/1999 và nhỏ hơn 31/12/2999:
-check(SLDau > 0 and SLCuoi > 0 and TongSLNhap > 0 and TongSLXuat > 0); --Check SL > 0 <Cách 1>
+ALTER TABLE TonKho ADD CONSTRAINT ck_TonKho_SL CHECK (SLDau > 0 and SLCuoi > 0 and TongSLNhap > 0 and TongSLXuat > 0); --Check SL > 0 <Cách 1>
 go
-alter table TonKho alter column NamThang date; --Check Ngày Tháng
+alter table TonKho alter column NamThang date; --Check Ngày Tháng <Cách 1>
 alter table TonKho add constraint ck_TonKho_NamThang check(NamThang > 1/1/1991 and NamThang < 31/12/2999);
 go
 -----
 --13_Truy vấn danh sách các phiếu đặt hàng chưa được nhập hàng:
-
+SELECT * FROM DonDatHang WHERE MaDDH NOT IN (SELECT MaDDH FROM PhieuNhapHang);
 -----
 --14_Lấy thông tin nhà cung cấp có nhiều đơn đặt hàng nhất:
-SELECT NhaCungCap.MaNCC, NhaCungCap.TenNhaCungCap, MAX(DonDatHang.MaDDH) FROM NhaCungCap, DonDatHang GROUP BY NhaCungCap.MaNCC;
+SELECT NhaCungCap.MaNCC, TenNhaCungCap, DiaChi, DienThoai, COUNT(MaDDH)[NCCNhieuDonDatHangNhat] FROM NhaCungCap 
+LEFT JOIN DonDatHang ON NhaCungCap.MaNCC = DonDatHang.MaNCC GROUP BY NhaCungCap.MaNCC, TenNhaCungCap, DiaChi, DienThoai;
+SELECT * FROM DonDatHang;
+SELECT * FROM NhaCungCap;
 -----
 --15_Lấy thông tin vật tư được xuất bán nhiều nhất:
-
+SELECT TOP 2 VatTu.MaVT, VatTu.TenVatTu, VatTu.DonViTinh, VatTu.TiLePhanTram, SUM(SoLuongXuat)[VTXuatBanNhieuNhat] FROM VatTu LEFT JOIN ChiTietPhieuXuat ON VatTu.MaVT = ChiTietPhieuXuat.MaVT GROUP BY VatTu.MaVT, VatTu.TenVatTu, VatTu.DonViTinh, VatTu.TiLePhanTram ORDER BY VTXuatBanNhieuNhat DESC;
+SELECT * FROM VatTu;
+SELECT * FROM ChiTietPhieuXuat;
 -----
 --16_Tính tổng tiền của các đơn đặt hàng, đưa ra đơn đặt hàng có giá trị lớn nhất:
 

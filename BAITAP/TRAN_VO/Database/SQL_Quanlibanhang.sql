@@ -167,8 +167,11 @@
 	insert into Phieunhaphang values ('MSN008','19/08/2018','DH008');
 	insert into Phieunhaphang values ('MSN009','20/09/2018','DH009');
 	insert into Phieunhaphang values ('MSN010','30/10/2018','DH005');
+	insert into Phieunhaphang values ('MSN011','16/08/2018','DH007');
+	insert into Phieunhaphang values ('MSN012','17/08/2018','DH001');
 
 	--Chitietphieunhap
+	UPDATE Chitietphieunhap SET Dongianhap='20' WHERE Masophieunhap='MSN009'
 	insert into Chitietphieunhap values ('MSN009','MS01','50','10');
 	insert into Chitietphieunhap values ('MSN008','MS05','500','12');
 	insert into Chitietphieunhap values ('MSN007','MS03','510','15');
@@ -179,6 +182,10 @@
 	insert into Chitietphieunhap values ('MSN002','MS04','300','35');
 	insert into Chitietphieunhap values ('MSN001','MS02','250','40');
 	insert into Chitietphieunhap values ('MSN010','MS03','300','15');
+	insert into Chitietphieunhap values ('MSN011','MS07','400','15');
+	insert into Chitietphieunhap values ('MSN012','MS01','310','15');
+
+
 
 
 	
@@ -396,6 +403,99 @@
 
 
 	insert into VATTU values ('MS13','tea11 ','kg','83');
+
+--------------------------- Update (16/8) – Store Procedure, Trigger, Function And Transaction---------------------------------------------------
+-- Câu 29: Thêm cột thành tiền  cho bảng Chi tiết phiếu nhập, viết hàm tính thành tiền với biến đầu vào là đơn giá và số lượng.  Tạo trigger cho phép tự động tính thành tiền trong bảng Chi tiết phiếu nhập mỗi khi có 1 bảng ghi mới được thêm vào
+		ALTER TABLE Chitietphieunhap add Thanhtien FLOAT(3) 
+		ALTER TABLE Chitietphieunhap ALTER COLUMN Thanhtien int NOT NULL
+		CREATE FUNCTION fn_tinhtien
+			(@soluongnhap int,
+			@dongianhap int)
+		RETURNS INT
+		AS BEGIN
+			DECLARE @Thanhtien INT
+			set @Thanhtien=@soluongnhap*@dongianhap
+			RETURN @Thanhtien;
+		END
+		SELECT dbo.fn_tinhtien (13,40)
+
+	--Tạo trigger cho phép tự động tính thành tiền trong bảng Chi tiết phiếu nhập mỗi khi có 1 bảng ghi mới được thêm vào
+		ALTER TRIGGER tg_tinhtien on Chitietphieunhap FOR INSERT, UPDATE 
+		AS 
+		UPDATE Chitietphieunhap	SET Thanhtien=inserted.Soluongnhap*inserted.Dongianhap FROM Chitietphieunhap, inserted,deleted 
+		WHERE Chitietphieunhap.Masophieunhap=inserted.Masophieunhap AND Chitietphieunhap.Mavattu=inserted.Mavattu
+
+-- Câu 30: Thêm cột tinhtrang (tình trạng) vào bảng Vattu (quy định 0 = “hết hàng’, 1=”còn hàng”). Viết thủ tục kiểm tra trạng thái của các vật tư hiện đang có.
+		ALTER TABLE VATTU add tinhtrang BIT
+		BEGIN
+		select Mavattu, Ten, Donvitinh, Tilephantram, (case
+		when tinhtrang= 0 THEN N'Hết hàng'
+		else N'Còn hàng'
+		END)[Tình trạng] FROM VATTU
+		END
+
+
+-- Câu 31: Viết trigger cho phép tự động cập nhật trạng thái của vật tư mỗi khi có sự thay đổi nhập hoặc xuất.
+		CREATE TRIGGER trg_capnhathang on chitietphieunhap for INSERT, UPDATE  AS
+		BEGIN
+		DECLARE @soluongnhap int=( select SUM(Chitietphieunhap.Soluongnhap)FROM Chitietphieunhap, inserted WHERE Chitietphieunhap.Mavattu=inserted.Mavattu)
+		DECLARE @soluongxuat INT=(SELECT SUM(Chitietphieuxuat.Soluongxuat)FROM Chitietphieuxuat,inserted WHERE Chitietphieuxuat.Mavattu=inserted.Mavattu)
+		IF @soluongnhap>@soluongxuat 
+			UPDATE VATTU SET tinhtrang=	1 FROM inserted WHERE VATTU.Mavattu=inserted.Mavattu
+		
+		IF @soluongnhap<=@soluongxuat
+			UPDATE VATTU SET tinhtrang=0 FROM inserted WHERE VATTU.Mavattu=inserted.Mavattu
+		END
+
+
+-- Câu 32: Viết thủ tục tính lượng hàng tồn kho hiện tại cho mỗi loại vật tư và áp dụng lên bảng vật tư
+
+		SELECT Chitietphieunhap.Mavattu, SUM(Chitietphieunhap.Soluongnhap)-SUM(Chitietphieuxuat.Soluongxuat) FROM Chitietphieunhap LEFT JOIN Chitietphieuxuat ON  Chitietphieunhap.Mavattu=Chitietphieuxuat.Mavattu
+		GROUP BY Chitietphieunhap.Mavattu
+		
+		SELECT nhap.thuoc, (nhapsoluong -[B] IFNULL[/B](xuatsoluong,0)) as count FROM
+(SELECT nhap.thuoc, SUM(nhap.soluong) FROM nhap GROUP BY nhap.thuoc)  LEFT JOIN
+(SELECT xuat.thuoc, SUM(xuat.soluong) FROM xuat GROUP BY xuat.thuoc)  ON nhap.thuoc = xuat.thuoc
+
+
+DECLARE @i int = 1
+        DECLARE @n int = (select Count(mavattu) from VatTu)
+        DECLARE @VatTu_ID nvarchar(50)
+
+        DECLARE @DonNhap_ID int
+        DECLARE @DonXuat_ID int
+        DECLARE @ab int
+
+        while @i <= @n
+            BEGIN
+                --print @i
+                set @VatTu_ID = (
+                    select Mavattu from (
+                        select ROW_NUMBER() Over(order by mavattu) as index_id,Mavattu
+                        from VATTU
+                    ) as tem_VATTU 
+                    where index_id = @i
+                )
+                set @DonNhap_ID = (select sum(soluongnhap) from Chitietphieunhap where Mavattu = @VatTu_ID)
+                set @DonXuat_ID = (select sum(Soluongxuat) from Chitietphieuxuat where Mavattu = @VatTu_ID)
+
+                if (@DonNhap_ID <= @DonXuat_ID) 
+                    BEGIN
+                        UPDATE VATTU
+                        set tinhtrang = 0
+                        where Mavattu = @VatTu_ID
+                    end
+                ELSE
+                    BEGIN
+                        UPDATE VATTU
+                        set tinhtrang = 1
+                        WHERE Mavattu = @VatTu_ID
+                    end
+
+                set @i = @i + 1
+            END
+-- Câu 33: Tạo trigger cho phép thay đổi số lượng tồn kho vật tư mỗi khi có sự thay đổi vể nhập xuất, đưa ra thông báo “Không Đủ Vật Tư Đề Xuất” trong trường hợp không đủ vật tư theo phiếu chi tiết xuất
+
 -------------------------------------------------------------
 	select*from VATTU
 	select*from NHACC
