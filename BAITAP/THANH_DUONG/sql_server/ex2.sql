@@ -315,10 +315,17 @@ select top 1 tem.SLD as [Số đơn],NhaCungCap.* from NhaCungCap
     ) as tem on NhaCungCap.MaNCCap=tem.IDNCC order by tem.SLD desc
 
 -- 15: Lấy thông tin vật tư được xuất bán nhiều nhất
-select top 1 tem.SLX as [số lượng],VatTu.* from VatTu 
+
+select tem.SLX as [Số lượng],VatTu.* from VatTu 
     inner join (
         select MaVatTu as MVT_ID, Sum(SoLuongXuat) as SLX from ChiTietPXuat group by MaVatTu
-    ) as tem on VatTu.MaVatTu = tem.MVT_ID order by tem.SLX desc
+    ) as tem on VatTu.MaVatTu = tem.MVT_ID
+    where tem.SLX = (
+        select top 1 tem.SLX as [số lượng] from VatTu 
+        inner join (
+            select MaVatTu as MVT_ID, Sum(SoLuongXuat) as SLX from ChiTietPXuat group by MaVatTu
+        ) as tem on VatTu.MaVatTu = tem.MVT_ID order by tem.SLX desc
+    )
     
 -- 16: Tính tổng tiền của các đơn đặt hàng, đưa ra đơn đặt hàng có giá trị lớn nhất
 
