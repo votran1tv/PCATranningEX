@@ -12,86 +12,113 @@
 --use master
 -- Tạo bảng
 
-	create table NHACC(
-	Mancc varchar (255) primary key,
-	ten varchar(255),
-	Diachi text,
-	Dienthoai int
-	)
+	IF OBJECT_ID('NHACC','U') IS NOT NULL
+	DROP TABLE NHACC
+		create table NHACC(
+		Mancc varchar (255) primary key,
+		ten varchar(255) NOT NULL,
+		Diachi text NOT NULL,
+		Dienthoai int NOT NULL
+		)
 
-	create table VATTU(
-	Mavattu varchar(255) primary key,
-	Ten varchar(255),
-	Donvitinh varchar(10),
-	Tilephantram int,
-	Mancc VARCHAR (255),
-	CONSTRAINT FK_Manccvt FOREIGN KEY (Mancc) REFERENCES Nhacc(Mancc)
-	)
+
+	IF OBJECT_ID('VATTU','U') IS NOT NULL
+	DROP TABLE VATTU
+		create table VATTU(
+		Mavattu varchar(255) primary key NOT NULL,
+		Ten varchar(255) NOT NULL,
+		Donvitinh varchar(10) NOT NULL,
+		Tilephantram int,
+		Mancc VARCHAR (255),
+		CONSTRAINT FK_Manccvt FOREIGN KEY (Mancc) REFERENCES Nhacc(Mancc)
+		)
 
 	--Đơn Đặt Hàng
-	create table Dondathang(
-	Madondathang varchar(255) primary key,
-	Ngaydat date, 
-	Mancc varchar(255),
-	CONSTRAINT FK_Mancc FOREIGN KEY (Mancc)
-    REFERENCES NHACC(Mancc)
-	)	
+	IF OBJECT_ID('Dondathang','U') IS NOT NULL
+	DROP TABLE Dondathang
+		create table Dondathang(
+		Madondathang varchar(255) primary key NOT NULL,
+		Ngaydat date NOT NULL, 
+		Mancc varchar(255) NOT NULL,
+		CONSTRAINT FK_Mancc FOREIGN KEY (Mancc)
+		REFERENCES NHACC(Mancc)
+		)	
 
 	--Chi tiết đơn đặt hàng
-	create table Chitietdonhang(
-	id int primary key identity,
-	Madondathang varchar(255), 
-	Mavattu varchar(255), 
-	Soluongdat int,
-	CONSTRAINT FK_Mavattu FOREIGN KEY (Mavattu)
-    REFERENCES VATTU(Mavattu),
-	CONSTRAINT FK_Madondathang FOREIGN KEY (Madondathang)
-    REFERENCES Dondathang(Madondathang)
-	)
+	IF OBJECT_ID('Chitietdonhang','U') IS NOT NULL
+	DROP TABLE Chitietdonhang
+		create table Chitietdonhang(
+		Madondathang varchar(255) NOT NULL, 
+		Mavattu varchar(255) NOT NULL,
+		Soluongdat int NOT NULL,
+		constraint PK_mavattu primary key (madondathang, mavattu),
+		CONSTRAINT FK_Mavattu FOREIGN KEY (Mavattu)
+		REFERENCES VATTU(Mavattu),
+		CONSTRAINT FK_Madondathang FOREIGN KEY (Madondathang)
+		REFERENCES Dondathang(Madondathang)
+		)
 
 	--Phiếu nhập hàng: 
-	create table Phieunhaphang(
-	Masophieunhap varchar(255) primary key, 
-	Ngaynhap date, 
-	Madondathang varchar(255),
-	CONSTRAINT FK_Madondathangnhap FOREIGN KEY (Madondathang)
-    REFERENCES Dondathang(Madondathang)
-	)
+	IF OBJECT_ID('Phieunhaphang','U') IS NOT NULL
+	DROP TABLE Phieunhaphang
+		create table Phieunhaphang(
+		Masophieunhap varchar(255) primary key NOT NULL, 
+		Ngaynhap date NOT NULL, 
+		Madondathang varchar(255) NOT NULL,
+		CONSTRAINT FK_Madondathangnhap FOREIGN KEY (Madondathang)
+		REFERENCES Dondathang(Madondathang)
+		)
 
 	--Chi tiết phiếu nhập:
-	create table Chitietphieunhap(
-	id int primary key identity,
-	Masophieunhap varchar(255), 
-	Mavattu varchar(255), 
-	Soluongnhap int, 
-	Dongianhap int,
-	CONSTRAINT FK_Masophieunhap FOREIGN KEY (Masophieunhap)
-    REFERENCES Phieunhaphang(Masophieunhap),
-	CONSTRAINT FK_Mavattunhap FOREIGN KEY (Mavattu)
-    REFERENCES VATTU(Mavattu)
-	)
-
+	IF OBJECT_ID('Chitietphieunhap','U') IS NOT NULL
+	DROP TABLE Chitietphieunhap
+		create table Chitietphieunhap(
+		Masophieunhap varchar(255) NOT NULL, 
+		Mavattu varchar(255) NOT NULL, 
+		Soluongnhap int NOT NULL, 
+		Dongianhap int  NOT NULL,
+		constraint PK_mspnmvt primary key (masophieunhap, mavattu),
+		CONSTRAINT FK_Masophieunhap FOREIGN KEY (Masophieunhap)
+		REFERENCES Phieunhaphang(Masophieunhap),
+		CONSTRAINT FK_Mavattunhap FOREIGN KEY (Mavattu)
+		REFERENCES VATTU(Mavattu)
+		)
 	--Phiếu xuất hàng:
-	create table Phieuxuat(
-	Maphieuxuat varchar(255) primary key,  
-	Ngayxuat date, 
-	Tenkhachhang text
-	)
+		IF OBJECT_ID('Phieuxuat','U') IS NOT NULL
+		DROP TABLE Phieuxuat
+		create table Phieuxuat(
+		Maphieuxuat varchar(255) primary key NOT NULL,  
+		Ngayxuat date NOT NULL, 
+		Tenkhachhang text NOT NULL
+		)
 
 	--Chi tiết xuất hàng
-	create table Chitietphieuxuat(
-	id int primary key identity,  
-	Maphieuxuat varchar(255),
-	Mavattu varchar(255), 
-	Soluongxuat int, 
-	Dongia int,
-	CONSTRAINT FK_Maphieuxuat FOREIGN KEY (Maphieuxuat)
-    REFERENCES Phieuxuat (Maphieuxuat),
-	CONSTRAINT FK_Mavattuxuat FOREIGN KEY (Mavattu)
-    REFERENCES VATTU (Mavattu)
-	)
+		IF OBJECT_ID('Chitietphieuxuat','U') IS NOT NULL
+		DROP TABLE Chitietphieuxuat
+		create table Chitietphieuxuat(
+		id int primary key identity,  
+		Maphieuxuat varchar(255) NOT NULL,
+		Mavattu varchar(255) NOT NULL, 
+		Soluongxuat int NOT NULL, 
+		Dongia int NOT NULL,
+		CONSTRAINT FK_Maphieuxuat FOREIGN KEY (Maphieuxuat)
+		REFERENCES Phieuxuat (Maphieuxuat),
+		CONSTRAINT FK_Mavattuxuat FOREIGN KEY (Mavattu)
+		REFERENCES VATTU (Mavattu)
+		)
 
 -- Chèn dữ liệu vào bảng
+	--NHACC
+	insert into NHACC values ('NCC001','Exotic Liquid','49 Gilbert St.','1715552222');
+	insert into NHACC values ('NCC002','New Orleans Cajun Delights','P.O. Box 78934','1005554822');
+	insert into NHACC values ('NCC003','Grandma Kelly Homestead','707 Oxford Rd.','35555735');
+	insert into NHACC values ('NCC004','Tokyo Traders','Sekimai Musashino','35555011');
+	insert into NHACC values ('NCC005','Pavlova','74 Rose St. Moonie Ponds','4442343');
+	insert into NHACC values ('NCC006','Biscuits','29 KingWay','5554448');
+	insert into NHACC values ('NCC007','LTDA','Av. das Americanas 12.890',' 5554640');
+	insert into NHACC values ('NCC008','Formaggi Fortini ','Viale Dante, 75','054460323');
+	insert into NHACC values ('NCC009','Bigfoot Breweries','3400 - 8th Avenue Suite 210','5559931');
+SELECT*FROM NHACC
 	--VATTU
 	insert into VATTU values ('MS01','Chais','bags','90','NCC001');
 	insert into VATTU values ('MS02','Chang','bottles','50','NCC002');
@@ -112,16 +139,6 @@
 	insert into VATTU values ('MS17','tea6 ','kg','89','NCC009');
 	insert into VATTU values ('MS18','tea7 ','kg','80','NCC001');
 
-	--NHACC
-	insert into NHACC values ('NCC001','Exotic Liquid','49 Gilbert St.','1715552222');
-	insert into NHACC values ('NCC002','New Orleans Cajun Delights','P.O. Box 78934','1005554822');
-	insert into NHACC values ('NCC003','Grandma Kelly Homestead','707 Oxford Rd.','35555735');
-	insert into NHACC values ('NCC004','Tokyo Traders','Sekimai Musashino','35555011');
-	insert into NHACC values ('NCC005','Pavlova','74 Rose St. Moonie Ponds','4442343');
-	insert into NHACC values ('NCC006','Biscuits','29 KingWay','5554448');
-	insert into NHACC values ('NCC007','LTDA','Av. das Americanas 12.890',' 5554640');
-	insert into NHACC values ('NCC008','Formaggi Fortini ','Viale Dante, 75','054460323');
-	insert into NHACC values ('NCC009','Bigfoot Breweries','3400 - 8th Avenue Suite 210','5559931');
 
 	--Dondathang
 	set dateformat dmy;
@@ -139,7 +156,7 @@
 	insert into Dondathang values ('DH012','04/03/2018','NCC004');
 	insert into Dondathang values ('DH013','01/07/2018','NCC009');
 
-
+		SELECT*FROM Dondathang
 
 	--Chitietdonhang
 	insert into Chitietdonhang values ('DH001','MS01','50');
@@ -163,7 +180,7 @@
 	insert into Chitietdonhang values ('DH012','MS06','80');
 	insert into Chitietdonhang values ('DH013','MS17','100');
 
-	
+		SELECT*FROM Chitietdonhang
 
 
 	--Phieunhaphang
@@ -179,7 +196,10 @@
 	insert into Phieunhaphang values ('MSN010','30/10/2018','DH010');
 	insert into Phieunhaphang values ('MSN011','10/01/2018','DH011');
 	insert into Phieunhaphang values ('MSN012','04/04/2018','DH012');
+	insert into Phieunhaphang values ('MSN013','23/08/2018','DH013');
+	insert into Phieunhaphang values ('MSN014','23/08/2018','DH006');
 
+SELECT*FROM Phieunhaphang
 	--Chitietphieunhap
 	insert into Chitietphieunhap values ('MSN001','MS01','50','10');
 	insert into Chitietphieunhap values ('MSN001','MS01','80','10');
@@ -200,7 +220,9 @@
 	insert into Chitietphieunhap values ('MSN009','MS15','70','25');
 	insert into Chitietphieunhap values ('MSN010','MS18','90','50');
 	insert into Chitietphieunhap values ('MSN012','MS06','80','25');
-
+	insert into Chitietphieunhap values ('MSN013','MS17','90','25');
+	insert into Chitietphieunhap values ('MSN014','MS03','45','90');
+		SELECT*FROM Chitietphieunhap
 	--Phieuxuat
 	insert into Phieuxuat values ('MSX001','10/07/2018','Maria ');
 	insert into Phieuxuat values ('MSX002','10/02/2018','Trujillo');
@@ -211,7 +233,8 @@
 	insert into Phieuxuat values ('MSX007','10/07/2018','Sommer	');
 	insert into Phieuxuat values ('MSX008','30/08/2018','Victoria ');
 	insert into Phieuxuat values ('MSX009','10/09/2018','Francisco ');
-
+	insert into Phieuxuat values ('MSX010','23/08/2018','BaSon ');
+		SELECT*FROM Phieuxuat
 	--Chitietphieuxuat
 	insert into Chitietphieuxuat values ('MSX001','MS01','50','15');
 	insert into Chitietphieuxuat values ('MSX002','MS08','80','20');
@@ -222,7 +245,8 @@
 	insert into Chitietphieuxuat values ('MSX007','MS16','100','16');
 	insert into Chitietphieuxuat values ('MSX008','MS18','80','60');
 	insert into Chitietphieuxuat values ('MSX009','MS06','80','30');
-
+	insert into Chitietphieuxuat values ('MSX010','MS18','100','65');
+		SELECT*FROM Chitietphieuxuat
 --5. Lấy ra danh sách các đơn đặt hàng từ 1/1/2018 đến 1/6/2018
 	select*from Dondathang where Ngaydat between '1/1/2018' and '1/6/2018';
 
@@ -275,28 +299,32 @@
 
 --------Upddate EX2(10/8/2018)------------------------------------
 --11. Tạo bảng tồn kho
-	
+
+
+		IF OBJECT_ID('Tonkho','U') IS NOT NULL
+				DROP TABLE Tonkho
 		create table Tonkho
 		(
 			id int identity primary key,
-			Namthang char(255),
+			Namthang char(255) NOT NULL,
 			--check (Namthang > '1/1/1999'),check (Namthang<'31/12/2999'),
-			Mavattu varchar(255),
-			SLDau int,
+			Mavattu varchar(255) NOT NULL,
+			SLDau int NOT NULL,
 			check (SLDau>0),
-			TongSLNhap int,
+			TongSLNhap int NOT NULL,
 			check (TongSLNhap>0),
-			TôngSLXuat int,
+			TôngSLXuat int NOT NULL,
 			check (TôngSLXuat>0),
-			SLCuoi int,
+			SLCuoi int NOT NULL,
 			check (SLCuoi>0),
 			CONSTRAINT FK_Mavattutonkho FOREIGN KEY (Mavattu)
-			REFERENCES VATTU (Mavattu)
+					REFERENCES VATTU (Mavattu)
 		)
+		SELECT*FROM Tonkho
 --12. Đặt điều kiện ràng buộc giá trị nhập vào cho các trường số lượng có giá trị lớn hơn không, giá trị ngày tháng lớn hơn 1/1/1999 và nhỏ hơn 31/12/2999
 
 			ALTER TABLE Tonkho ALTER COLUMN Namthang date;
-			alter table Tonkho add constraint namthang_cst check( Namthang > '1/1/1999' and Namthang<'31/12/2999' )
+			alter table Tonkho add constraint namthang check( Namthang > '1/1/1999' and Namthang<'31/12/2999' )
 
 			insert into Tonkho
 			values('2/1/2005', 'MS01', '100', '150', '200', '50')
@@ -309,10 +337,11 @@
 			SELECT Madondathang, Mavattu, Soluongdat
 			FROM Chitietdonhang
 			WHERE  Madondathang NOT IN (SELECT Madondathang
-				FROM Phieunhaphang) or Mavattu NOT IN (SELECT Mavattu
+				FROM Phieunhaphang) OR Mavattu NOT IN (SELECT Mavattu
 				FROM Chitietphieunhap)
 
 --14.Lấy thông tin nhà cung cấp có nhiều đơn đặt hàng nhất
+		INSERT INTO Dondathang VALUES ('DH014','23/08/2018','NCC008')
 	---Cách 1
 		select Mancc, ten, Diachi, Dienthoai
 		from NHACC
@@ -338,26 +367,39 @@
 		order by sum(soluongxuat)desc
 
 --16. Tính tổng tiền của các đơn đặt hàng, đưa ra đơn đặt hàng có giá trị lớn nhất
-		select Chitietdonhang.Madondathang,sum(dongianhap*Soluongnhap)[Tổng tiển] from Chitietphieunhap left join Chitietdonhang on Chitietdonhang.Mavattu=Chitietphieunhap.Mavattu
-		group by Chitietdonhang.Madondathang 
-		order by [Tổng tiển] desc
 
+		select Chitietdonhang.Madondathang, SUM(dongianhap*soluongdat)[Tổng tiền]
+		from Chitietdonhang INNER JOIN Phieunhaphang ON chitietdonhang.madondathang=Phieunhaphang.Madondathang INNER JOIN Chitietphieunhap ON Chitietphieunhap.masophieunhap=Phieunhaphang.Masophieunhap
+		where Chitietdonhang.Madondathang=Phieunhaphang.Madondathang and Phieunhaphang.Masophieunhap=Chitietphieunhap.Masophieunhap and Chitietdonhang.Mavattu=Chitietphieunhap.Mavattu
+		group by Chitietdonhang.Madondathang
+		order by [Tổng tiền] DESC 
+
+		--Tổng tiền các đơn nhập
+		SELECT Phieunhaphang.Madondathang, Chitietphieunhap.Masophieunhap, SUM(Soluongnhap*Dongianhap) FROM Phieunhaphang, Chitietphieunhap
+		WHERE Phieunhaphang.Masophieunhap=Chitietphieunhap.Masophieunhap
+		GROUP BY Chitietphieunhap.Masophieunhap,Phieunhaphang.Madondathang
+
+		--Tham khảo
+		SELECT TOP 10 madondathang,SUM(soluongnhap*dongianhap)
+		FROM chitietphieunhap INNER JOIN chitietdonhang ON ChiTietDonHang.MaVatTu = ChiTietPhieuNhap.MaVatTu 
+		WHERE Masophieunhap IN
+		(SELECT MaSoPhieuNhap FROM PhieuNhapHang)
+		group by madondathang
+		ORDER BY SUM(SoLuongNhap*dongianhap) DESC
+		SELECT*FROM Chitietphieunhap
 --17. Thống kê những đơn đặt hàng chưa nhập đủ số lượng(số lượng nhập ít hơn số lượng đặt)
-		select madondathang,Chitietdonhang.mavattu,Chitietdonhang.Soluongdat, sum(Chitietphieuxuat.Soluongxuat)[số lượng xuất] from Chitietdonhang inner join Chitietphieuxuat on Chitietdonhang.Mavattu=Chitietphieuxuat.Mavattu 
-		group by Madondathang,Chitietdonhang.mavattu,Chitietdonhang.Soluongdat--, Chitietphieuxuat.Soluongxuat
-		having sum(Chitietdonhang.Soluongdat)>sum(Chitietphieuxuat.Soluongxuat)
-		order by Madondathang asc
-		select madondathang,Chitietdonhang.mavattu,Chitietdonhang.Soluongdat,Chitietphieuxuat.Soluongxuat[số lượng xuất] from Chitietdonhang inner join Chitietphieuxuat on Chitietdonhang.Mavattu=Chitietphieuxuat.Mavattu 
-		group by Madondathang,Chitietdonhang.mavattu,Chitietdonhang.Soluongdat, Chitietphieuxuat.Soluongxuat
-		having sum(Chitietdonhang.Soluongdat)<sum(Chitietphieuxuat.Soluongxuat)
-		order by Madondathang asc
-
+		select  DISTINCT Chitietdonhang.Madondathang,chitietphieunhap.mavattu,chitietdonhang.soluongdat, chitietphieunhap.soluongnhap
+		from Chitietdonhang,Phieunhaphang,Chitietphieunhap
+		where Chitietdonhang.Madondathang=Phieunhaphang.Madondathang AND Phieunhaphang.Masophieunhap=Chitietphieunhap.Masophieunhap and Chitietdonhang.Mavattu=Chitietphieunhap.Mavattu 
+		OR chitietdonhang.Madondathang NOT IN (SELECT Phieunhaphang.Madondathang  FROM Phieunhaphang)
+		GROUP BY Chitietdonhang.Madondathang,chitietdonhang.soluongdat, chitietphieunhap.soluongnhap,chitietphieunhap.mavattu
+		having chitietphieunhap.soluongnhap<chitietdonhang.soluongdat
+	
 		--Thống kê những đơn đặt hàng chưa nhập đủ số lượng
 		select Phieunhaphang.Madondathang,Chitietphieunhap.mavattu,Chitietdonhang.Soluongdat,sum(Chitietphieunhap.Soluongnhap) from Chitietphieunhap inner join Chitietdonhang on Chitietdonhang.Mavattu=Chitietphieunhap.Mavattu inner join Phieunhaphang on Phieunhaphang.Madondathang=Chitietdonhang.Madondathang
 		group by Phieunhaphang.Madondathang,Chitietphieunhap.mavattu,Chitietdonhang.Soluongdat,Chitietphieunhap.Soluongnhap
 		having sum(Chitietdonhang.Soluongdat)>sum(Chitietphieunhap.Soluongnhap)
 		order by Phieunhaphang.Madondathang asc
-
 
 		select Chitietdonhang.madondathang, Chitietdonhang.Mavattu,Chitietphieunhap.Masophieunhap,Chitietdonhang.Soluongdat, sum(distinct Chitietphieunhap.Soluongnhap) from Chitietdonhang inner join Phieunhaphang on Chitietdonhang.Madondathang=Phieunhaphang.Madondathang inner join Chitietphieunhap on Phieunhaphang.Masophieunhap=Chitietphieunhap.Masophieunhap
 		group by Chitietdonhang.madondathang, Chitietdonhang.Mavattu,Chitietphieunhap.Masophieunhap, Chitietdonhang.Soluongdat
@@ -369,6 +411,7 @@
 		CREATE VIEW vw_DMVT AS
 		SELECT Mavattu, ten
 		FROM VATTU
+		
 --19) Tạo View vw_DonDH_Tong SLDatNhap gồm (SoHD, TongSLDat và TongSLNhap) dùng để thống kê những đơn đặt hàng đã được nhập hàng đầy đủ
 		create view vw_DonDH_Tong_SLDatNhap as
 		select Chitietdonhang.Madondathang, sum(chitietdonhang.soluongdat)TongSLDat, sum(Chitietphieunhap.Soluongnhap)TongSLNhap
