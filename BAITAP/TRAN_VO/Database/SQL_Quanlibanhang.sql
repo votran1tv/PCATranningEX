@@ -300,7 +300,6 @@ SELECT*FROM Phieunhaphang
 --------Upddate EX2(10/8/2018)------------------------------------
 --11. Tạo bảng tồn kho
 
-
 		IF OBJECT_ID('Tonkho','U') IS NOT NULL
 				DROP TABLE Tonkho
 		create table Tonkho
@@ -393,7 +392,7 @@ SELECT*FROM Phieunhaphang
 		where Chitietdonhang.Madondathang=Phieunhaphang.Madondathang AND Phieunhaphang.Masophieunhap=Chitietphieunhap.Masophieunhap and Chitietdonhang.Mavattu=Chitietphieunhap.Mavattu 
 		OR chitietdonhang.Madondathang NOT IN (SELECT Phieunhaphang.Madondathang  FROM Phieunhaphang)
 		GROUP BY Chitietdonhang.Madondathang,chitietdonhang.soluongdat, chitietphieunhap.soluongnhap,chitietphieunhap.mavattu
-		having chitietphieunhap.soluongnhap<chitietdonhang.soluongdat
+		having SUM(chitietphieunhap.soluongnhap)=SUM(chitietdonhang.soluongdat)
 	
 		--Thống kê những đơn đặt hàng chưa nhập đủ số lượng
 		select Phieunhaphang.Madondathang,Chitietphieunhap.mavattu,Chitietdonhang.Soluongdat,sum(Chitietphieunhap.Soluongnhap) from Chitietphieunhap inner join Chitietdonhang on Chitietdonhang.Mavattu=Chitietphieunhap.Mavattu inner join Phieunhaphang on Phieunhaphang.Madondathang=Chitietdonhang.Madondathang
@@ -401,19 +400,16 @@ SELECT*FROM Phieunhaphang
 		having sum(Chitietdonhang.Soluongdat)>sum(Chitietphieunhap.Soluongnhap)
 		order by Phieunhaphang.Madondathang asc
 
-		select Chitietdonhang.madondathang, Chitietdonhang.Mavattu,Chitietphieunhap.Masophieunhap,Chitietdonhang.Soluongdat, sum(distinct Chitietphieunhap.Soluongnhap) from Chitietdonhang inner join Phieunhaphang on Chitietdonhang.Madondathang=Phieunhaphang.Madondathang inner join Chitietphieunhap on Phieunhaphang.Masophieunhap=Chitietphieunhap.Masophieunhap
-		group by Chitietdonhang.madondathang, Chitietdonhang.Mavattu,Chitietphieunhap.Masophieunhap, Chitietdonhang.Soluongdat
-		having sum(Chitietdonhang.Soluongdat)>sum(Chitietphieunhap.Soluongnhap)  chitietdonhang.mavattu=chiphieunhap.mavattu
-		order by Chitietdonhang.Madondathang asc
+
 
 ----------Update EX2(13/8)----------------------------------------------------------------
 --18) Tạo View  vw_DMVT gồm (MAVTu và TenVTu) dùng liệt kê các danh sách trong bảng vật tư
-		CREATE VIEW vw_DMVT AS
-		SELECT Mavattu, ten
-		FROM VATTU
-		
+			CREATE VIEW [vw_DMVT] AS
+			SELECT  Mavattu, Ten
+			FROM VATTU
+
 --19) Tạo View vw_DonDH_Tong SLDatNhap gồm (SoHD, TongSLDat và TongSLNhap) dùng để thống kê những đơn đặt hàng đã được nhập hàng đầy đủ
-		create view vw_DonDH_Tong_SLDatNhap as
+		create view vwDonDH_Tong_SLDatNhap as
 		select Chitietdonhang.Madondathang, sum(chitietdonhang.soluongdat)TongSLDat, sum(Chitietphieunhap.Soluongnhap)TongSLNhap
 		from Chitietdonhang inner join Chitietphieunhap on Chitietdonhang.Mavattu=Chitietphieunhap.Mavattu
 		group by Chitietdonhang.Madondathang
@@ -421,14 +417,18 @@ SELECT*FROM Phieunhaphang
 
 
 --20) Tạo View vw_DonDH_DaNhapDu gồm (Số DH, DaNhapDu) có hai giá trị là “Da Nhap Du” nếu đơn hàng đó đã nhập đủ hoặc “Chu Nhap Du” nếu đơn đặt hàng chưa nhập đủ
-		create view vw_DonDH_DaNhapDu as
-		select distinct madondathang, Chitietdonhang.Mavattu, case
-		when soluongdat <= soluongnhap then N'Đã nhập đủ'
-		else N'Chưa nhập đủ' end
-		[Trạng thái hàng]
-		from chitietdonhang inner join chitietphieunhap on chitietdonhang.mavattu=chitietdonhang.mavattu
 
 
+		create view vw_DonDH_DaNhapDu
+		as
+			select distinct Chitietdonhang.Madondathang, Chitietdonhang.Mavattu, case
+						when soluongdat = soluongnhap then N'Đã nhập đủ'
+						else N'Chưa nhập đủ' end
+						[Trạng thái hàng]
+			from chitietdonhang, chitietphieunhap, Phieunhaphang
+			WHERE Chitietdonhang.Madondathang=Phieunhaphang.Madondathang AND Phieunhaphang.Masophieunhap=Chitietphieunhap.Masophieunhap AND Chitietdonhang.Mavattu=Chitietphieunhap.Mavattu
+
+DROP VIEW vw_DonDH_DaNhapDu
 
 --21) Tạo View vw_TongNhap gồm (NamThang, MaVTu và TongSLNhap) dùng để thống kê số lượng nhập của các vật tư trong năm tháng tương ứng (Không sử dụng bảng tồn kho)
 		create view vw_TongNhap as
@@ -437,10 +437,12 @@ SELECT*FROM Phieunhaphang
 		group by Phieunhaphang.Ngaynhap, Chitietphieunhap.Mavattu, Chitietphieunhap.Soluongnhap
 
 --22) Tạo View vw_TongXuat gồm (NamThang, MaVTu và TongSLXuat) dùng để thống kê SL xuất của vật tư trong từng năm tương ứng (Không sử dụng bảng tồn kho)
-		create view vw_TongXuat as
-		select CAST(YEAR(Ngayxuat) as varchar)[Thời gian], Chitietphieuxuat.Mavattu, Chitietphieuxuat.Soluongxuat
-		from Phieuxuat inner join Chitietphieuxuat on Chitietphieuxuat.Maphieuxuat=Phieuxuat.Maphieuxuat
-		group by Phieuxuat.Ngayxuat, Chitietphieuxuat.Mavattu, Chitietphieuxuat.Soluongxuat
+
+		create view vw_TongXuat
+		AS
+			SELECT DISTINCT Chitietphieuxuat.Mavattu, CAST(YEAR(Ngayxuat) as varchar)[Thời gian], SUM(Chitietphieuxuat.Soluongxuat)
+			FROM Phieuxuat, Chitietphieuxuat
+			GROUP BY Phieuxuat.Ngayxuat, Chitietphieuxuat.Mavattu
 
 
 ------------------------------------- Upddate EX2(15/8) – Store Procedure, Trigger, Fuction And Transaction----------------------------------------------------------------------
