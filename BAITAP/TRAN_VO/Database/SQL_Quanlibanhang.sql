@@ -392,7 +392,7 @@ SELECT*FROM Phieunhaphang
 		where Chitietdonhang.Madondathang=Phieunhaphang.Madondathang AND Phieunhaphang.Masophieunhap=Chitietphieunhap.Masophieunhap and Chitietdonhang.Mavattu=Chitietphieunhap.Mavattu 
 		OR chitietdonhang.Madondathang NOT IN (SELECT Phieunhaphang.Madondathang  FROM Phieunhaphang)
 		GROUP BY Chitietdonhang.Madondathang,chitietdonhang.soluongdat, chitietphieunhap.soluongnhap,chitietphieunhap.mavattu
-		having SUM(chitietphieunhap.soluongnhap)=SUM(chitietdonhang.soluongdat)
+		having chitietphieunhap.soluongnhap<chitietdonhang.soluongdat
 	
 		--Thống kê những đơn đặt hàng chưa nhập đủ số lượng
 		select Phieunhaphang.Madondathang,Chitietphieunhap.mavattu,Chitietdonhang.Soluongdat,sum(Chitietphieunhap.Soluongnhap) from Chitietphieunhap inner join Chitietdonhang on Chitietdonhang.Mavattu=Chitietphieunhap.Mavattu inner join Phieunhaphang on Phieunhaphang.Madondathang=Chitietdonhang.Madondathang
@@ -404,9 +404,16 @@ SELECT*FROM Phieunhaphang
 
 ----------Update EX2(13/8)----------------------------------------------------------------
 --18) Tạo View  vw_DMVT gồm (MAVTu và TenVTu) dùng liệt kê các danh sách trong bảng vật tư
-			CREATE VIEW [vw_DMVT] AS
-			SELECT  Mavattu, Ten
+		
+		CREATE VIEW [vw_DMVT]
+		AS
+			SELECT Mavattu, Ten
 			FROM VATTU
+		WITH CHECK OPTION
+		drop VIEW vw_DMVT
+		SELECT*
+		FROM [vw_DMVT]
+		UPDATE VATTU set Ten='tea8' WHERE Mavattu='MS18'
 
 --19) Tạo View vw_DonDH_Tong SLDatNhap gồm (SoHD, TongSLDat và TongSLNhap) dùng để thống kê những đơn đặt hàng đã được nhập hàng đầy đủ
 		create view vwDonDH_Tong_SLDatNhap as
@@ -431,11 +438,14 @@ SELECT*FROM Phieunhaphang
 DROP VIEW vw_DonDH_DaNhapDu
 
 --21) Tạo View vw_TongNhap gồm (NamThang, MaVTu và TongSLNhap) dùng để thống kê số lượng nhập của các vật tư trong năm tháng tương ứng (Không sử dụng bảng tồn kho)
-		create view vw_TongNhap as
-		select cast (MONTH(Ngaynhap)as varchar) +'/'+CAST(YEAR(Ngaynhap)as varchar)[Thời gian], Chitietphieunhap.Mavattu, Chitietphieunhap.Soluongnhap
-		from Phieunhaphang inner join Chitietphieunhap on Phieunhaphang.Masophieunhap=Chitietphieunhap.Masophieunhap
-		group by Phieunhaphang.Ngaynhap, Chitietphieunhap.Mavattu, Chitietphieunhap.Soluongnhap
 
+		create view vw_TongNhap
+		as
+			select cast (MONTH(Ngaynhap)as varchar) +'/'+CAST(YEAR(Ngaynhap)as varchar)[Thời gian], Chitietphieunhap.Mavattu, Chitietphieunhap.Soluongnhap
+			from Phieunhaphang inner join Chitietphieunhap on Phieunhaphang.Masophieunhap=Chitietphieunhap.Masophieunhap
+			group by Phieunhaphang.Ngaynhap, Chitietphieunhap.Mavattu, Chitietphieunhap.Soluongnhap
+				WITH CHECK OPTION
+		drop VIEW vw_TongNhap
 --22) Tạo View vw_TongXuat gồm (NamThang, MaVTu và TongSLXuat) dùng để thống kê SL xuất của vật tư trong từng năm tương ứng (Không sử dụng bảng tồn kho)
 
 		create view vw_TongXuat
@@ -443,6 +453,15 @@ DROP VIEW vw_DonDH_DaNhapDu
 			SELECT DISTINCT Chitietphieuxuat.Mavattu, CAST(YEAR(Ngayxuat) as varchar)[Thời gian], SUM(Chitietphieuxuat.Soluongxuat)
 			FROM Phieuxuat, Chitietphieuxuat
 			GROUP BY Phieuxuat.Ngayxuat, Chitietphieuxuat.Mavattu
+
+SELECT Chitietphieuxuat.Mavattu, CAST(YEAR(Ngayxuat) AS VARCHAR)[Năm], Soluongxuat
+FROM Chitietphieuxuat, Phieuxuat
+WHERE Phieuxuat.Maphieuxuat=Chitietphieuxuat.Maphieuxuat
+--GROUP BY Chitietphieuxuat.Mavattu, Phieuxuat.Ngayxuat
+
+SELECT distinct Mavattu,CAST(YEAR(Phieuxuat.Ngayxuat) AS VARCHAR)[Năm],SUM(soluongxuat) FROM Chitietphieuxuat, Phieuxuat
+WHERE Phieuxuat.Maphieuxuat=Chitietphieuxuat.Maphieuxuat
+GROUP BY Mavattu, Phieuxuat.Ngayxuat
 
 
 ------------------------------------- Upddate EX2(15/8) – Store Procedure, Trigger, Fuction And Transaction----------------------------------------------------------------------
